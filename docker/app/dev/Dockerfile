@@ -11,4 +11,4 @@ EXPOSE 3000
 
 WORKDIR /app/app
 
-CMD ["yarn","start"]
+CMD ["yarn","dev"]
