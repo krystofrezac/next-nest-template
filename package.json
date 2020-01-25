@@ -1,0 +1,17 @@
+{
+  "name": "template",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "app",
+    "api"
+  ],
+  "scripts": {
+    "docker:dev:build": "sudo docker-compose -f docker-compose.dev.yml build",
+    "docker:dev:up": "sudo docker-compose -f docker-compose.dev.yml up",
+    "docker:dev:down": "sudo docker-compose -f docker-compose.dev.yml down",
+    "docker:prod:build": "sudo docker-compose -f docker-compose.prod.yml build",
+    "docker:prod:up": "sudo docker-compose -f docker-compose.prod.yml up",
+    "docker:prod:down": "sudo docker-compose -f docker-compose.prod.yml down"
+  }
+}
