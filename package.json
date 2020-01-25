@@ -6,6 +6,9 @@
     "app",
     "api"
   ],
+  "engines": {
+    "node": "12.14"
+  },
   "scripts": {
     "docker:dev:build": "sudo docker-compose -f docker-compose.dev.yml build",
     "docker:dev:up": "sudo docker-compose -f docker-compose.dev.yml up",
@@ -13,5 +16,17 @@
     "docker:prod:build": "sudo docker-compose -f docker-compose.prod.yml build",
     "docker:prod:up": "sudo docker-compose -f docker-compose.prod.yml up",
     "docker:prod:down": "sudo docker-compose -f docker-compose.prod.yml down"
+  },
+  "devDependencies": {
+    "prettier": "^1.19.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint": "^6.8.0",
+    "@typescript-eslint/eslint-plugin": "^2.17.0",
+    "@typescript-eslint/parser": "^2.17.0",
+    "@types/node": "^13.5.0",
+    "typescript": "^3.7.5"
   }
 }
