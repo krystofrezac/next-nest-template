@@ -1,4 +1,4 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Query } from '@nestjs/graphql';
 import User from './user.entity';
 
 class UserResolver {
