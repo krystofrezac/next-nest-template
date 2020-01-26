@@ -8,17 +8,21 @@ import { useQuery } from '@apollo/react-hooks';
 import withApollo from '../lib/apollo/withApollo';
 
 const QUERY = gql`
-  {
-    userGet(password: "heslo") {
+  query Dog($password: String!) {
+    userGet(password: $password) {
       id
     }
   }
 `;
 
 const Index = props => {
-  const { loading, data } = useQuery(QUERY);
+  const { loading, data, error } = useQuery(QUERY, { variables: { password: props.cookie } });
 
-  console.log(loading, data);
+  if (error) {
+    console.clear();
+    // @ts-ignore
+    console.log('a', error.graphQLErrors[0].message.statusCode);
+  }
 
   const changeCookie = () => {
     document.cookie = `${appConfig.cookies.token}=ahoj; path=/`;
@@ -27,7 +31,8 @@ const Index = props => {
   return (
     <>
       <div>
-        {data ? data.userGet.id : '-'}
+        <div>{data ? data.userGet.id : '-'}</div>
+        <div>{props.cookie}</div>
         <Link href={{ pathname: '/a' }}>a</Link>
         <button onClick={changeCookie}>a</button>
       </div>
@@ -36,7 +41,7 @@ const Index = props => {
 };
 
 Index.getInitialProps = ctx => {
-  return { cookie: cookies(ctx).template };
+  return { cookie: cookies(ctx)[appConfig.cookies.token] };
 };
 
 export default withApollo(Index);
