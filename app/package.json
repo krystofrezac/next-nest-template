@@ -12,6 +12,7 @@
     "fix": "eslint '*/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
+    "@template/shared": "1.0.0",
     "next": "^9.2.1",
     "next-cookies": "^2.0.3",
     "next-redux-wrapper": "^4.0.1",

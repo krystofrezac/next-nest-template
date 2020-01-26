@@ -5,6 +5,7 @@ import cookies from 'next-cookies';
 import config from '@template/shared/config';
 
 const Index = props => {
+  console.log(props);
   const changeCookie = () => {
     document.cookie = `${config.cookies.token}=ahoj; path=/`;
   };
