@@ -6,5 +6,7 @@ prefab.rules = {
   ...prefab.rules,
   'react/jsx-filename-extension': 'off',
   'react/jsx-props-no-spreading': 'off',
+  'react/prop-types': 'off',
+  'react/destructuring-assignment': 'off'
 };
 module.exports = prefab;

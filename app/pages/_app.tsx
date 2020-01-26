@@ -7,7 +7,6 @@ import makeStore from '../redux';
 
 class MyApp extends App<{ store: any }> {
   static async getInitialProps({ Component, ctx }) {
-    // we can dispatch from here too
     ctx.store.dispatch({ type: 'FOO', payload: 'foo' });
 
     const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
