@@ -1,9 +1,18 @@
 version: "3"
 services:
   app:
-    container_name: app
+    container_name: template_prod_app
     build:
       context: .
-      dockerfile: ./docker/app/prod/Dockerfile
+      dockerfile: docker/app/prod/Dockerfile
     ports:
       - 3000:3000
+    depends_on:
+      - api
+  api:
+    container_name: template_prod_api
+    build:
+      context: .
+      dockerfile: docker/api/prod/Dockerfile
+    ports:
+      - 4000:4000

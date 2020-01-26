@@ -1,14 +1,24 @@
 version: "3"
 services:
   app:
-    container_name: app
+    container_name: template_dev_app
     build:
       context: .
-      dockerfile: ./docker/app/dev/Dockerfile
+      dockerfile: docker/app/dev/Dockerfile
     ports:
       - 3000:3000
     volumes:
       - ./app:/app/app
-      - /app/node_modules
-      - /app/app/node_modules
-      - /app/app/.next
+      - ./node_modules:/app/node_modules
+    depends_on:
+      - api
+  api:
+    container_name: template_dev_api
+    build:
+      context: .
+      dockerfile: docker/api/dev/Dockerfile
+    ports:
+      - 4000:4000
+    volumes:
+      - ./api:/app/api
+      - ./node_modules:/app/node_modules
