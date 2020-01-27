@@ -3,7 +3,10 @@ FROM node:12.14
 RUN mkdir /app
 WORKDIR /app
 
-COPY . .
+COPY ./package.json .
+COPY ./yarn.lock .
+COPY ./app app
+COPY ./shared shared
 
 RUN yarn
 
