@@ -3,14 +3,12 @@ FROM node:12.14
 RUN mkdir /app
 WORKDIR /app
 
-COPY ./package.json .
-COPY ./yarn.lock .
-COPY ./api api
-COPY ./shared shared
-
+COPY . .
 
 RUN yarn
 
+EXPOSE 4000
+
 WORKDIR /app/api
 
-CMD ["yarn dev"]
+CMD ["yarn","dev"]
