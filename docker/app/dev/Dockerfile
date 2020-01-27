@@ -5,8 +5,8 @@ WORKDIR /app
 
 COPY ./package.json .
 COPY ./yarn.lock .
-COPY ./app app
-COPY ./shared shared
+COPY ./app /app/app
+COPY ./shared /app/shared
 
 RUN yarn
 

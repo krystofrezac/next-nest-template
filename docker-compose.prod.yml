@@ -1,27 +1,36 @@
 version: "3"
 services:
   app:
-    container_name: template_prod_app
+    container_name: template_dev_app
     build:
       context: .
-      dockerfile: docker/app/prod/Dockerfile
+      dockerfile: docker/app/dev/Dockerfile
     ports:
       - 3000:3000
     depends_on:
       - api
+    links:
+      - api
   api:
-    container_name: template_prod_api
+    container_name: template_dev_api
     build:
       context: .
-      dockerfile: docker/api/prod/Dockerfile
+      dockerfile: docker/api/dev/Dockerfile
     ports:
       - 4000:4000
+    depends_on:
+      - db
+    links:
+      - db
   db:
     image: mysql
     container_name: template_dev_db
+    command: --default-authentication-plugin=mysql_native_password
     env_file: ./docker/db/db.env
     restart: always
     expose:
       - 3306
+    ports:
+      - 5000:3306
     volumes:
       - ./docker/db/data:/var/lib/mysql

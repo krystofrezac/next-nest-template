@@ -8,9 +8,9 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./app:/app/app
-      - ./shared:/app/shared
-      - ./node_modules:/app/node_modules
+      - .:/app
+      - template_node_modules_app_app_dev:/app/app/node_modules
+      - template_node_modules_app_dev:/app/node_modules
     depends_on:
       - api
     links:
@@ -23,8 +23,9 @@ services:
     ports:
       - 4000:4000
     volumes:
-      - ./api:/app/api
-      - ./node_modules:/app/node_modules
+      - .:/app
+      - template_node_modules_api_api_dev:/app/api/node_modules
+      - template_node_modules_api_dev:/app/node_modules
     depends_on:
       - db
     links:
@@ -40,4 +41,10 @@ services:
     ports:
       - 5000:3306
     volumes:
-      - ./docker/db/data:/var/lib/mysql
+      - template_db:/var/lib/mysql
+volumes:
+  template_db:
+  template_node_modules_app_dev:
+  template_node_modules_api_dev:
+  template_node_modules_api_api_dev:
+  template_node_modules_app_app_dev:

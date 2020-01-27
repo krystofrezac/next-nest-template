@@ -3,14 +3,13 @@ FROM node:12.14
 RUN mkdir /app
 WORKDIR /app
 
-COPY . .
+COPY ./package.json .
+COPY ./yarn.lock .
+COPY ./app /app/app
+COPY ./shared /app/shared
 
 RUN yarn
 
-EXPOSE 3000
-
 WORKDIR /app/app
-
-RUN yarn build
 
 CMD ["yarn","start"]
