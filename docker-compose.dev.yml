@@ -35,7 +35,6 @@ services:
   db:
     image: mysql
     container_name: template_dev_db
-    command: --default-authentication-plugin=mysql_native_password
     env_file: ./docker/db/db.env
     restart: always
     expose:

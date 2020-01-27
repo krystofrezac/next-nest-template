@@ -16,3 +16,12 @@ services:
       dockerfile: docker/api/prod/Dockerfile
     ports:
       - 4000:4000
+  db:
+    image: mysql
+    container_name: template_dev_db
+    env_file: ./docker/db/db.env
+    restart: always
+    expose:
+      - 3306
+    volumes:
+      - ./docker/db/data:/var/lib/mysql
