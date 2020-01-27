@@ -13,4 +13,4 @@ RUN yarn
 
 WORKDIR /app/api
 
-CMD ["yarn","dev"]
+CMD ["yarn dev"]

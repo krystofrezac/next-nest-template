@@ -4,12 +4,14 @@
   "private": true,
   "scripts": {
     "prebuild": "rimraf dist",
+    "predev": "rimraf dist",
     "build": "nest build",
     "dev": "nest start --watch",
     "start": "node dist/main",
     "fix": "eslint './src/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
+    "@template/shared": "1.0.0",
     "@nestjs/common": "^6.7.2",
     "@nestjs/core": "^6.7.2",
     "@nestjs/graphql": "^6.5.3",
