@@ -7,8 +7,6 @@ COPY . .
 
 RUN yarn
 
-EXPOSE 3000
-
 WORKDIR /app/app
 
 CMD ["yarn","dev"]

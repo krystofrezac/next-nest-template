@@ -20,8 +20,11 @@ const Index = props => {
 
   if (error) {
     console.clear();
-    // @ts-ignore
-    console.log('a', error.graphQLErrors[0].message.statusCode);
+
+    if (error.graphQLErrors.length > 0) {
+      // @ts-ignore
+      console.log('a', error.graphQLErrors[0].message.statusCode);
+    }
   }
 
   const changeCookie = () => {
