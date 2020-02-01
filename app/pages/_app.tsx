@@ -6,8 +6,8 @@ import withRedux from 'next-redux-wrapper';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Head from 'next/head';
-import makeStore from '../redux';
-import theme from '../src/theme';
+import makeStore from '../src/redux';
+import theme from '../src/lib/materialui/theme';
 
 class MyApp extends App<{ store: any }> {
   componentDidMount() {

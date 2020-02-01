@@ -5,7 +5,7 @@ import { gql } from 'apollo-boost';
 import cookies from 'next-cookies';
 import appConfig from '@template/shared/app';
 import { useQuery } from '@apollo/react-hooks';
-import withApollo from '../lib/apollo/withApollo';
+import withApollo from '../src/lib/apollo/withApollo';
 
 const QUERY = gql`
   query Dog($password: String!) {
