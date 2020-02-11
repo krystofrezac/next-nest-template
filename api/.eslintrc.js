@@ -8,6 +8,7 @@ prefab.rules = {
 };
 
 prefab.settings = {
+  ...prefab.settings,
   'import/resolver': {
     'typescript': {
       'alwaysTryTypes': true

@@ -10,6 +10,7 @@ prefab.rules = {
   'react/destructuring-assignment': 'off'
 };
 prefab.settings = {
+  ...prefab.settings,
   'import/resolver': 'babel-module',
   react: {
     version: 'detect'
