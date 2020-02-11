@@ -7,7 +7,8 @@
   "database": "template",
   "entities": ["dist/**/*.entity.js"],
 
-  "migrations": ["src/migrations/*.js"],
+  "migrationsRun: true": false,
+  "migrations": ["dist/migrations/*.js"],
   "cli": {
     "migrationsDir": "migrations"
   }

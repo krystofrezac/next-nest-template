@@ -1,9 +1,10 @@
-import { Args, Mutation, Query } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UnauthorizedException } from '@nestjs/common';
 
 import User from 'user/user.entity';
 import UserService from 'user/user.service';
 
+@Resolver()
 class UserResolver {
   constructor(private readonly userService: UserService) {}
 
