@@ -5,5 +5,10 @@
   "username": "krystof",
   "password": "heslo",
   "database": "template",
-  "entities": ["dist/**/*.entity{.ts,.js}"]
+  "entities": ["dist/**/*.entity.js"],
+
+  "migrations": ["src/migrations/*.js"],
+  "cli": {
+    "migrationsDir": "migrations"
+  }
 }
