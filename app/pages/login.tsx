@@ -1,3 +1,3 @@
-import LoginIndex from '../src/pages/login';
+import LoginIndex from 'pages/login';
 
 export default LoginIndex;

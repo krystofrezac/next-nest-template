@@ -9,4 +9,10 @@ prefab.rules = {
   'react/prop-types': 'off',
   'react/destructuring-assignment': 'off'
 };
+prefab.settings = {
+  'import/resolver': 'babel-module',
+  react: {
+    version: 'detect'
+  }
+};
 module.exports = prefab;

@@ -1,11 +1,13 @@
 import React from 'react';
-import Link from 'next/link';
-import { gql } from 'apollo-boost';
-
-import cookies from 'next-cookies';
-import appConfig from '@template/shared/app';
 import { useQuery } from '@apollo/react-hooks';
-import withApollo from '../src/lib/apollo/withApollo';
+import { gql } from 'apollo-boost';
+import Link from 'next/link';
+import cookies from 'next-cookies';
+import { connect } from 'react-redux';
+
+import appConfig from '@template/shared/app';
+
+import withApollo from 'lib/apollo/withApollo';
 
 const QUERY = gql`
   query Dog($password: String!) {
@@ -34,6 +36,7 @@ const Index = props => {
   return (
     <>
       <div>
+        <input type="text" value={props.foo} onChange={e => props.changeFoo(e.target.value)} />
         <div>{data ? data.userGet.id : '-'}</div>
         <div>{props.cookie}</div>
         <Link href={{ pathname: '/a' }}>a</Link>
@@ -47,4 +50,12 @@ Index.getInitialProps = ctx => {
   return { cookie: cookies(ctx)[appConfig.cookies.token] };
 };
 
-export default withApollo(Index);
+const mapStateToProps = state => ({
+  foo: state.foo,
+});
+
+const mapDispatchToProps = dispatch => ({
+  changeFoo: foo => dispatch({ type: 'FOO', payload: foo }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withApollo(Index));
