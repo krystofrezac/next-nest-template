@@ -26,7 +26,6 @@ class UserResolver {
     const user = new User();
     user.email = email;
     user.password = await this.userService.hashPassword(password);
-    user.passwordIsHashed = true;
     user.name = name;
     user.surname = surname;
 

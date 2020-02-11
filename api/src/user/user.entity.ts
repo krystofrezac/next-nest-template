@@ -9,10 +9,10 @@ class User {
   id: number;
 
   @Field()
-  @Column()
+  @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ default: true })
   passwordIsHashed: boolean;
 
   @Column()
