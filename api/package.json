@@ -12,7 +12,8 @@
     "migration:run": "ts-node ./node_modules/.bin/typeorm migration:run",
     "migration:revert": "ts-node ./node_modules/.bin/typeorm migration:revert",
     "migration:generate": "ts-node ./node_modules/.bin/typeorm migration:generate",
-    "migration:create": "ts-node ./node_modules/.bin/typeorm migration:create"
+    "migration:create": "ts-node ./node_modules/.bin/typeorm migration:create",
+    "conf": "cp ../shared/api.ts ./src/config/"
   },
   "workspaces": {
     "nohoist": [

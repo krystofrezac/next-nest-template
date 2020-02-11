@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { hash } from 'bcrypt';
 
 import User from 'user/user.entity';
+import apiConfig from '../config/api';
 
 @Injectable()
 class UserService {
@@ -14,7 +15,7 @@ class UserService {
   }
 
   async hashPassword(password: string) {
-    return hash(password, 6);
+    return hash(password, apiConfig.hash.saltRounds);
   }
 }
 
