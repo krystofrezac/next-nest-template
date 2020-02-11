@@ -1,16 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  Avatar,
-  Button,
-  CssBaseline,
-  TextField,
-  FormControlLabel,
-  Checkbox,
-  Typography,
-  makeStyles,
-  Container,
-} from '@material-ui/core/';
+import { Avatar, Button, CssBaseline, TextField, Typography, makeStyles, Container } from '@material-ui/core/';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 const useStyles = makeStyles(theme => ({
@@ -75,7 +65,6 @@ const Login = () => {
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
             Sign In
           </Button>
