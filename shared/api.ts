@@ -3,6 +3,10 @@ const apiConfig = {
   hash: {
     saltRounds: 6,
   },
+  jwt: {
+    secret: 'secretKey',
+    expiresIn: '2h',
+  },
 };
 
 export default apiConfig;

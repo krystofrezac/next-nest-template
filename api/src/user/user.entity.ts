@@ -8,6 +8,9 @@ class User {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Field({ nullable: true })
+  accessToken: string;
+
   @Field()
   @Column({ unique: true })
   email: string;
