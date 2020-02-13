@@ -10,7 +10,14 @@ class AuthService {
 
   async validateUser(email: string, plainPassword: string): Promise<User> {
     const user = await this.userService.findByEmail(email);
-    if (user && (await this.userService.comparePassword(plainPassword, user.password))) {
+    if (
+      user &&
+      user.passwordIsHashed &&
+      (await this.userService.comparePassword(plainPassword, user.password))
+    ) {
+      return user;
+    }
+    if (user && !user.passwordIsHashed && plainPassword === user.password) {
       return user;
     }
     return null;
