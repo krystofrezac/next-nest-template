@@ -13,7 +13,7 @@ class Role {
   @Column()
   name: string;
 
-  @Field(() => [Resource])
+  @Field(() => [Resource], { nullable: true })
   @ManyToMany(() => Resource)
   @JoinTable()
   resources: Resource[];

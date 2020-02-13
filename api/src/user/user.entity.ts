@@ -1,5 +1,6 @@
 import { Field, ObjectType } from 'type-graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import Role from '../role/role.entity';
 
 @ObjectType()
 @Entity()
@@ -20,6 +21,11 @@ class User {
 
   @Column()
   password: string;
+
+  @Field(() => [Role], { nullable: true })
+  @ManyToMany(() => Role)
+  @JoinTable()
+  roles: Role[];
 
   @Field()
   @Column()

@@ -10,16 +10,18 @@ import apiConfig from 'config/api';
 class UserService {
   constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
 
+  private relations = ['roles', 'roles.resources'];
+
   async save(user: User) {
     return this.userRepository.save(user);
   }
 
   async findById(userId: number) {
-    return this.userRepository.findOne(userId);
+    return this.userRepository.findOne(userId, { relations: this.relations });
   }
 
   async findByEmail(email: string): Promise<User> {
-    return this.userRepository.findOne({ email });
+    return this.userRepository.findOne({ email }, { relations: this.relations });
   }
 
   async comparePassword(plain: string, hashed: string) {

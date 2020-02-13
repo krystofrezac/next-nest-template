@@ -46,7 +46,7 @@ class UserResolver {
   }
 
   @Query(() => User)
-  @Secured(['ADMIN'])
+  @Secured()
   async userGetLogged(@CurrentUserDecorator() userId: number) {
     return this.userService.findById(userId);
   }

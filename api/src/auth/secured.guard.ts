@@ -1,9 +1,9 @@
-import { SetMetadata, UseGuards } from '@nestjs/common';
+import { UseGuards } from '@nestjs/common';
 import ResourcesGuard from 'auth/resource.guard';
 import GqlAuthGuard from 'auth/jwt.guard';
 import ResourceDecorator from './resource.decorator';
 
-const Secured = (resources: string[]) => {
+const Secured = (resources: string[] = []) => {
   const metadata = ResourceDecorator(...resources);
   const resourceGuard = UseGuards(ResourcesGuard);
   const gqlGuard = UseGuards(GqlAuthGuard);

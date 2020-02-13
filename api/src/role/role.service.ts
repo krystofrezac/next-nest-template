@@ -7,12 +7,14 @@ import Role from './role.entity';
 class RoleService {
   constructor(@InjectRepository(Role) private readonly roleRepository: Repository<Role>) {}
 
+  private relations = ['resources'];
+
   async findAll() {
-    return this.roleRepository.find();
+    return this.roleRepository.find({ relations: this.relations });
   }
 
   async findById(roleId: number) {
-    return this.roleRepository.findOne(roleId);
+    return this.roleRepository.findOne(roleId, { relations: this.relations });
   }
 }
 
