@@ -6,7 +6,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 class User {
   @Field()
   @PrimaryGeneratedColumn()
-  id: number;
+  readonly id: number;
 
   @Field({ nullable: true })
   accessToken: string;
