@@ -1,5 +1,15 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { SetMetadata, UnauthorizedException, UseGuards } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  SetMetadata,
+  UnauthorizedException,
+  UseGuards,
+  UseInterceptors,
+  PipeTransform,
+  Injectable,
+  ArgumentMetadata,
+  BadRequestException,
+} from '@nestjs/common';
 
 import AuthService from 'auth/auth.service';
 import CurrentUserDecorator from 'auth/currentUser.decorator';
@@ -17,6 +27,7 @@ class UserResolver {
   ) {}
 
   @Query(() => User)
+  @UseInterceptors(ClassSerializerInterceptor) 
   async userLogin(
     @Args({ name: 'email', type: () => String }) email: string,
     @Args({ name: 'password', type: () => String }) plainPassword: string,
