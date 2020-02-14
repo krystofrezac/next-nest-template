@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { SetMetadata, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { SetMetadata, UnauthorizedException, UseGuards, UseInterceptors } from '@nestjs/common';
 
 import AuthService from 'auth/auth.service';
 import CurrentUserDecorator from 'auth/currentUser.decorator';
@@ -8,6 +8,7 @@ import User from 'user/user.entity';
 import UserService from 'user/user.service';
 import ResourceGuard from '../auth/resource.guard';
 import Secured from '../auth/secured.guard';
+import LoggingInterceptor, { ExcludeNullInterceptor } from '../auth/interceptor';
 
 @Resolver()
 class UserResolver {
@@ -17,6 +18,7 @@ class UserResolver {
   ) {}
 
   @Query(() => User)
+  @UseInterceptors(ExcludeNullInterceptor)
   async userLogin(
     @Args({ name: 'email', type: () => String }) email: string,
     @Args({ name: 'password', type: () => String }) plainPassword: string,
@@ -24,8 +26,10 @@ class UserResolver {
     const user = await this.authService.validateUser(email, plainPassword);
     if (user) {
       user.accessToken = await this.authService.login(user);
+      user.email = null;
       return user;
     }
+
     throw new UnauthorizedException();
   }
 
@@ -47,6 +51,7 @@ class UserResolver {
 
   @Query(() => User)
   @Secured()
+  @UseInterceptors(ExcludeNullInterceptor)
   async userGetLogged(@CurrentUserDecorator() userId: number) {
     return this.userService.findById(userId);
   }
