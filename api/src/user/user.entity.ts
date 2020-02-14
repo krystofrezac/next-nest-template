@@ -1,15 +1,6 @@
 import { Field, ObjectType } from 'type-graphql';
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Transform } from 'class-transformer';
-import {
-  PipeTransform,
-  Injectable,
-  ArgumentMetadata,
-  BadRequestException,
-  Inject,
-  forwardRef,
-} from '@nestjs/common';
-import UserService from 'user/user.service';
 import Role from '../role/role.entity';
 
 @ObjectType()

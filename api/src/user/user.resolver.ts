@@ -27,7 +27,7 @@ class UserResolver {
   ) {}
 
   @Query(() => User)
-  @UseInterceptors(ClassSerializerInterceptor) 
+  @UseInterceptors(ClassSerializerInterceptor)
   async userLogin(
     @Args({ name: 'email', type: () => String }) email: string,
     @Args({ name: 'password', type: () => String }) plainPassword: string,
