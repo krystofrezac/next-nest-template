@@ -1,5 +1,6 @@
 import { Field, ObjectType } from 'type-graphql';
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Transform } from 'class-transformer';
 import Role from '../role/role.entity';
 
 @ObjectType()
@@ -14,6 +15,7 @@ class User {
 
   @Field()
   @Column({ unique: true })
+  @Transform(value => ({ resourceGuard: true, value }))
   email: string;
 
   @Column({ default: true })

@@ -2,6 +2,8 @@ import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nes
 import { Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { GqlExecutionContext } from '@nestjs/graphql';
+import { ClassTransformOptions } from '@nestjs/common/interfaces/external/class-transform-options.interface';
+import { PlainLiteralObject } from '@nestjs/common/serializer/class-serializer.interceptor';
 
 @Injectable()
 class LoggingInterceptor implements NestInterceptor {
@@ -27,7 +29,12 @@ export class ExcludeNullInterceptor implements NestInterceptor {
       map(value => {
         const res = {};
         Object.keys(value).forEach(k => {
-          res[k] = value[k] === null ? '' : value[k];
+          if (typeof value[k] === 'object' && value[k].resourceGuard === true) {
+            console.log('*', value[k].value);
+            res[k] = value[k].value;
+          } else {
+            res[k] = value[k] === null ? '' : value[k];
+          }
         });
         console.log(typeof value);
         return res;
