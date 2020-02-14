@@ -15,7 +15,7 @@ class User {
 
   @Field()
   @Column({ unique: true })
-  @Transform(value => ({ resourceGuard: true, value }))
+  @Transform(value => ({ resourceGuard: true, resources: ['test'], value }))
   email: string;
 
   @Column({ default: true })
@@ -31,6 +31,10 @@ class User {
 
   @Field()
   @Column()
+  @Transform((name, obj, transforamtionType) => {
+    console.log(this.userService);
+    return `${name}a`;
+  })
   name: string;
 
   @Field()
