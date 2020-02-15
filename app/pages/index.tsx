@@ -5,7 +5,7 @@ import Link from 'next/link';
 import cookies from 'next-cookies';
 import { connect } from 'react-redux';
 
-import appConfig from '@template/shared/app';
+import appConfig from '@template/shared/config/app';
 
 import withApollo from 'lib/apollo/withApollo';
 
@@ -50,9 +50,7 @@ Index.getInitialProps = ctx => {
   return { cookie: cookies(ctx)[appConfig.cookies.token] };
 };
 
-const mapStateToProps = state => ({
-  foo: state.foo,
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
   changeFoo: foo => dispatch({ type: 'FOO', payload: foo }),

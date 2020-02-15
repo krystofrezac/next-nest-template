@@ -4,7 +4,7 @@ import nextApollo from 'next-with-apollo';
 import ApolloClient, { InMemoryCache } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { getDataFromTree } from '@apollo/react-ssr';
-import appConfig from '../../../../shared/app';
+import appConfig from '../../../../shared/config/app';
 
 const apolloProvider = ({ Page, props }) => {
   return (
@@ -14,7 +14,7 @@ const apolloProvider = ({ Page, props }) => {
   );
 };
 
-const withApolloPure = nextApollo(
+export const withApolloPure = nextApollo(
   ({ initialState }) => {
     return new ApolloClient({
       uri: process.browser ? appConfig.api.clientUrl : appConfig.api.serverUrl,

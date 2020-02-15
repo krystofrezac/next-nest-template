@@ -1,7 +1,17 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Avatar, Button, CssBaseline, TextField, Typography, makeStyles, Container } from '@material-ui/core/';
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Typography,
+  makeStyles,
+  Container,
+  CircularProgress,
+} from '@material-ui/core/';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { LoginProps } from 'pages/login/types';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -15,20 +25,24 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  progress: {
+    position: 'absolute',
+    marginTop: 5,
+  },
 }));
 
-const Login = () => {
+const Login = (props: LoginProps) => {
   const classes = useStyles();
-  const { handleSubmit, register, errors } = useForm();
+  const { handleSubmit, register, errors } = useForm<{ email: string; password: string }>();
 
   const onSubmit = values => {
-    console.log(values);
+    props.onSubmit(values.email, values.password);
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -37,35 +51,41 @@ const Login = () => {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
+        {props.loading ? <CircularProgress size={46} className={classes.progress} /> : null}
+
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)} className={classes.form} noValidate>
           <TextField
-            inputRef={register({ required: true })}
-            error={errors.email !== undefined}
+            inputRef={register({ required: true, pattern: /^\S+@\S+$/i })}
+            error={errors.email !== undefined || props.badInputs}
             variant="outlined"
             margin="normal"
             fullWidth
-            id="email"
-            label="Email Address"
+            label="Email"
             name="email"
             autoComplete="email"
             autoFocus
           />
           <TextField
             inputRef={register({ required: true })}
-            error={errors.password !== undefined}
+            error={errors.password !== undefined || props.badInputs}
             variant="outlined"
             margin="normal"
             fullWidth
             name="password"
             label="Password"
             type="password"
-            id="password"
             autoComplete="current-password"
           />
-          <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
             Sign In
           </Button>
         </form>

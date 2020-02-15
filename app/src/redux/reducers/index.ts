@@ -1,14 +1,15 @@
-import { createStore } from 'redux';
+import { combineReducers, createStore } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-const rootReducer = (state = { foo: '' }, action) => {
-  switch (action.type) {
-    case 'FOO':
-      return { ...state, foo: action.payload };
-    default:
-      return state;
-  }
+import user from './user';
+
+const appReducer = combineReducers({
+  user,
+});
+
+const rootReducer = (state, action) => {
+  return appReducer(state, action);
 };
 
 const makeStore = initialState => {
