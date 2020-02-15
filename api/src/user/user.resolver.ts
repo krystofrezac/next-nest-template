@@ -3,7 +3,7 @@ import { UnauthorizedException } from '@nestjs/common';
 
 import Secured from 'auth/secured.guard';
 import AuthService from 'auth/auth.service';
-import CurrentUser from 'auth/currentUser';
+import CurrentUser from 'auth/currentUser.decorator';
 import User from 'user/user.entity';
 import UserService from 'user/user.service';
 
