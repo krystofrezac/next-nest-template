@@ -5,7 +5,6 @@
 
 ## currentUser.decorator
 - Provides currently logged user.
-- Usage:
 ```js
 async userGetLogged(@CurrentUser() userId: number) {
     return this.userService.findById(userId);
@@ -17,7 +16,6 @@ async userGetLogged(@CurrentUser() userId: number) {
 - Endpoint must be decorated with `@UseInterceptors(ResourceInterceptor)` or any decorator that implements it.
 - As parameters accepts resources that user need to access the field. 
 If they are not met the field is returned to client with `null` value.
-- Usage:
 ```js
 @ObjectType()
 class User {
@@ -34,7 +32,6 @@ export default User;
  
 ## jwt.guard
 - Checks if user has valid token. If not return 401 exception.
-- Usage:
 ```js
 @UseGuards(GqlAuthGuard)
 async userGetLogged(@CurrentUser() userId: number) {
@@ -47,7 +44,6 @@ async userGetLogged(@CurrentUser() userId: number) {
 
 ## resource.decorator
 - Provides resources to `resource.guard`.
-- Usage:
 ```js
 @ResourceDecorator('resource1', 'resource2')
 async userGetLogged(@CurrentUser() userId: number) {
@@ -58,7 +54,6 @@ async userGetLogged(@CurrentUser() userId: number) {
 ## resource.guard.ts
 - Check if user has sufficient resources. If not it throws 401 exception.
 - `resource.decorator` must be placed before it.
-- Usage:
 ```js
 @UseGuards(ResourceGuard)
 async userGetLogged(@CurrentUser() userId: number) {
@@ -68,7 +63,6 @@ async userGetLogged(@CurrentUser() userId: number) {
 
 ## resource.interceptor
 - Translate `field.guard` and other fields with `@Translate()`.
-- Usage:
 ```js
 @UseInterceptors(ResourceInterceptor)
 async userGetLogged(@CurrentUser() userId: number) {
@@ -78,7 +72,6 @@ async userGetLogged(@CurrentUser() userId: number) {
 
 ## secured.guard
 - Combines `resoucre.decorator`, `resource.guard`, `jwt.guard` and `resource.interceptor`
-- Usage:
 ```js
 @Secured()
 async userGetLogged(@CurrentUser() userId: number) {
