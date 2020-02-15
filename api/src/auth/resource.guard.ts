@@ -1,8 +1,8 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import UserService from 'user/user.service';
-import AuthService from './auth.service';
+
+import AuthService from 'auth/auth.service';
 
 @Injectable()
 class ResourceGuard implements CanActivate {

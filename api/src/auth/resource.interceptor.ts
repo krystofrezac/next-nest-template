@@ -13,13 +13,12 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { ClassTransformOptions } from '@nestjs/common/interfaces/external/class-transform-options.interface';
 import { PlainLiteralObject } from '@nestjs/common/serializer/class-serializer.interceptor';
 import { CLASS_SERIALIZER_OPTIONS } from '@nestjs/common/serializer/class-serializer.constants';
-import UserService from 'user/user.service';
 import AuthService from './auth.service';
 
 const REFLECTOR = 'Reflector';
 
 @Injectable()
-export class ExcludeNullInterceptor extends ClassSerializerInterceptor {
+class ResourceInterceptor extends ClassSerializerInterceptor {
   constructor(
     @Inject(AuthService) private authService: AuthService,
     @Inject(REFLECTOR) protected readonly reflector: any,
@@ -73,10 +72,11 @@ export class ExcludeNullInterceptor extends ClassSerializerInterceptor {
     // eslint-disable-next-line no-restricted-syntax
     for (const key of Object.keys(response)) {
       const item = response[key];
-      if (typeof item === 'object' && item !== null && item.resourceGuard === true) {
+      // eslint-disable-next-line no-underscore-dangle
+      if (typeof item === 'object' && item !== null && item.__RESOURCE_GUARD__ === true) {
         // eslint-disable-next-line no-await-in-loop
-        (await this.authService.hasAccess(userId, item.resources))
-          ? (transformed[key] = response[key].value)
+        transformed[key] = (await this.authService.hasAccess(userId, item.resources))
+          ? response[key].value
           : null;
       } else {
         transformed[key] = response[key];
@@ -85,3 +85,5 @@ export class ExcludeNullInterceptor extends ClassSerializerInterceptor {
     return transformed;
   }
 }
+
+export default ResourceInterceptor;

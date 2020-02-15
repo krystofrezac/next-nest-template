@@ -1,24 +1,11 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import {
-  ClassSerializerInterceptor,
-  SetMetadata,
-  UnauthorizedException,
-  UseGuards,
-  UseInterceptors,
-  PipeTransform,
-  Injectable,
-  ArgumentMetadata,
-  BadRequestException,
-} from '@nestjs/common';
+import { UnauthorizedException } from '@nestjs/common';
 
+import Secured from 'auth/secured.guard';
 import AuthService from 'auth/auth.service';
 import CurrentUser from 'auth/currentUser';
-import GqlAuthGuard from 'auth/jwt.guard';
 import User from 'user/user.entity';
 import UserService from 'user/user.service';
-import ResourceGuard from '../auth/resource.guard';
-import Secured from '../auth/secured.guard';
-import { ExcludeNullInterceptor } from '../auth/interceptor';
 
 @Resolver()
 class UserResolver {
@@ -28,7 +15,6 @@ class UserResolver {
   ) {}
 
   @Query(() => User)
-  @UseInterceptors(ExcludeNullInterceptor)
   async userLogin(
     @Args({ name: 'email', type: () => String }) email: string,
     @Args({ name: 'password', type: () => String }) plainPassword: string,
@@ -60,7 +46,6 @@ class UserResolver {
 
   @Query(() => User)
   @Secured()
-  @UseInterceptors(ExcludeNullInterceptor)
   async userGetLogged(@CurrentUser() userId: number) {
     return this.userService.findById(userId);
   }

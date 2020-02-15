@@ -1,7 +1,8 @@
 import { Field, ObjectType } from 'type-graphql';
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Transform } from 'class-transformer';
-import Role from '../role/role.entity';
+
+import FieldGuard from 'auth/field.guard';
+import Role from 'role/role.entity';
 
 @ObjectType()
 @Entity()
@@ -15,7 +16,7 @@ class User {
 
   @Field({ nullable: true })
   @Column({ unique: true })
-  @Transform(value => ({ resourceGuard: true, resources: ['testa'], value }))
+  @FieldGuard('test')
   email: string;
 
   @Column({ default: true })
@@ -31,10 +32,6 @@ class User {
 
   @Field()
   @Column()
-  @Transform((name, obj, transforamtionType) => {
-    console.log(this.userService);
-    return `${name}a`;
-  })
   name: string;
 
   @Field()
