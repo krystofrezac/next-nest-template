@@ -27,6 +27,36 @@ class AuthService {
     const payload = { sub: user.id };
     return this.jwtService.sign(payload);
   }
+
+  async hasAccess(userId: number, resources: string[]) {
+    if (resources.length === 0) return true;
+
+    const userRoles = (await this.userService.findById(userId)).roles;
+
+    if (userRoles === undefined) return false;
+
+    const requestedResources = {};
+    resources.forEach(resource => {
+      requestedResources[resource] = false;
+    });
+
+    userRoles.forEach(role => {
+      role.resources.forEach(resource => {
+        if (requestedResources[resource.name] !== undefined) {
+          requestedResources[resource.name] = true;
+        }
+      });
+    });
+
+    let hasAccess = true;
+    Object.keys(requestedResources).forEach(resource => {
+      if (!requestedResources[resource]) {
+        hasAccess = false;
+      }
+    });
+
+    return hasAccess;
+  }
 }
 
 export default AuthService;

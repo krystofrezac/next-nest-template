@@ -13,9 +13,9 @@ class User {
   @Field({ nullable: true })
   accessToken: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column({ unique: true })
-  @Transform(value => ({ resourceGuard: true, resources: ['test'], value }))
+  @Transform(value => ({ resourceGuard: true, resources: ['testa'], value }))
   email: string;
 
   @Column({ default: true })

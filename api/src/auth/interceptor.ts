@@ -1,24 +1,27 @@
 import {
   Injectable,
-  NestInterceptor,
   ExecutionContext,
   CallHandler,
   ClassSerializerInterceptor,
   Inject,
 } from '@nestjs/common';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Observable } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { map } from 'rxjs/operators';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { ClassTransformOptions } from '@nestjs/common/interfaces/external/class-transform-options.interface';
 import { PlainLiteralObject } from '@nestjs/common/serializer/class-serializer.interceptor';
-import UserService from 'user/user.service';
 import { CLASS_SERIALIZER_OPTIONS } from '@nestjs/common/serializer/class-serializer.constants';
+import UserService from 'user/user.service';
+import AuthService from './auth.service';
 
 const REFLECTOR = 'Reflector';
+
 @Injectable()
 export class ExcludeNullInterceptor extends ClassSerializerInterceptor {
   constructor(
-    @Inject(UserService) private userService: UserService,
+    @Inject(AuthService) private authService: AuthService,
     @Inject(REFLECTOR) protected readonly reflector: any,
   ) {
     super(reflector);
@@ -33,10 +36,9 @@ export class ExcludeNullInterceptor extends ClassSerializerInterceptor {
     if (!(typeof response === 'object') && response !== null && !isArray) {
       return response;
     }
-    const r = isArray
+    return isArray
       ? (response as PlainLiteralObject[]).map(item => this.transformToPlain(item, options))
       : this.transformToGuard(this.transformToPlain(response, options), user);
-    return r;
   }
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
@@ -66,22 +68,20 @@ export class ExcludeNullInterceptor extends ClassSerializerInterceptor {
   }
 
   async transformToGuard(response, userId: number) {
-    const user = await this.userService.findById(userId);
-    console.log(user);
+    const transformed = {};
 
-    const res = {};
-    Object.keys(response).forEach(key => {
-      if (
-        typeof response[key] === 'object' &&
-        response[key] !== null &&
-        response[key].resourceGuard === true
-      ) {
-        // TODO has resource
-        res[key] = response[key].value;
+    // eslint-disable-next-line no-restricted-syntax
+    for (const key of Object.keys(response)) {
+      const item = response[key];
+      if (typeof item === 'object' && item !== null && item.resourceGuard === true) {
+        // eslint-disable-next-line no-await-in-loop
+        (await this.authService.hasAccess(userId, item.resources))
+          ? (transformed[key] = response[key].value)
+          : null;
       } else {
-        res[key] = response[key];
+        transformed[key] = response[key];
       }
-    });
-    return res;
+    }
+    return transformed;
   }
 }
