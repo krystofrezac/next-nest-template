@@ -31,7 +31,7 @@ class AuthService {
   async hasAccess(userId: number, resources: string[]) {
     if (resources.length === 0) return true;
 
-    const userRoles = (await this.userService.findById(userId)).roles;
+    const userRoles = await (await this.userService.findById(userId)).roles;
 
     if (userRoles === undefined) return false;
 
@@ -40,13 +40,16 @@ class AuthService {
       requestedResources[resource] = false;
     });
 
-    userRoles.forEach(role => {
-      role.resources.forEach(resource => {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const roleKey of Object.keys(userRoles)) {
+      const role = userRoles[roleKey];
+      // eslint-disable-next-line no-await-in-loop
+      (await role.resources).forEach(resource => {
         if (requestedResources[resource.name] !== undefined) {
           requestedResources[resource.name] = true;
         }
       });
-    });
+    }
 
     let hasAccess = true;
     Object.keys(requestedResources).forEach(resource => {

@@ -13,9 +13,12 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { ClassTransformOptions } from '@nestjs/common/interfaces/external/class-transform-options.interface';
 import { PlainLiteralObject } from '@nestjs/common/serializer/class-serializer.interceptor';
 import { CLASS_SERIALIZER_OPTIONS } from '@nestjs/common/serializer/class-serializer.constants';
+import { loadPackage } from '@nestjs/common/utils/load-package.util';
 import AuthService from './auth.service';
 
 const REFLECTOR = 'Reflector';
+
+let classTransformer: any = {};
 
 @Injectable()
 class ResourceInterceptor extends ClassSerializerInterceptor {
@@ -24,6 +27,10 @@ class ResourceInterceptor extends ClassSerializerInterceptor {
     @Inject(REFLECTOR) protected readonly reflector: any,
   ) {
     super(reflector);
+    classTransformer = loadPackage('class-transformer', 'ClassSerializerInterceptor', () =>
+      require('class-transformer'),
+    );
+    require('class-transformer');
   }
 
   serializeCustom(
@@ -36,21 +43,25 @@ class ResourceInterceptor extends ClassSerializerInterceptor {
       return response;
     }
     return isArray
-      ? (response as PlainLiteralObject[]).map(item => this.transformToPlain(item, options))
-      : this.transformToGuard(this.transformToPlain(response, options), user);
+      ? (response as PlainLiteralObject[]).map(item => this.transformToClass(item, options))
+      : this.transformToGuard(this.transformToClass(response, options), user);
+  }
+
+  transformToClass(plainOrClass: any, options: ClassTransformOptions): PlainLiteralObject {
+    return plainOrClass && plainOrClass.constructor !== Object
+      ? classTransformer.classToClass(plainOrClass, options)
+      : plainOrClass;
   }
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const options = this.getContextOptionsCustom(context);
     const ctx = GqlExecutionContext.create(context);
     const { user } = ctx.getContext().req;
-    return next
-      .handle()
-      .pipe(
-        map((res: PlainLiteralObject | Array<PlainLiteralObject>) =>
-          this.serializeCustom(res, options, user),
-        ),
-      );
+    return next.handle().pipe(
+      map((res: PlainLiteralObject | Array<PlainLiteralObject>) => {
+        return this.serializeCustom(res, options, user);
+      }),
+    );
   }
 
   private getContextOptionsCustom(context: ExecutionContext): ClassTransformOptions | undefined {
@@ -67,22 +78,18 @@ class ResourceInterceptor extends ClassSerializerInterceptor {
   }
 
   async transformToGuard(response, userId: number) {
-    const transformed = {};
-
     // eslint-disable-next-line no-restricted-syntax
     for (const key of Object.keys(response)) {
       const item = response[key];
       // eslint-disable-next-line no-underscore-dangle
       if (typeof item === 'object' && item !== null && item.__RESOURCE_GUARD__ === true) {
         // eslint-disable-next-line no-await-in-loop
-        transformed[key] = (await this.authService.hasAccess(userId, item.resources))
+        response[key] = (await this.authService.hasAccess(userId, item.resources))
           ? response[key].value
           : null;
-      } else {
-        transformed[key] = response[key];
       }
     }
-    return transformed;
+    return response;
   }
 }
 

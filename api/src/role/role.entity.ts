@@ -16,7 +16,7 @@ class Role {
   @Field(() => [Resource], { nullable: true })
   @ManyToMany(() => Resource)
   @JoinTable()
-  resources: Resource[];
+  resources: Promise<Resource[]>;
 }
 
 export default Role;

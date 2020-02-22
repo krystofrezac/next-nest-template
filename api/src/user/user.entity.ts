@@ -28,7 +28,7 @@ class User {
   @Field(() => [Role], { nullable: true })
   @ManyToMany(() => Role)
   @JoinTable()
-  roles: Role[];
+  roles: Promise<Role[]>;
 
   @Field()
   @Column()

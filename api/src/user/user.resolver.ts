@@ -47,7 +47,7 @@ class UserResolver {
   @Query(() => User)
   @Secured()
   async userGetLogged(@CurrentUser() userId: number) {
-    return this.userService.findById(userId);
+    return this.userService.findByEmail('test');
   }
 }
 
