@@ -28,8 +28,10 @@ class ResourceInterceptor extends ClassSerializerInterceptor {
   ) {
     super(reflector);
     classTransformer = loadPackage('class-transformer', 'ClassSerializerInterceptor', () =>
+      // eslint-disable-next-line global-require
       require('class-transformer'),
     );
+    // eslint-disable-next-line global-require
     require('class-transformer');
   }
 
