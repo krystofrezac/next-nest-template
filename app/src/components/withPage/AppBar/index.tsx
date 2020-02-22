@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const AppBar = () => {
-  const classes = useStyles({});
+  const classes = useStyles();
   return (
     <AppBarPrefab position="fixed" className={classes.appBar}>
       <Toolbar>

@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const Drawer = () => {
-  const classes = useStyles({});
+  const classes = useStyles();
   return (
     <DrawerPrefab
       className={classes.drawer}
