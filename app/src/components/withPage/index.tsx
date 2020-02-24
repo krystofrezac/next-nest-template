@@ -1,8 +1,10 @@
 import React from 'react';
-import { Typography, makeStyles, Theme } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core';
 
 import withApollo from 'lib/apollo/withApollo';
+
 import Content from 'components/withPage/Content';
+
 import AppBar from './AppBar';
 import Drawer from './Drawer';
 
@@ -27,10 +29,10 @@ const withPage = (
 
     return (
       <div className={classes.root}>
-        <AppBar />
+        <AppBar name={name} />
         <Drawer />
 
-        <Content name={name} breadcrumbs={breadcrumbs}>
+        <Content breadcrumbs={breadcrumbs}>
           <Component {...props} />
         </Content>
       </div>

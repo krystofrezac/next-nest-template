@@ -1,5 +1,5 @@
 import React from 'react';
-import { Breadcrumbs, Link as MLink, Theme, Typography } from '@material-ui/core';
+import { Breadcrumbs, Link as MLink, Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Link from 'next/link';
@@ -19,9 +19,6 @@ const Content: React.FC<ContentProps> = props => {
   return (
     <div className={classes.content}>
       <div className={classes.toolbar}>a</div>
-      <Typography variant="h4" component="h1">
-        {props.name}
-      </Typography>
       <Breadcrumbs>
         {props.breadcrumbs.map(b => (
           <Link key={b.route + b.label} href={b.route}>

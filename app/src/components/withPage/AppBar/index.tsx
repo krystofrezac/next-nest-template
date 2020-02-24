@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppBar as AppBarPrefab, Theme, Toolbar, Typography, makeStyles } from '@material-ui/core';
-import appConfig from '@template/shared/config/app';
+import { AppBarProps } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -8,13 +8,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const AppBar = () => {
+const AppBar = (props: AppBarProps) => {
   const classes = useStyles();
   return (
     <AppBarPrefab position="fixed" className={classes.appBar}>
       <Toolbar>
-        <Typography variant="h6" noWrap>
-          {appConfig.appName}
+        <Typography variant="h6" component="h1" noWrap>
+          {props.name}
         </Typography>
       </Toolbar>
     </AppBarPrefab>

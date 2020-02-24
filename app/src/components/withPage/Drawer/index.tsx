@@ -1,6 +1,5 @@
 import {
   Drawer as DrawerPrefab,
-  Divider,
   List,
   ListItem,
   ListItemIcon,
@@ -8,11 +7,9 @@ import {
   makeStyles,
   Theme,
 } from '@material-ui/core';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+
 import React from 'react';
 import navList from 'components/withPage/Drawer/navList';
-import appConfig from '../../../../../shared/config/app';
 
 const drawerWidth = 240;
 
