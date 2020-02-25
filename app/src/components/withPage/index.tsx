@@ -26,26 +26,18 @@ const withPage = (
   name: string,
   breadcrumbs: { label: string; route: string }[],
 ) => {
-  const WithPage = (p: any) => {
-    const WithPageApollo = withApollo(props => {
-      const classes = useStyles();
-      return (
-        <div className={classes.root}>
-          <AppBar name={name} />
-          <Drawer />
+  const WithPage = (props: any) => {
+    const classes = useStyles();
+    return (
+      <div className={classes.root}>
+        <AppBar name={name} />
+        <Drawer />
 
-          <Content breadcrumbs={breadcrumbs}>
-            <Component {...props} />
-          </Content>
-        </div>
-      );
-    }, p.token);
-
-    return <WithPageApollo {...p} />;
-  };
-
-  WithPage.getInitialProps = ctx => {
-    return { token: cookies(ctx)[appConfig.cookies.token] };
+        <Content breadcrumbs={breadcrumbs}>
+          <Component {...props} />
+        </Content>
+      </div>
+    );
   };
   return WithPage;
 };

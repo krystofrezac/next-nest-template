@@ -37,7 +37,7 @@ const USER_LOGIN = gql`
 
 const LoginIndex = (props: LoginIndexProps) => {
   const [userLogin, { loading, data, error }] = useLazyQuery<UserLogin>(USER_LOGIN);
-  const [, setCookie] = useCookies();
+  const [getCookies, setCookie] = useCookies();
   const [state, setState] = useState({ loggedIn: false });
   const router = useRouter();
 
@@ -45,6 +45,9 @@ const LoginIndex = (props: LoginIndexProps) => {
     props.changeUser(data.userLogin);
     setCookie(appConfig.cookies.token, data.userLogin.accessToken);
     setState({ ...state, loggedIn: true });
+  }
+
+  if (getCookies[appConfig.cookies.token]) {
     router.push(appConfig.routes.dashboard);
   }
 
