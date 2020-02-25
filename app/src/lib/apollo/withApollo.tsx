@@ -14,21 +14,29 @@ const apolloProvider = ({ Page, props }) => {
   );
 };
 
-export const withApolloPure = nextApollo(
-  ({ initialState }) => {
-    return new ApolloClient({
-      uri: process.browser ? appConfig.api.clientUrl : appConfig.api.serverUrl,
-      cache: new InMemoryCache().restore(initialState || {}),
-    });
-  },
-  {
-    render: apolloProvider,
-  },
-);
+export const withApolloPure = (token: string = '') =>
+  nextApollo(
+    ({ initialState }) => {
+      return new ApolloClient({
+        uri: process.browser ? appConfig.api.clientUrl : appConfig.api.serverUrl,
+        cache: new InMemoryCache().restore(initialState || {}),
+        request: operation => {
+          operation.setContext({
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        },
+      });
+    },
+    {
+      render: apolloProvider,
+    },
+  );
 
-const withApollo = (Component, ssr: boolean = true) => {
-  if (ssr) return withApolloPure(Component, { getDataFromTree });
-  return withApolloPure(Component);
+const withApollo = (Component, token: string = '', ssr: boolean = true) => {
+  if (ssr) return withApolloPure(token)(Component, { getDataFromTree });
+  return withApolloPure(token)(Component);
 };
 
 export default withApollo;

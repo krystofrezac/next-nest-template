@@ -5,8 +5,10 @@ import withApollo from 'lib/apollo/withApollo';
 
 import Content from 'components/withPage/Content';
 
+import cookies from 'next-cookies';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
+import appConfig from '../../../../shared/config/app';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -23,20 +25,30 @@ const withPage = (
   Component: React.FunctionComponent,
   name: string,
   breadcrumbs: { label: string; route: string }[],
-) =>
-  withApollo((props: any) => {
-    const classes = useStyles();
+) => {
+  const WithPage = (p: any) => {
+    console.log('token', p.token);
+    const WithPageApollo = withApollo(props => {
+      const classes = useStyles();
+      return (
+        <div className={classes.root}>
+          <AppBar name={name} />
+          <Drawer />
 
-    return (
-      <div className={classes.root}>
-        <AppBar name={name} />
-        <Drawer />
+          <Content breadcrumbs={breadcrumbs}>
+            <Component {...props} />
+          </Content>
+        </div>
+      );
+    }, p.token);
 
-        <Content breadcrumbs={breadcrumbs}>
-          <Component {...props} />
-        </Content>
-      </div>
-    );
-  });
+    return <WithPageApollo {...p} />;
+  };
+
+  WithPage.getInitialProps = ctx => {
+    return { token: cookies(ctx)[appConfig.cookies.token] };
+  };
+  return WithPage;
+};
 
 export default withPage;
