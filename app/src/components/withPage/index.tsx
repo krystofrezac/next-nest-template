@@ -27,7 +27,6 @@ const withPage = (
   breadcrumbs: { label: string; route: string }[],
 ) => {
   const WithPage = (p: any) => {
-    console.log('token', p.token);
     const WithPageApollo = withApollo(props => {
       const classes = useStyles();
       return (

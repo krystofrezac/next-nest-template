@@ -20,6 +20,7 @@ export const withApolloPure = (token: string = '') =>
       return new ApolloClient({
         uri: process.browser ? appConfig.api.clientUrl : appConfig.api.serverUrl,
         cache: new InMemoryCache().restore(initialState || {}),
+        
         request: operation => {
           operation.setContext({
             headers: {
@@ -34,8 +35,7 @@ export const withApolloPure = (token: string = '') =>
     },
   );
 
-const withApollo = (Component, token: string = '', ssr: boolean = true) => {
-  if (ssr) return withApolloPure(token)(Component, { getDataFromTree });
+const withApollo = (Component, token: string = '') => {
   return withApolloPure(token)(Component);
 };
 
