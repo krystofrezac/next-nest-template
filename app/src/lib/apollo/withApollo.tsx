@@ -17,10 +17,12 @@ const apolloProvider = ({ Page, props }) => {
 
 export const withApolloPure = nextApollo(
   ({ initialState, ctx }) => {
-    const token = !process.browser
-      ? cookies(ctx)[appConfig.cookies.token]
-      : browserCookies.get(appConfig.cookies.token);
-    console.log('token', token);
+    let token = '';
+    if (!process.browser) {
+      token = ctx ? cookies(ctx)[appConfig.cookies.token] : '';
+    } else {
+      token = browserCookies.get(appConfig.cookies.token);
+    }
     return new ApolloClient({
       uri: process.browser ? appConfig.api.clientUrl : appConfig.api.serverUrl,
       cache: new InMemoryCache().restore(initialState || {}),
@@ -38,8 +40,9 @@ export const withApolloPure = nextApollo(
   },
 );
 
-const withApollo = Component => {
-  return withApolloPure(Component, { getDataFromTree });
+const withApollo = (Component, ssr: boolean = false) => {
+  if (ssr) return withApolloPure(Component, { getDataFromTree });
+  return withApolloPure(Component);
 };
 
 export default withApollo;
