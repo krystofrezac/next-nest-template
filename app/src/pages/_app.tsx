@@ -19,12 +19,6 @@ class MyApp extends App<{ store: any }> {
     }
   }
 
-  static async getInitialProps({ Component, ctx }) {
-    const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
-
-    return { pageProps };
-  }
-
   render() {
     const { Component, pageProps } = this.props;
     return (
