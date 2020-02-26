@@ -1,15 +1,14 @@
+import React, { useState } from 'react';
+
 import {
   Drawer as DrawerPrefab,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
+  Hidden,
   makeStyles,
+  SwipeableDrawer,
   Theme,
 } from '@material-ui/core';
-
-import React from 'react';
-import navList from 'components/withPage/Drawer/navList';
+import List from './List';
+import { DrawerProps } from './types';
 
 const drawerWidth = 240;
 
@@ -17,7 +16,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
   },
-
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
@@ -28,26 +26,40 @@ const useStyles = makeStyles((theme: Theme) => ({
   toolbar: theme.mixins.toolbar,
 }));
 
-const Drawer = () => {
+const Drawer = (props: DrawerProps) => {
   const classes = useStyles();
+
   return (
-    <DrawerPrefab
-      className={classes.drawer}
-      variant="permanent"
-      classes={{
-        paper: classes.drawerPaper,
-      }}
-    >
-      <div className={classes.toolbar} />
-      <List>
-        {navList.map(item => (
-          <ListItem button key={item.label + item.link}>
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.label} />
-          </ListItem>
-        ))}
-      </List>
-    </DrawerPrefab>
+    <>
+      <Hidden smDown>
+        <DrawerPrefab
+          className={classes.drawer}
+          variant="permanent"
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div className={classes.toolbar} />
+          <List />
+        </DrawerPrefab>
+      </Hidden>
+      <Hidden mdUp>
+        <SwipeableDrawer
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+          onClose={() => {
+            props.setOpen(false);
+          }}
+          onOpen={() => {
+            props.setOpen(true);
+          }}
+          open={props.open}
+        >
+          <List />
+        </SwipeableDrawer>
+      </Hidden>
+    </>
   );
 };
 export default Drawer;

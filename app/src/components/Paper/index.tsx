@@ -13,7 +13,7 @@ const Paper = (props: PaperProps) => {
   const { title, children, ...rest } = props;
 
   return (
-    <PaperPrefab className={classes.paper} {...rest}>
+    <PaperPrefab className={classes.paper} elevation={2} {...rest}>
       {title && (
         <Typography variant="h5" component="h2">
           {title}

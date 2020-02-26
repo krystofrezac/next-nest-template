@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, Theme } from '@material-ui/core';
 
 import withApollo from 'lib/apollo/withApollo';
@@ -27,11 +27,13 @@ const withPage = (
   breadcrumbs: { label: string; route: string }[],
 ) => {
   const WithPage = (props: any) => {
+    const [drawerOpen, setDrawerOpen] = useState(false);
     const classes = useStyles();
+
     return (
       <div className={classes.root}>
-        <AppBar name={name} />
-        <Drawer />
+        <AppBar name={name} drawerOpen={() => setDrawerOpen(true)} />
+        <Drawer open={drawerOpen} setOpen={setDrawerOpen} />
 
         <Content breadcrumbs={breadcrumbs}>
           <Component {...props} />
