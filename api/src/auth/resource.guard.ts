@@ -14,7 +14,7 @@ class ResourceGuard implements CanActivate {
 
     const resources = this.reflector.get<string[]>('resources', context.getHandler());
 
-    return this.authService.hasAccess(user, resources);
+    return this.authService.hasResources(user, resources);
   }
 }
 

@@ -21,6 +21,4 @@ const mapStateToProps = (state: State): MapState => ({
 
 export default withPage(connect(mapStateToProps)(DashboardIndex), 'Přehled', [
   { label: 'Přehled', route: routes.dashboard },
-  { label: 'A', route: routes.dashboard },
-  { label: 'B', route: routes.dashboard },
 ]);

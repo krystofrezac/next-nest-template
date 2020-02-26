@@ -86,7 +86,7 @@ class ResourceInterceptor extends ClassSerializerInterceptor {
       // eslint-disable-next-line no-underscore-dangle
       if (typeof item === 'object' && item !== null && item.__RESOURCE_GUARD__ === true) {
         // eslint-disable-next-line no-await-in-loop
-        response[key] = (await this.authService.hasAccess(userId, item.resources))
+        response[key] = (await this.authService.hasResources(userId, item.resources))
           ? response[key].value
           : null;
       }

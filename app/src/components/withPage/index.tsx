@@ -1,46 +1,34 @@
-import React, { useState } from 'react';
-import { makeStyles, Theme } from '@material-ui/core';
+import React from 'react';
 
 import withApollo from 'lib/apollo/withApollo';
 
-import Content from 'components/withPage/Content';
+import Page from 'components/withPage/Page';
+import { gql } from 'apollo-boost';
+import { useQuery } from '@apollo/react-hooks';
+import Error from 'next/error';
+import { Breadcrumb } from './types';
 
-import cookies from 'next-cookies';
-import AppBar from './AppBar';
-import Drawer from './Drawer';
-import appConfig from '../../../../shared/config/app';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    display: 'flex',
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
-  toolbar: theme.mixins.toolbar,
-}));
+const USER_GET_LOGGED = gql`
+  {
+    userGetLogged {
+      id
+    }
+  }
+`;
 
 const withPage = (
   Component: React.FunctionComponent,
   name: string,
-  breadcrumbs: { label: string; route: string }[],
+  breadcrumbs: Breadcrumb[],
+  apolloSsr: boolean = false,
 ) => {
-  const WithPage = (props: any) => {
-    const [drawerOpen, setDrawerOpen] = useState(false);
-    const classes = useStyles();
+  const WithPage = withApollo((props: any) => {
+    const { error } = useQuery(USER_GET_LOGGED);
 
-    return (
-      <div className={classes.root}>
-        <AppBar name={name} drawerOpen={() => setDrawerOpen(true)} />
-        <Drawer open={drawerOpen} setOpen={setDrawerOpen} />
-
-        <Content breadcrumbs={breadcrumbs}>
-          <Component {...props} />
-        </Content>
-      </div>
-    );
-  };
+    if (!error)
+      return <Page Component={Component} name={name} breadcrumbs={breadcrumbs} {...props} />;
+    return <Error statusCode={401} title="Na tuto stránku nemáte přístup" />;
+  }, apolloSsr);
   return WithPage;
 };
 

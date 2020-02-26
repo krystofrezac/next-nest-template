@@ -28,7 +28,7 @@ class AuthService {
     return this.jwtService.sign(payload);
   }
 
-  async hasAccess(userId: number, resources: string[]) {
+  async hasResources(userId: number, resources: string[]) {
     if (resources.length === 0) return true;
 
     const userRoles = await (await this.userService.findById(userId)).roles;
