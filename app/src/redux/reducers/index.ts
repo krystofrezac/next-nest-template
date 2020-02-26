@@ -12,7 +12,7 @@ const rootReducer = (state, action) => {
   return appReducer(state, action);
 };
 
-const makeStore = initialState => {
+const makeStore = () => {
   let store;
 
   if (process.browser) {
@@ -21,11 +21,11 @@ const makeStore = initialState => {
       storage,
     };
 
-    store = createStore(persistReducer(persistConfig, rootReducer), initialState);
+    store = createStore(persistReducer(persistConfig, rootReducer));
     // eslint-disable-next-line no-underscore-dangle
     store.__PERSISTOR = persistStore(store);
   } else {
-    store = createStore(rootReducer, initialState);
+    store = createStore(rootReducer);
   }
   return store;
 };

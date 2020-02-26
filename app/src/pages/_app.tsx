@@ -1,5 +1,4 @@
 import React from 'react';
-import withRedux from 'next-redux-wrapper';
 import App from 'next/app';
 import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -8,6 +7,8 @@ import { Provider } from 'react-redux';
 
 import makeStore from 'redux/reducers';
 import theme from 'lib/materialui/theme';
+
+const store = makeStore();
 
 class MyApp extends App<{ store: any }> {
   componentDidMount() {
@@ -25,7 +26,7 @@ class MyApp extends App<{ store: any }> {
   }
 
   render() {
-    const { Component, pageProps, store } = this.props;
+    const { Component, pageProps } = this.props;
     return (
       <>
         <Head>
@@ -43,4 +44,4 @@ class MyApp extends App<{ store: any }> {
   }
 }
 
-export default withRedux(makeStore)(MyApp);
+export default MyApp;
