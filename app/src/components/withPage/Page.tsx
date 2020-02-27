@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   toolbar: theme.mixins.toolbar,
 }));
 
-const Page = ({ Component, ...props }: PageProps) => {
+const Page = ({ Component, name, breadcrumbs, ...props }: PageProps) => {
   const classes = useStyles();
 
   const [, , removeCookies] = useCookies();
@@ -38,10 +38,10 @@ const Page = ({ Component, ...props }: PageProps) => {
 
   return (
     <div className={classes.root}>
-      <AppBar name={props.name} drawerOpen={() => setDrawerOpen(true)} onLogOut={handlerLogOut} />
+      <AppBar name={name} drawerOpen={() => setDrawerOpen(true)} onLogOut={handlerLogOut} />
       <Drawer open={drawerOpen} setOpen={setDrawerOpen} />
 
-      <Content breadcrumbs={props.breadcrumbs}>
+      <Content breadcrumbs={breadcrumbs}>
         <Component {...props} />
       </Content>
     </div>
