@@ -33,16 +33,29 @@ const withPage = (
 ) => {
   const WithPage = withApollo(
     connect(mapStateToProps)(({ userRoles, ...props }: any) => {
-      console.log('props', props);
       const { error } = useQuery(USER_GET_LOGGED);
 
-      if (!error) {
-        const userResources = rolesToResources(userRoles);
-        console.log('userResources', userResources);
-        if (hasResources(userResources, requiredResources))
-          return <Page Component={Component} name={name} breadcrumbs={breadcrumbs} {...props} />;
-      }
-      return <Error statusCode={401} title="Na tuto stránku nemáte přístup" />;
+      const userResources = rolesToResources(userRoles);
+
+      const showPage = !error && hasResources(userResources, requiredResources);
+
+      const errorStyle = { display: showPage ? 'none' : 'block' };
+      const pageStyle = { display: !showPage ? 'none' : 'block' };
+
+      return (
+        <>
+          <div style={pageStyle}>
+            <Page Component={Component} name={name} breadcrumbs={breadcrumbs} {...props} />
+          </div>
+          <div style={errorStyle}>
+            <Error
+              style={{ display: 'none' }}
+              statusCode={401}
+              title="Na tuto stránku nemáte přístup"
+            />
+          </div>
+        </>
+      );
     }),
     apolloSsr,
   );
