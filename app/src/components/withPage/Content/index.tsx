@@ -18,7 +18,7 @@ const Content: React.FC<ContentProps> = props => {
 
   return (
     <div className={classes.content}>
-      <div className={classes.toolbar}>a</div>
+      <div className={classes.toolbar} />
       <Breadcrumbs>
         {props.breadcrumbs.map(b => (
           <Link key={b.route + b.label} href={b.route}>
