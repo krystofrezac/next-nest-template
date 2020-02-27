@@ -17,19 +17,20 @@ const apolloProvider = ({ Page, props }) => {
 
 export const withApolloPure = nextApollo(
   ({ initialState, ctx }) => {
-    let token = '';
-    if (!process.browser) {
-      token = ctx ? cookies(ctx)[appConfig.cookies.token] : '';
-    } else {
-      token = browserCookies.get(appConfig.cookies.token);
-    }
     return new ApolloClient({
       uri: process.browser ? appConfig.api.clientUrl : appConfig.api.serverUrl,
       cache: new InMemoryCache().restore(initialState || {}),
       request: operation => {
         operation.setContext({
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${
+              // eslint-disable-next-line no-nested-ternary
+              process.browser
+                ? browserCookies.get(appConfig.cookies.token)
+                : ctx
+                ? cookies(ctx)[appConfig.cookies.token]
+                : ''
+            }`,
           },
         });
       },
