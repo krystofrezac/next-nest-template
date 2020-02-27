@@ -5,10 +5,8 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Provider } from 'react-redux';
 
-import makeStore from 'redux/reducers';
 import theme from 'lib/materialui/theme';
-
-const store = makeStore();
+import store from 'redux/reducers';
 
 class MyApp extends App<{ store: any }> {
   componentDidMount() {

@@ -9,6 +9,9 @@ const appReducer = combineReducers({
 });
 
 const rootReducer = (state, action) => {
+  if (action.type === 'STORE_CLEAR') {
+    storage.removeItem('persist:root');
+  }
   return appReducer(state, action);
 };
 
@@ -30,4 +33,6 @@ const makeStore = () => {
   return store;
 };
 
-export default makeStore;
+const store = makeStore();
+
+export default store;

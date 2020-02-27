@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
+
 import { makeStyles, Theme } from '@material-ui/core';
+import { useRouter } from 'next/router';
+import { useCookies } from 'react-cookie';
+
+import store from 'redux/reducers';
+import { storeClear } from 'redux/actions/store';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
 import Content from './Content';
 import { PageProps } from './types';
+import appConfig from '../../../../shared/config/app';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -17,12 +24,21 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const Page = ({ Component, ...props }: PageProps) => {
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const classes = useStyles();
+
+  const [, , removeCookies] = useCookies();
+  const router = useRouter();
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const handlerLogOut = () => {
+    removeCookies(appConfig.cookies.token);
+    store.dispatch(storeClear());
+    router.push('/');
+  };
 
   return (
     <div className={classes.root}>
-      <AppBar name={props.name} drawerOpen={() => setDrawerOpen(true)} />
+      <AppBar name={props.name} drawerOpen={() => setDrawerOpen(true)} onLogOut={handlerLogOut} />
       <Drawer open={drawerOpen} setOpen={setDrawerOpen} />
 
       <Content breadcrumbs={props.breadcrumbs}>
