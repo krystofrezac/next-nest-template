@@ -31,6 +31,20 @@ const PaperWithTabs = (props: PaperWithTabsProps) => {
 
   const { title, children, ...rest } = props;
 
+  const mappedTabs = props.tabs.map(tab => (
+    <Tab
+      key={`tab${tab.label}`}
+      label={tab.label}
+      classes={{
+        root: classes.tabRoot,
+      }}
+    />
+  ));
+
+  const mappedPanels = props.tabs.map((tab, index) => (
+    <div key={`tabPanel${tab.label}`}>{index === value && <>{tab.Panel}</>}</div>
+  ));
+
   return (
     <PaperPrefab className={classes.paper} elevation={2} {...rest}>
       <div className={classes.head}>
@@ -42,26 +56,16 @@ const PaperWithTabs = (props: PaperWithTabsProps) => {
         <div>
           <Tabs
             value={value}
-            onChange={(e, value) => setValue(value)}
+            onChange={(e, v) => setValue(v)}
             classes={{
               root: classes.tabsRoot,
             }}
           >
-            {props.tabs.map(tab => (
-              <Tab
-                key={`tab${tab.label}`}
-                label={tab.label}
-                classes={{
-                  root: classes.tabRoot,
-                }}
-              />
-            ))}
+            {mappedTabs}
           </Tabs>
         </div>
       </div>
-      {props.tabs.map((tab, index) => (
-        <div key={`tabPanel${tab.label}`}>{index === value && <>{tab.Panel}</>}</div>
-      ))}
+      {mappedPanels}
       {children}
     </PaperPrefab>
   );

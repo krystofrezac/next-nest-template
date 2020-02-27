@@ -40,9 +40,6 @@ const withPage = (
       const showPage =
         (!error && hasResources(userResources, requiredResources)) || !process.browser;
 
-      const errorStyle = { display: showPage ? 'none' : 'block' };
-      const pageStyle = { display: !showPage ? 'none' : 'block' };
-
       return (
         <>
           {showPage && (
