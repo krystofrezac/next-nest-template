@@ -37,23 +37,24 @@ const withPage = (
 
       const userResources = rolesToResources(userRoles);
 
-      const showPage = !error && hasResources(userResources, requiredResources);
+      const showPage =
+        (!error && hasResources(userResources, requiredResources)) || !process.browser;
 
       const errorStyle = { display: showPage ? 'none' : 'block' };
       const pageStyle = { display: !showPage ? 'none' : 'block' };
 
       return (
         <>
-          <div style={pageStyle}>
+          {showPage && (
             <Page Component={Component} name={name} breadcrumbs={breadcrumbs} {...props} />
-          </div>
-          <div style={errorStyle}>
+          )}
+          {!showPage && (
             <Error
               style={{ display: 'none' }}
               statusCode={401}
               title="Na tuto stránku nemáte přístup"
             />
-          </div>
+          )}
         </>
       );
     }),
