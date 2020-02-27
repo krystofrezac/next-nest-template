@@ -5,12 +5,13 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Provider } from 'react-redux';
 
+import SnackbarProvider from 'lib/notistack';
 import theme from 'lib/materialui/theme';
+
 import store from 'redux/reducers';
 
 class MyApp extends App<{ store: any }> {
   componentDidMount() {
-    // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
@@ -27,8 +28,10 @@ class MyApp extends App<{ store: any }> {
         </Head>
         <Provider store={store}>
           <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Component {...pageProps} />
+            <SnackbarProvider>
+              <CssBaseline />
+              <Component {...pageProps} />
+            </SnackbarProvider>
           </ThemeProvider>
         </Provider>
       </>

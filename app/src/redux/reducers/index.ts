@@ -3,9 +3,11 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import user from './user';
+import roles from './roles';
 
 const appReducer = combineReducers({
   user,
+  roles,
 });
 
 const rootReducer = (state, action) => {

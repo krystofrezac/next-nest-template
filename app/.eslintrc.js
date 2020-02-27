@@ -7,7 +7,8 @@ prefab.rules = {
   'react/jsx-filename-extension': 'off',
   'react/jsx-props-no-spreading': 'off',
   'react/prop-types': 'off',
-  'react/destructuring-assignment': 'off'
+  'react/destructuring-assignment': 'off',
+  'jsx-a11y/anchor-is-valid': 'off'
 };
 prefab.settings = {
   ...prefab.settings,

@@ -1,12 +1,16 @@
-import { Resolver } from '@nestjs/graphql';
+import { Resolver, Query } from '@nestjs/graphql';
+
 import ResourceService from './resource.service';
+import Resource from './resource.entity';
 
 @Resolver()
 class ResourceResolver {
   constructor(private readonly resourceService: ResourceService) {}
 
+  @Query(() => [Resource])
   async resourceFindAll() {
-    return this.resourceService.findAll();
+    const resources = this.resourceService.findAll();
+    return resources;
   }
 }
 

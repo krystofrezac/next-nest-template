@@ -1,4 +1,4 @@
-import { User } from 'redux/reducers/user/types';
+import { UserReducer } from 'redux/reducers/user/types';
 
 export interface UserLogin {
   userLogin: {
@@ -26,7 +26,7 @@ export interface LoginProps {
 export interface MapState {}
 
 export interface MapDispatch {
-  changeUser: (user: User) => void;
+  changeUser: (user: UserReducer) => void;
 }
 
 export interface LoginIndexProps extends MapDispatch {}

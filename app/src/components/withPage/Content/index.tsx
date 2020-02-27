@@ -21,7 +21,7 @@ const Content: React.FC<ContentProps> = props => {
       <div className={classes.toolbar} />
       <Breadcrumbs>
         {props.breadcrumbs.map(b => (
-          <Link key={b.route + b.label} href={b.route}>
+          <Link key={b.link + b.label} href={b.link}>
             <MLink href="#" color="inherit">
               {b.label}
             </MLink>

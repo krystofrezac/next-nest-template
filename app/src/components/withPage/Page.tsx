@@ -11,6 +11,7 @@ import Drawer from './Drawer';
 import Content from './Content';
 import { PageProps } from './types';
 import appConfig from '../../../../shared/config/app';
+import routes from '../../../../shared/config/app/routes';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -33,7 +34,7 @@ const Page = ({ Component, name, breadcrumbs, ...props }: PageProps) => {
   const handlerLogOut = () => {
     removeCookies(appConfig.cookies.token);
     store.dispatch(storeClear());
-    router.push('/');
+    router.push(routes.roles);
   };
 
   return (

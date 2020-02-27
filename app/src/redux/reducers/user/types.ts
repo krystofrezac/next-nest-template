@@ -6,7 +6,7 @@ export interface Role {
   }[];
 }
 
-export interface User {
+export interface UserReducer {
   id: number;
   email: string;
   name: string;

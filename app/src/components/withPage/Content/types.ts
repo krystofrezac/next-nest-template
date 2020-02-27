@@ -1,3 +1,5 @@
+import { Breadcrumb } from 'components/withPage/types';
+
 export interface ContentProps {
-  breadcrumbs: { label: string; route: string }[];
+  breadcrumbs: Breadcrumb[];
 }

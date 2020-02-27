@@ -28,7 +28,7 @@ const mapStateToProps = (state: State) => ({
 });
 
 const withPage = (
-  Component: React.FunctionComponent,
+  Component: React.ComponentType,
   name: string,
   breadcrumbs: Breadcrumb[],
   requiredResources: string[] = [],
@@ -40,8 +40,7 @@ const withPage = (
 
       const userResources = rolesToResources(userRoles);
 
-      const showPage =
-        (!error && hasResources(userResources, requiredResources)) || !process.browser;
+      const showPage = hasResources(userResources, requiredResources) || !process.browser;
 
       return (
         <>

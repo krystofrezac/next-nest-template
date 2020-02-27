@@ -1,5 +1,7 @@
-import { User } from './user/types';
+import { RolesReducer } from 'redux/reducers/roles/types';
+import { UserReducer } from './user/types';
 
 export interface State {
-  user: User;
+  user: UserReducer;
+  roles: RolesReducer;
 }

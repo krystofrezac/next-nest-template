@@ -1,4 +1,6 @@
-const initState = {
+import { UserReducer } from './types';
+
+const initState: UserReducer = {
   id: null,
   email: null,
   name: null,
@@ -6,8 +8,10 @@ const initState = {
   roles: [],
 };
 
-const userReducer = (state = initState, action) => {
+const userReducer = (s = initState, action) => {
   const { type } = action;
+
+  const state = { ...s };
 
   if (type === 'USER_CHANGE') {
     return { ...state, ...action.user };

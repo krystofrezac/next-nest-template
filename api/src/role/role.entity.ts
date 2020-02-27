@@ -14,7 +14,10 @@ class Role {
   name: string;
 
   @Field(() => [Resource], { nullable: true })
-  @ManyToMany(() => Resource)
+  @ManyToMany(
+    () => Resource,
+    resource => resource.roles,
+  )
   @JoinTable()
   resources: Promise<Resource[]>;
 }

@@ -1,3 +1,3 @@
-import { User } from 'redux/reducers/user/types';
+import { UserReducer } from 'redux/reducers/user/types';
 
-export const userChange = (user: User) => ({ type: 'USER_CHANGE', user });
+export const userChange = (user: UserReducer) => ({ type: 'USER_CHANGE', user });

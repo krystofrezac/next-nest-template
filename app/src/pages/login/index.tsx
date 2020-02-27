@@ -9,7 +9,7 @@ import appConfig from '@template/shared/config/app';
 
 import withApollo from 'lib/apollo/withApollo';
 
-import { User } from 'redux/reducers/user/types';
+import { UserReducer } from 'redux/reducers/user/types';
 import { userChange } from 'redux/actions/user';
 
 import { useRouter } from 'next/router';
@@ -61,7 +61,7 @@ const LoginIndex = (props: LoginIndexProps) => {
 const mapStateToProps = (): MapState => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatch => ({
-  changeUser: (user: User) => dispatch(userChange(user)),
+  changeUser: (user: UserReducer) => dispatch(userChange(user)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withApollo(LoginIndex));

@@ -1,11 +1,11 @@
-import { User } from 'redux/reducers/user/types';
+import { UserReducer } from 'redux/reducers/user/types';
 
 export interface MapState {
-  user: User;
+  user: UserReducer;
 }
 
 export interface DashboardIndexProps extends MapState {}
 
 export interface DashboardProps {
-  user: User;
+  user: UserReducer;
 }

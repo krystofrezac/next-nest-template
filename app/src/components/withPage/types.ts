@@ -2,7 +2,7 @@ import React from 'react';
 
 export interface Breadcrumb {
   label: string;
-  route: string;
+  link: string;
 }
 
 export interface PageProps {
