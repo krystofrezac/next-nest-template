@@ -5,12 +5,15 @@ import withApollo from 'lib/apollo/withApollo';
 import Page from 'components/withPage/Page';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
-import Error from 'next/error';
+
 import hasResources from 'components/resources/hasResources';
 import { State } from 'redux/reducers/types';
 import { connect } from 'react-redux';
 import rolesToResources from 'components/resources/rolesToResources';
+import dynamic from 'next/dynamic';
 import { Breadcrumb } from './types';
+
+const Error = dynamic(import('next/error'), { ssr: false });
 
 const USER_GET_LOGGED = gql`
   {
@@ -33,7 +36,7 @@ const withPage = (
 ) => {
   const WithPage = withApollo(
     connect(mapStateToProps)(({ userRoles, ...props }: any) => {
-      const { error } = useQuery(USER_GET_LOGGED);
+      const { error } = useQuery(USER_GET_LOGGED, { fetchPolicy: 'no-cache' });
 
       const userResources = rolesToResources(userRoles);
 
@@ -47,6 +50,7 @@ const withPage = (
           )}
           {!showPage && (
             <Error
+              // @ts-ignore
               style={{ display: 'none' }}
               statusCode={401}
               title="Na tuto stránku nemáte přístup"
