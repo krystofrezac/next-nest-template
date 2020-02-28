@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { withSnackbar } from 'notistack';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
@@ -15,6 +15,7 @@ import {
   rolesAddChangedResource,
   rolesChangeResources,
   rolesChangeRoles,
+  rolesClearChangedResources,
 } from 'redux/actions/roles';
 import { ChangedResource, Resource, Role } from 'redux/reducers/roles/types';
 
@@ -55,6 +56,10 @@ const RolesIndex = (props: RolesIndexProps) => {
     props.rolesAddChangedResource({ resourceId, roleId, active });
   };
 
+  const cancelHandler = () => {
+    props.rolesClearChangedResources();
+  };
+
   return (
     <>
       <Paper
@@ -64,10 +69,11 @@ const RolesIndex = (props: RolesIndexProps) => {
           <Button key="saveButton" variant="contained" color="primary">
             Uložit
           </Button>,
-          <Button key="cancelButton" variant="contained" color="secondary">
+          <Button key="cancelButton" variant="contained" color="secondary" onClick={cancelHandler}>
             Zrušit
           </Button>,
         ]}
+        footer={<Typography>{`Počet změn: ${props.changedResources.length}`}</Typography>}
       >
         <Roles
           resources={props.resources}
@@ -91,6 +97,7 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatch => ({
   rolesChangeResources: (resources: Resource[]) => dispatch(rolesChangeResources(resources)),
   rolesAddChangedResource: (changedResource: ChangedResource) =>
     dispatch(rolesAddChangedResource(changedResource)),
+  rolesClearChangedResources: () => dispatch(rolesClearChangedResources()),
 });
 
 export default withPage(

@@ -14,3 +14,7 @@ export const rolesAddChangedResource = (changedResource: ChangedResource) => ({
   type: 'ROLE_ADD_CHANGED_RESOURCE',
   changedResource,
 });
+
+export const rolesClearChangedResources = () => ({
+  type: 'ROLE_CLEAR_CHANGED_RESOURCES',
+});

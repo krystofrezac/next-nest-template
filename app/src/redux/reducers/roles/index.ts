@@ -28,6 +28,9 @@ const rolesReducer = (s = initState, action) => {
 
     return { ...state, changedResources };
   }
+  if (type === 'ROLE_CLEAR_CHANGED_RESOURCES') {
+    return { ...state, changedResources: [] };
+  }
   return state;
 };
 

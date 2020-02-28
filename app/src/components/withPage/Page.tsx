@@ -34,7 +34,7 @@ const Page = ({ Component, name, breadcrumbs, ...props }: PageProps) => {
   const handlerLogOut = () => {
     removeCookies(appConfig.cookies.token);
     store.dispatch(storeClear());
-    router.push(routes.roles);
+    router.push(routes.login);
   };
 
   return (

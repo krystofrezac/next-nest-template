@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   actions: {
     display: 'grid',
     justifyItems: 'right',
-    marginTop: theme.spacing(2),
   },
   actionsInnerWrapper: {
     display: 'flex',
@@ -38,12 +37,21 @@ const useStyles = makeStyles((theme: Theme) => ({
   action: {
     marginLeft: theme.spacing(2),
   },
+  footer: {
+    marginTop: theme.spacing(2),
+    display: 'grid',
+    gridTemplateColumns: 'auto 1fr',
+  },
+  footerText: {
+    display: 'grid',
+    alignItems: 'center',
+  },
 }));
 
 const Paper = (props: PaperProps) => {
   const classes = useStyles();
 
-  const { title, children, loading, actions, ...rest } = props;
+  const { title, children, loading, actions, footer, ...rest } = props;
 
   return (
     <div className={`${classes.wrapper} `}>
@@ -54,17 +62,22 @@ const Paper = (props: PaperProps) => {
           </Typography>
         )}
         {children}
-        <div className={classes.actions}>
-          <div className={classes.actionsInnerWrapper}>
-            {actions &&
-              actions.map((a, index) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <div key={index} className={classes.action}>
-                  {a}
-                </div>
-              ))}
+        {(actions || footer) && (
+          <div className={classes.footer}>
+            <div className={classes.footerText}>{footer}</div>
+            <div className={classes.actions}>
+              <div className={classes.actionsInnerWrapper}>
+                {actions &&
+                  actions.map((a, index) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <div key={index} className={classes.action}>
+                      {a}
+                    </div>
+                  ))}
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </PaperPrefab>
       {loading && <CircularProgress size={24} className={classes.progress} />}
     </div>

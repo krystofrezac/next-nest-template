@@ -4,6 +4,8 @@ import {
   Resource as ResourceRedux,
   ChangedResource,
 } from 'redux/reducers/roles/types';
+import Roles from 'pages/roles/roles';
+import React from 'react';
 
 interface Role {
   id: number;
@@ -31,6 +33,7 @@ export interface MapDispatch {
   rolesChangeRoles: (roles: RoleRedux[]) => void;
   rolesChangeResources: (roles: ResourceRedux[]) => void;
   rolesAddChangedResource: (changedResource: ChangedResource) => void;
+  rolesClearChangedResources: () => void;
 }
 
 export interface RolesIndexProps extends MapState, MapDispatch, WithSnackbarProps {}

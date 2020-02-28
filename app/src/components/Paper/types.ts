@@ -4,4 +4,5 @@ export interface PaperProps extends PaperPrefabProps {
   title?: string;
   loading?: boolean;
   actions?: JSX.Element[];
+  footer?: JSX.Element;
 }
