@@ -28,7 +28,6 @@ const RESOURCE_ROLE_FIND_ALL = gql`
       name
       roles {
         id
-        name
       }
     }
     roleFindAll {
@@ -56,8 +55,6 @@ const RolesIndex = (props: RolesIndexProps) => {
     props.rolesAddChangedResource({ resourceId, roleId, active });
   };
 
-  console.log('props', props);
-
   return (
     <>
       <Paper
@@ -75,6 +72,7 @@ const RolesIndex = (props: RolesIndexProps) => {
         <Roles
           resources={props.resources}
           roles={props.roles}
+          changedResources={props.changedResources}
           onResourceChange={changeResourceHandler}
         />
       </Paper>
@@ -85,6 +83,7 @@ const RolesIndex = (props: RolesIndexProps) => {
 const mapStateToProps = (state: State): MapState => ({
   roles: state.roles.roles,
   resources: state.roles.resources,
+  changedResources: state.roles.changedResources,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatch => ({

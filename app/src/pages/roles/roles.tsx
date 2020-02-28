@@ -4,22 +4,28 @@ import { Checkbox, Table, TableBody, TableCell, TableHead, TableRow } from '@mat
 import { RolesProps } from './types';
 
 const Roles = (props: RolesProps) => {
+  const resources = [...props.resources];
   const mappedHead = props.roles.map(role => (
     <TableCell key={`headRole${role.id}`}>{role.name}</TableCell>
   ));
 
-  const mappedRows = props.resources.map(resource => (
+  const mappedRows = resources.map(resource => (
     <TableRow key={`row${resource.id}`}>
       <TableCell>{resource.name}</TableCell>
       {props.roles.map(role => {
+        const changed = props.changedResources.find(
+          ch => ch.resourceId === resource.id && ch.roleId === role.id,
+        );
         const checked = resource.roles.find(r => r.id === role.id) !== undefined;
+        const changedChecked = changed ? !checked : checked;
 
         const changeHandler = () => {
-          props.onResourceChange(resource.id, role.id, !checked);
+          props.onResourceChange(resource.id, role.id, !changedChecked);
         };
+
         return (
           <TableCell key={`checkbox${role.id}${resource.id}`}>
-            <Checkbox checked={checked} onChange={changeHandler} />
+            <Checkbox checked={changedChecked} onChange={changeHandler} />
           </TableCell>
         );
       })}

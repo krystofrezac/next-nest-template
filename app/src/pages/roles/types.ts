@@ -1,8 +1,7 @@
 import { WithSnackbarProps } from 'notistack';
 import {
-  RolesReducer,
   Role as RoleRedux,
-  Resource as ResourcesRedux,
+  Resource as ResourceRedux,
   ChangedResource,
 } from 'redux/reducers/roles/types';
 
@@ -14,7 +13,7 @@ interface Role {
 interface Resource {
   id: number;
   name: string;
-  roles: Role[];
+  roles: { id: number }[];
 }
 
 export interface ResourceRoleFindAll {
@@ -24,19 +23,21 @@ export interface ResourceRoleFindAll {
 
 export interface MapState {
   roles: RoleRedux[];
-  resources: ResourcesRedux[];
+  resources: ResourceRedux[];
+  changedResources: ChangedResource[];
 }
 
 export interface MapDispatch {
   rolesChangeRoles: (roles: RoleRedux[]) => void;
-  rolesChangeResources: (roles: ResourcesRedux[]) => void;
+  rolesChangeResources: (roles: ResourceRedux[]) => void;
   rolesAddChangedResource: (changedResource: ChangedResource) => void;
 }
 
 export interface RolesIndexProps extends MapState, MapDispatch, WithSnackbarProps {}
 
 export interface RolesProps {
-  resources: Resource[];
-  roles: Role[];
-  onResourceChange: (resourceId: number, roleId: number,active:boolean) => void;
+  resources: ResourceRedux[];
+  roles: RoleRedux[];
+  changedResources: ChangedResource[];
+  onResourceChange: (resourceId: number, roleId: number, active: boolean) => void;
 }

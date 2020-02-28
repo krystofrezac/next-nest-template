@@ -23,5 +23,4 @@ export default withPage(
   connect(mapStateToProps)(DashboardIndex),
   'Přehled',
   [{ label: 'Přehled', link: routes.dashboard }],
-  ['test'],
 );

@@ -15,14 +15,18 @@ const rolesReducer = (s = initState, action) => {
   }
   if (type === 'ROLE_ADD_CHANGED_RESOURCE') {
     const { changedResource }: { changedResource: ChangedResource } = action;
-    const oldResource = state.changedResources.findIndex(
+    const changedResources = [...state.changedResources];
+    const oldResourceIndex = changedResources.findIndex(
       r => r.resourceId === changedResource.resourceId && r.roleId === changedResource.roleId,
     );
-    if (oldResource >= 0) {
-      state.changedResources.splice(oldResource, 1);
+
+    if (oldResourceIndex >= 0) {
+      changedResources.splice(oldResourceIndex, 1);
+    } else if (oldResourceIndex < 0) {
+      changedResources.push(changedResource);
     }
-    state.changedResources.push(changedResource);
-    return { ...state };
+
+    return { ...state, changedResources };
   }
   return state;
 };

@@ -6,7 +6,7 @@ export interface Role {
 export interface Resource {
   id: number;
   name: string;
-  roles: Role[];
+  roles: { id: number }[];
 }
 
 export interface ChangedResource {
