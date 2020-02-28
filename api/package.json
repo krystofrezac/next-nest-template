@@ -12,6 +12,8 @@
     "migration:run": "ts-node ./node_modules/.bin/typeorm migration:run",
     "migration:revert": "ts-node ./node_modules/.bin/typeorm migration:revert",
     "migration:generate": "ts-node ./node_modules/.bin/typeorm migration:generate",
+    "postmigration:generate": "yarn build",
+    "postmigration:create": "yarn build",
     "migration:create": "ts-node ./node_modules/.bin/typeorm migration:create",
     "conf": "cp ../shared/api.ts ./src/config/ && cp ../shared/resource.ts ./src/config/"
   },

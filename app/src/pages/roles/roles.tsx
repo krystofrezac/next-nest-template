@@ -1,6 +1,14 @@
 import React from 'react';
 
-import { Checkbox, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import {
+  Checkbox,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@material-ui/core';
 import { RolesProps } from './types';
 
 const Roles = (props: RolesProps) => {
@@ -24,7 +32,7 @@ const Roles = (props: RolesProps) => {
         };
 
         return (
-          <TableCell key={`checkbox${role.id}${resource.id}`}>
+          <TableCell padding="none" key={`checkbox${role.id}${resource.id}`}>
             <Checkbox checked={changedChecked} onChange={changeHandler} />
           </TableCell>
         );
@@ -41,6 +49,12 @@ const Roles = (props: RolesProps) => {
             {mappedHead}
           </TableRow>
         </TableHead>
+        <TableRow>
+          <TableCell>
+            <b>Test</b>
+          </TableCell>
+          <TableCell />
+        </TableRow>
         <TableBody>{mappedRows}</TableBody>
       </Table>
     </>
