@@ -41,10 +41,8 @@ class AuthService {
       requestedResources[resource] = false;
     });
 
-    // eslint-disable-next-line no-restricted-syntax
     for (const roleKey of Object.keys(userRoles)) {
       const role = userRoles[roleKey];
-      // eslint-disable-next-line no-await-in-loop
       (await role.resources).forEach(resource => {
         if (requestedResources[resource.name] !== undefined) {
           requestedResources[resource.name] = true;

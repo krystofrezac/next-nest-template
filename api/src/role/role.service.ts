@@ -7,6 +7,14 @@ import Role from './role.entity';
 class RoleService {
   constructor(@InjectRepository(Role) private readonly roleRepository: Repository<Role>) {}
 
+  async save(role: Role) {
+    return this.roleRepository.save(role);
+  }
+
+  async saveMultiple(roles: Role[]) {
+    return this.roleRepository.save(roles);
+  }
+
   async findAll() {
     return this.roleRepository.find();
   }

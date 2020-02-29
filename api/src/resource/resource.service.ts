@@ -13,6 +13,10 @@ class ResourceService {
   async findAll() {
     return this.resourceRepository.find();
   }
+
+  async findById(id: number) {
+    return this.resourceRepository.findOne(id);
+  }
 }
 
 export default ResourceService;

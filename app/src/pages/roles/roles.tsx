@@ -12,11 +12,12 @@ const Roles = (props: RolesProps) => {
 
   const mappedBody = props.resourceCategories.map(category => {
     const categoryResources = category.resources.map(resource => {
+      console.log('resource', resource);
       const resourceRoles = props.roles.map(role => {
-        const changed = props.changedResources.findIndex(
+        const changed = props.changedResources.some(
           ch => ch.resourceId === resource.id && ch.roleId === role.id,
         );
-        const active = resource.roles.findIndex(r => r.id === role.id) >= 0;
+        const active = resource.roles.some(r => r.id === role.id);
         const changedActive = changed ? !active : active;
         const checkboxChangeHandler = () => {
           props.onResourceChange(resource.id, role.id, !changedActive);

@@ -30,10 +30,10 @@ class UserResolver {
 
   @Mutation(() => User)
   async userRegister(
-    @Args({ name: 'email', type: () => String }) email: string,
-    @Args({ name: 'password', type: () => String }) password: string,
-    @Args({ name: 'name', type: () => String }) name: string,
-    @Args({ name: 'surname', type: () => String }) surname: string,
+    @Args('email') email: string,
+    @Args('password') password: string,
+    @Args('name') name: string,
+    @Args('surname') surname: string,
   ) {
     const user = new User();
     user.email = email;

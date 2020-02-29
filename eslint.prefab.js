@@ -33,6 +33,8 @@ module.exports = {
     ],
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 'error',
+    'no-await-in-loop': 'off',
+    'no-restricted-syntax': 'off'
   },
   settings: {
     "import/resolver": {

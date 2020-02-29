@@ -28,6 +28,24 @@ export interface ResourceRoleFindAll {
   roleFindAll: Role[];
 }
 
+export interface RoleChangeResources {
+  roleChangeResources: {
+    id: number;
+    resources: {
+      id: number;
+      name: string;
+    };
+  };
+}
+
+export interface RoleChangeResourcesVars {
+  changedResources: {
+    resourceId: number;
+    roleId: number;
+    active: boolean;
+  }[];
+}
+
 export interface MapState {
   roles: RoleRedux[];
   resourceCategories: ResourceCategory[];
