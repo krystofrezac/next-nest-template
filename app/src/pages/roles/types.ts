@@ -28,21 +28,18 @@ export interface ResourceRoleFindAll {
   roleFindAll: Role[];
 }
 
-export interface RoleChangeResources {
-  roleChangeResources: {
+export interface ResourceChangeRoles {
+  id: number;
+  roles: {
     id: number;
-    resources: {
-      id: number;
-      name: string;
-    };
   };
 }
 
-export interface RoleChangeResourcesVars {
-  changedResources: {
+export interface ResourceChangeRolesVars {
+  changedRoles: {
+    active: boolean;
     resourceId: number;
     roleId: number;
-    active: boolean;
   }[];
 }
 

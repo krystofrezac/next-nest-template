@@ -1,7 +1,7 @@
 import { Field, InputType } from 'type-graphql';
 
 @InputType()
-class ChangedResourcesArg {
+class ChangedRoleArg {
   @Field()
   resourceId: number;
 
@@ -12,4 +12,4 @@ class ChangedResourcesArg {
   active: boolean;
 }
 
-export default ChangedResourcesArg;
+export default ChangedRoleArg;

@@ -5,9 +5,10 @@ import Resource from 'resource/resource.entity';
 import ResourceService from 'resource/resource.service';
 import ResourceResolver from 'resource/resource.resolver';
 import AuthModule from '../auth/auth.module';
+import RoleModule from '../role/role.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Resource]), AuthModule],
+  imports: [TypeOrmModule.forFeature([Resource]), AuthModule, RoleModule],
   providers: [ResourceResolver, ResourceService],
   exports: [ResourceService],
 })

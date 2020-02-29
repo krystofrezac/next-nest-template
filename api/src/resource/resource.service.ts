@@ -10,6 +10,14 @@ class ResourceService {
     @InjectRepository(Resource) private readonly resourceRepository: Repository<Resource>,
   ) {}
 
+  async save(resource: Resource) {
+    return this.resourceRepository.save(resource);
+  }
+
+  async saveMultiple(resources: Resource[]) {
+    return this.resourceRepository.save(resources);
+  }
+
   async findAll() {
     return this.resourceRepository.find();
   }

@@ -5,10 +5,9 @@ import Role from 'role/role.entity';
 import RoleService from 'role/role.service';
 import RoleResolver from 'role/role.resolver';
 import AuthModule from '../auth/auth.module';
-import ResourceModule from '../resource/resource.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Role]), AuthModule, ResourceModule],
+  imports: [TypeOrmModule.forFeature([Role]), AuthModule],
   providers: [RoleResolver, RoleService],
   exports: [RoleService],
 })

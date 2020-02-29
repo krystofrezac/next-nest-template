@@ -24,8 +24,8 @@ import {
   RolesIndexProps,
   MapDispatch,
   MapState,
-  RoleChangeResources,
-  RoleChangeResourcesVars,
+  ResourceChangeRoles,
+  ResourceChangeRolesVars,
 } from './types';
 import Roles from './roles';
 
@@ -49,13 +49,12 @@ const RESOURCE_ROLE_FIND_ALL = gql`
   }
 `;
 
-const ROLE_CHANGE_RESOURCES = gql`
-  mutation($changedResources: [ChangedResourcesArg!]!) {
-    roleChangeResources(changedResources: $changedResources) {
+const RESOURCE_CHANGE_ROLES = gql`
+  mutation($changedRoles: [ChangedRoleArg!]!) {
+    resourceChangeRoles(changedRoles: $changedRoles) {
       id
-      resources {
+      roles {
         id
-        name
       }
     }
   }
@@ -63,10 +62,10 @@ const ROLE_CHANGE_RESOURCES = gql`
 
 const RolesIndex = (props: RolesIndexProps) => {
   const { data, error, loading } = useQuery<ResourceRoleFindAll>(RESOURCE_ROLE_FIND_ALL);
-  const [rolesChangeResources, { data: mutData, error: mutError }] = useMutation<
-    RoleChangeResources,
-    RoleChangeResourcesVars
-  >(ROLE_CHANGE_RESOURCES);
+  const [resourceChangeRoles, { data: mutationData, error: mutationError }] = useMutation<
+    ResourceChangeRoles,
+    ResourceChangeRolesVars
+  >(RESOURCE_CHANGE_ROLES);
   const [saved, setSaved] = useState(false);
   const [mutationSnacked, setMutationSnacked] = useState(false);
 
@@ -80,11 +79,12 @@ const RolesIndex = (props: RolesIndexProps) => {
     setSaved(true);
   }
 
-  if (mutData && !mutationSnacked) {
+  if (mutationData && !mutationSnacked) {
     setMutationSnacked(true);
     props.rolesClearChangedResources();
     props.enqueueSnackbar('Role úspěšně aktualizovány', { variant: 'success' });
-  } else if (mutError && !mutationSnacked) {
+    // TODO edit redux
+  } else if (mutationError && !mutationSnacked) {
     setMutationSnacked(true);
     props.enqueueSnackbar('Nepovedlo se aktualizovat role', { variant: 'error' });
   }
@@ -99,7 +99,7 @@ const RolesIndex = (props: RolesIndexProps) => {
 
   const submitHandler = () => {
     setMutationSnacked(false);
-    rolesChangeResources({ variables: { changedResources: props.changedResources } });
+    resourceChangeRoles({ variables: { changedRoles: props.changedResources } });
   };
 
   return (
