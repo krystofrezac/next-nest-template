@@ -40,7 +40,8 @@ const withPage = (
 
       const userResources = rolesToResources(userRoles);
 
-      const showPage = hasResources(userResources, requiredResources) || !process.browser;
+      const showPage =
+        (!error && hasResources(userResources, requiredResources)) || !process.browser;
 
       return (
         <>
