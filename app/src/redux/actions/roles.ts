@@ -1,8 +1,8 @@
-import { ChangedResource, Resource, Role } from 'redux/reducers/roles/types';
+import { ChangedResource, ResourceCategory, Role } from 'redux/reducers/roles/types';
 
-export const rolesChangeResources = (resources: Resource[]) => ({
-  type: 'ROLES_CHANGE_RESOURCES',
-  resources,
+export const rolesChangeResourceCategories = (resourceCategories: ResourceCategory[]) => ({
+  type: 'ROLES_CHANGE_RESOURCE_CATEGORIES',
+  resourceCategories,
 });
 
 export const rolesChangeRoles = (roles: Role[]) => ({

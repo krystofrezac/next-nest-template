@@ -1,14 +1,14 @@
 import { ChangedResource, RolesReducer } from './types';
 
-const initState: RolesReducer = { resources: [], roles: [], changedResources: [] };
+const initState: RolesReducer = { resourceCategories: [], roles: [], changedResources: [] };
 
 const rolesReducer = (s = initState, action) => {
   const { type } = action;
 
   const state = { ...s };
 
-  if (type === 'ROLES_CHANGE_RESOURCES') {
-    return { ...state, resources: action.resources };
+  if (type === 'ROLES_CHANGE_RESOURCE_CATEGORIES') {
+    return { ...state, resourceCategories: action.resourceCategories };
   }
   if (type === 'ROLES_CHANGE_ROLES') {
     return { ...state, roles: action.roles };

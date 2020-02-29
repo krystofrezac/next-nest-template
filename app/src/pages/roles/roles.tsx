@@ -4,33 +4,53 @@ import { Checkbox, Table, TableBody, TableCell, TableHead, TableRow } from '@mat
 import { RolesProps } from './types';
 
 const Roles = (props: RolesProps) => {
-  const resources = [...props.resources];
+  console.log('props', props);
+
   const mappedHead = props.roles.map(role => (
-    <TableCell key={`headRole${role.id}`}>{role.name}</TableCell>
+    <TableCell key={`head${role.id}`}>{role.name}</TableCell>
   ));
 
-  const mappedRows = resources.map(resource => (
-    <TableRow key={`row${resource.id}`}>
-      <TableCell>{resource.name}</TableCell>
-      {props.roles.map(role => {
-        const changed = props.changedResources.find(
+  const mappedBody = props.resourceCategories.map(category => {
+    const categoryResources = category.resources.map(resource => {
+      const resourceRoles = props.roles.map(role => {
+        const changed = props.changedResources.findIndex(
           ch => ch.resourceId === resource.id && ch.roleId === role.id,
         );
-        const checked = resource.roles.find(r => r.id === role.id) !== undefined;
-        const changedChecked = changed ? !checked : checked;
-
-        const changeHandler = () => {
-          props.onResourceChange(resource.id, role.id, !changedChecked);
+        const active = resource.roles.findIndex(r => r.id === role.id) >= 0;
+        const changedActive = changed ? !active : active;
+        const checkboxChangeHandler = () => {
+          props.onResourceChange(resource.id, role.id, !changedActive);
         };
-
         return (
-          <TableCell padding="none" key={`checkbox${role.id}${resource.id}`}>
-            <Checkbox checked={changedChecked} onChange={changeHandler} />
+          <TableCell key={`resourceRole${role.id}-${category.id}`} padding="none">
+            <Checkbox checked={changedActive} onChange={checkboxChangeHandler} />
           </TableCell>
         );
-      })}
-    </TableRow>
-  ));
+      });
+      return (
+        <React.Fragment key={`categoryResource${category.id}-${resource.id}`}>
+          <TableRow>
+            <TableCell>{resource.name}</TableCell>
+            {resourceRoles}
+          </TableRow>
+        </React.Fragment>
+      );
+    });
+    const emptyCells = props.roles.map(role => (
+      <TableCell key={`categoryEmpty${role.id}-${role.id}`} />
+    ));
+    return (
+      <React.Fragment key={`category${category.id}`}>
+        <TableRow>
+          <TableCell>
+            <b>{category.name}</b>
+          </TableCell>
+          {emptyCells}
+        </TableRow>
+        {categoryResources}
+      </React.Fragment>
+    );
+  });
 
   return (
     <>
@@ -41,13 +61,7 @@ const Roles = (props: RolesProps) => {
             {mappedHead}
           </TableRow>
         </TableHead>
-        <TableRow>
-          <TableCell>
-            <b>Test</b>
-          </TableCell>
-          <TableCell />
-        </TableRow>
-        <TableBody>{mappedRows}</TableBody>
+        <TableBody>{mappedBody}</TableBody>
       </Table>
     </>
   );

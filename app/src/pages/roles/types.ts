@@ -3,9 +3,8 @@ import {
   Role as RoleRedux,
   Resource as ResourceRedux,
   ChangedResource,
+  ResourceCategory,
 } from 'redux/reducers/roles/types';
-import Roles from 'pages/roles/roles';
-import React from 'react';
 
 interface Role {
   id: number;
@@ -18,20 +17,26 @@ interface Resource {
   roles: { id: number }[];
 }
 
+interface Category {
+  id: number;
+  name: string;
+  resources: Resource[];
+}
+
 export interface ResourceRoleFindAll {
-  resourceFindAll: Resource[];
+  resourceCategoryFindAll: Category[];
   roleFindAll: Role[];
 }
 
 export interface MapState {
   roles: RoleRedux[];
-  resources: ResourceRedux[];
+  resourceCategories: ResourceCategory[];
   changedResources: ChangedResource[];
 }
 
 export interface MapDispatch {
   rolesChangeRoles: (roles: RoleRedux[]) => void;
-  rolesChangeResources: (roles: ResourceRedux[]) => void;
+  rolesChangeResourceCategories: (roles: ResourceCategory[]) => void;
   rolesAddChangedResource: (changedResource: ChangedResource) => void;
   rolesClearChangedResources: () => void;
 }
@@ -39,7 +44,7 @@ export interface MapDispatch {
 export interface RolesIndexProps extends MapState, MapDispatch, WithSnackbarProps {}
 
 export interface RolesProps {
-  resources: ResourceRedux[];
+  resourceCategories: ResourceCategory[];
   roles: RoleRedux[];
   changedResources: ChangedResource[];
   onResourceChange: (resourceId: number, roleId: number, active: boolean) => void;

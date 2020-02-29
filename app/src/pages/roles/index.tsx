@@ -13,22 +13,26 @@ import Paper from 'components/Paper';
 import { State } from 'redux/reducers/types';
 import {
   rolesAddChangedResource,
-  rolesChangeResources,
+  rolesChangeResourceCategories,
   rolesChangeRoles,
   rolesClearChangedResources,
 } from 'redux/actions/roles';
-import { ChangedResource, Resource, Role } from 'redux/reducers/roles/types';
+import { ChangedResource, ResourceCategory, Role } from 'redux/reducers/roles/types';
 
 import { ResourceRoleFindAll, RolesIndexProps, MapDispatch, MapState } from './types';
 import Roles from './roles';
 
 const RESOURCE_ROLE_FIND_ALL = gql`
   {
-    resourceFindAll {
+    resourceCategoryFindAll {
       id
       name
-      roles {
+      resources {
         id
+        name
+        roles {
+          id
+        }
       }
     }
     roleFindAll {
@@ -47,7 +51,7 @@ const RolesIndex = (props: RolesIndexProps) => {
   }
 
   if (data && !saved) {
-    props.rolesChangeResources(data.resourceFindAll);
+    props.rolesChangeResourceCategories(data.resourceCategoryFindAll);
     props.rolesChangeRoles(data.roleFindAll);
     setSaved(true);
   }
@@ -76,7 +80,7 @@ const RolesIndex = (props: RolesIndexProps) => {
         footer={<Typography>{`Počet změn: ${props.changedResources.length}`}</Typography>}
       >
         <Roles
-          resources={props.resources}
+          resourceCategories={props.resourceCategories}
           roles={props.roles}
           changedResources={props.changedResources}
           onResourceChange={changeResourceHandler}
@@ -88,13 +92,14 @@ const RolesIndex = (props: RolesIndexProps) => {
 
 const mapStateToProps = (state: State): MapState => ({
   roles: state.roles.roles,
-  resources: state.roles.resources,
+  resourceCategories: state.roles.resourceCategories,
   changedResources: state.roles.changedResources,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatch => ({
   rolesChangeRoles: (roles: Role[]) => dispatch(rolesChangeRoles(roles)),
-  rolesChangeResources: (resources: Resource[]) => dispatch(rolesChangeResources(resources)),
+  rolesChangeResourceCategories: (resourceCategories: ResourceCategory[]) =>
+    dispatch(rolesChangeResourceCategories(resourceCategories)),
   rolesAddChangedResource: (changedResource: ChangedResource) =>
     dispatch(rolesAddChangedResource(changedResource)),
   rolesClearChangedResources: () => dispatch(rolesClearChangedResources()),

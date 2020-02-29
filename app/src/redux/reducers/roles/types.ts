@@ -14,9 +14,14 @@ export interface ChangedResource {
   roleId: number;
   active: boolean;
 }
+export interface ResourceCategory {
+  id: number;
+  name: string;
+  resources: Resource[];
+}
 
 export interface RolesReducer {
-  resources: Resource[];
+  resourceCategories: ResourceCategory[];
   roles: Role[];
   changedResources: ChangedResource[];
 }
