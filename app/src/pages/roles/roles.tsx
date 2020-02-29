@@ -1,14 +1,6 @@
 import React from 'react';
 
-import {
-  Checkbox,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@material-ui/core';
+import { Checkbox, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { RolesProps } from './types';
 
 const Roles = (props: RolesProps) => {
