@@ -29,10 +29,13 @@ export interface ResourceRoleFindAll {
 }
 
 export interface ResourceChangeRoles {
-  id: number;
-  roles: {
+  resourceChangeRoles: {
     id: number;
-  };
+    name: string;
+    roles: {
+      id: number;
+    }[];
+  }[];
 }
 
 export interface ResourceChangeRolesVars {
@@ -54,6 +57,7 @@ export interface MapDispatch {
   rolesChangeResourceCategories: (roles: ResourceCategory[]) => void;
   rolesAddChangedResource: (changedResource: ChangedResource) => void;
   rolesClearChangedResources: () => void;
+  rolesUpdateResources: (resources: ResourceRedux[]) => void;
 }
 
 export interface RolesIndexProps extends MapState, MapDispatch, WithSnackbarProps {}

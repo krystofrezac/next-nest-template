@@ -1,3 +1,4 @@
+import userActionTypes from 'redux/reducers/user/actionTypes';
 import { UserReducer } from './types';
 
 const initState: UserReducer = {
@@ -13,7 +14,7 @@ const userReducer = (s = initState, action) => {
 
   const state = { ...s };
 
-  if (type === 'USER_CHANGE') {
+  if (type === userActionTypes.change) {
     return { ...state, ...action.user };
   }
   return state;

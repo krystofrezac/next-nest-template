@@ -1,20 +1,26 @@
-import { ChangedResource, ResourceCategory, Role } from 'redux/reducers/roles/types';
+import { ChangedResource, Resource, ResourceCategory, Role } from 'redux/reducers/roles/types';
+import rolesActionTypes from 'redux/reducers/roles/actionTypes';
 
 export const rolesChangeResourceCategories = (resourceCategories: ResourceCategory[]) => ({
-  type: 'ROLES_CHANGE_RESOURCE_CATEGORIES',
+  type: rolesActionTypes.changeResourceCategories,
   resourceCategories,
 });
 
 export const rolesChangeRoles = (roles: Role[]) => ({
-  type: 'ROLES_CHANGE_ROLES',
+  type: rolesActionTypes.changeRoles,
   roles,
 });
 
 export const rolesAddChangedResource = (changedResource: ChangedResource) => ({
-  type: 'ROLE_ADD_CHANGED_RESOURCE',
+  type: rolesActionTypes.addChangedResource,
   changedResource,
 });
 
 export const rolesClearChangedResources = () => ({
-  type: 'ROLE_CLEAR_CHANGED_RESOURCES',
+  type: rolesActionTypes.clearChangedResource,
+});
+
+export const rolesUpdateResources = (resources: Resource[]) => ({
+  type: rolesActionTypes.updateResources,
+  resources,
 });

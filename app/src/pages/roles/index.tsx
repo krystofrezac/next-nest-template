@@ -16,8 +16,9 @@ import {
   rolesChangeResourceCategories,
   rolesChangeRoles,
   rolesClearChangedResources,
+  rolesUpdateResources,
 } from 'redux/actions/roles';
-import { ChangedResource, ResourceCategory, Role } from 'redux/reducers/roles/types';
+import { ChangedResource, Resource, ResourceCategory, Role } from 'redux/reducers/roles/types';
 
 import {
   ResourceRoleFindAll,
@@ -53,6 +54,7 @@ const RESOURCE_CHANGE_ROLES = gql`
   mutation($changedRoles: [ChangedRoleArg!]!) {
     resourceChangeRoles(changedRoles: $changedRoles) {
       id
+      name
       roles {
         id
       }
@@ -82,8 +84,8 @@ const RolesIndex = (props: RolesIndexProps) => {
   if (mutationData && !mutationSnacked) {
     setMutationSnacked(true);
     props.rolesClearChangedResources();
+    props.rolesUpdateResources(mutationData.resourceChangeRoles);
     props.enqueueSnackbar('Role úspěšně aktualizovány', { variant: 'success' });
-    // TODO edit redux
   } else if (mutationError && !mutationSnacked) {
     setMutationSnacked(true);
     props.enqueueSnackbar('Nepovedlo se aktualizovat role', { variant: 'error' });
@@ -141,6 +143,7 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatch => ({
   rolesAddChangedResource: (changedResource: ChangedResource) =>
     dispatch(rolesAddChangedResource(changedResource)),
   rolesClearChangedResources: () => dispatch(rolesClearChangedResources()),
+  rolesUpdateResources: (resources: Resource[]) => dispatch(rolesUpdateResources(resources)),
 });
 
 export default withPage(

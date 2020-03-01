@@ -1,4 +1,5 @@
-import { ChangedResource, RolesReducer } from './types';
+import rolesActionTypes from 'redux/reducers/roles/actionTypes';
+import { ChangedResource, Resource, RolesReducer } from './types';
 
 const initState: RolesReducer = { resourceCategories: [], roles: [], changedResources: [] };
 
@@ -7,13 +8,13 @@ const rolesReducer = (s = initState, action) => {
 
   const state = { ...s };
 
-  if (type === 'ROLES_CHANGE_RESOURCE_CATEGORIES') {
+  if (type === rolesActionTypes.changeResourceCategories) {
     return { ...state, resourceCategories: action.resourceCategories };
   }
-  if (type === 'ROLES_CHANGE_ROLES') {
+  if (type === rolesActionTypes.changeRoles) {
     return { ...state, roles: action.roles };
   }
-  if (type === 'ROLE_ADD_CHANGED_RESOURCE') {
+  if (type === rolesActionTypes.addChangedResource) {
     const { changedResource }: { changedResource: ChangedResource } = action;
     const changedResources = [...state.changedResources];
     const oldResourceIndex = changedResources.findIndex(
@@ -28,9 +29,25 @@ const rolesReducer = (s = initState, action) => {
 
     return { ...state, changedResources };
   }
-  if (type === 'ROLE_CLEAR_CHANGED_RESOURCES') {
+  if (type === rolesActionTypes.clearChangedResource) {
     return { ...state, changedResources: [] };
   }
+  if (type === rolesActionTypes.updateResources) {
+    const updatedResources: Resource[] = action.resources;
+
+    updatedResources.forEach(updated => {
+      const category = state.resourceCategories.find(c =>
+        c.resources.some(r => r.id === updated.id),
+      );
+      if (category) {
+        const resource = category.resources.find(r => r.id === updated.id);
+        if (resource) {
+          resource.roles = updated.roles;
+        }
+      }
+    });
+  }
+
   return state;
 };
 
