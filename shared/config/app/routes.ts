@@ -1,7 +1,10 @@
 const routes = {
-  login:"/login",
+  login: '/login',
   dashboard: '/dashboard',
-  roles:"/roles"
+  roles: {
+    index: '/roles',
+    resourceDetail: '/roles/resourceDetail',
+  },
 };
 
 export default routes;

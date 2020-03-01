@@ -1,6 +1,7 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 
 import Secured from 'auth/secured.guard';
+import { Int } from 'type-graphql';
 import ResourceService from './resource.service';
 import Resource from './resource.entity';
 import ChangedRoleArg from './args/changedRole.arg';
@@ -17,6 +18,11 @@ class ResourceResolver {
   @Secured()
   async resourceFindAll() {
     return this.resourceService.findAll();
+  }
+
+  @Query(() => Resource)
+  async resourceFindById(@Args({ name: 'id', type: () => Int }) id: number) {
+    return this.resourceService.findById(id);
   }
 
   @Mutation(() => [Resource], { nullable: true })

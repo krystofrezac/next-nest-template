@@ -1,18 +1,27 @@
 import React from 'react';
 
-import { Checkbox, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import Link from 'next/link';
+import {
+  Checkbox,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  IconButton,
+} from '@material-ui/core';
+import InfoIcon from '@material-ui/icons/Info';
+
+import routes from '@template/shared/config/app/routes';
 import { RolesProps } from './types';
 
 const Roles = (props: RolesProps) => {
-  console.log('props', props);
-
   const mappedHead = props.roles.map(role => (
     <TableCell key={`head${role.id}`}>{role.name}</TableCell>
   ));
 
   const mappedBody = props.resourceCategories.map(category => {
     const categoryResources = category.resources.map(resource => {
-      console.log('resource', resource);
       const resourceRoles = props.roles.map(role => {
         const changed = props.changedResources.some(
           ch => ch.resourceId === resource.id && ch.roleId === role.id,
@@ -31,7 +40,16 @@ const Roles = (props: RolesProps) => {
       return (
         <React.Fragment key={`categoryResource${category.id}-${resource.id}`}>
           <TableRow>
-            <TableCell>{resource.name}</TableCell>
+            <TableCell padding="none">
+              <Link
+                href={{ pathname: routes.roles.resourceDetail, query: { resourceId: resource.id } }}
+              >
+                <IconButton color="primary">
+                  <InfoIcon />
+                </IconButton>
+              </Link>
+              {resource.name}
+            </TableCell>
             {resourceRoles}
           </TableRow>
         </React.Fragment>
@@ -43,7 +61,10 @@ const Roles = (props: RolesProps) => {
     return (
       <React.Fragment key={`category${category.id}`}>
         <TableRow>
-          <TableCell>
+          <TableCell padding="none">
+            <IconButton color="primary">
+              <InfoIcon />
+            </IconButton>
             <b>{category.name}</b>
           </TableCell>
           {emptyCells}

@@ -10,7 +10,7 @@ interface ListConfig {
 
 const listConfig: ListConfig[] = [
   { label: 'Přehled', icon: <DashboardIcon />, link: routes.dashboard },
-  { label: 'Role', icon: <DashboardIcon />, link: routes.roles },
+  { label: 'Role', icon: <DashboardIcon />, link: routes.roles.index },
 ];
 
 export default listConfig;

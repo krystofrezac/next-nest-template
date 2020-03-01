@@ -1,11 +1,11 @@
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Field, ObjectType } from 'type-graphql';
+import { Field, Int, ObjectType } from 'type-graphql';
 import Resource from '../resource/resource.entity';
 
 @ObjectType()
 @Entity()
 class Role {
-  @Field()
+  @Field(() => Int)
   @PrimaryGeneratedColumn()
   readonly id: number;
 

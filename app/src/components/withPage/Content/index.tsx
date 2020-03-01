@@ -21,11 +21,20 @@ const Content: React.FC<ContentProps> = props => {
       <div className={classes.toolbar} />
       <Breadcrumbs>
         {props.breadcrumbs.map(b => (
-          <Link key={b.link + b.label} href={b.link}>
-            <MLink href="#" color="inherit">
-              {b.label}
-            </MLink>
-          </Link>
+          <div key={b.link + b.label}>
+            {b.link && (
+              <Link href={b.link}>
+                <MLink href="#" color="inherit">
+                  {b.label}
+                </MLink>
+              </Link>
+            )}
+            {!b.link && (
+              <MLink href="#" color="inherit">
+                {b.label}
+              </MLink>
+            )}
+          </div>
         ))}
       </Breadcrumbs>
       {props.children}

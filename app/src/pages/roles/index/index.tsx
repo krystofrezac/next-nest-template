@@ -20,6 +20,7 @@ import {
 } from 'redux/actions/roles';
 import { ChangedResource, Resource, ResourceCategory, Role } from 'redux/reducers/roles/types';
 
+import rolesBreadcrumbs from 'pages/roles/index/breadcrumbs';
 import {
   ResourceRoleFindAll,
   RolesIndexProps,
@@ -94,7 +95,6 @@ const RolesIndex = (props: RolesIndexProps) => {
   const changeResourceHandler = (resourceId: number, roleId: number, active: boolean) => {
     props.rolesAddChangedResource({ resourceId, roleId, active });
   };
-
   const cancelHandler = () => {
     props.rolesClearChangedResources();
   };
@@ -149,5 +149,5 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatch => ({
 export default withPage(
   connect(mapStateToProps, mapDispatchToProps)(withSnackbar(RolesIndex)),
   'Role',
-  [{ label: 'Role', link: '/roles' }],
+  rolesBreadcrumbs,
 );

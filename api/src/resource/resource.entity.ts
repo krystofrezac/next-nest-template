@@ -1,4 +1,4 @@
-import { Field, ObjectType } from 'type-graphql';
+import { Field, Int, ObjectType } from 'type-graphql';
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import Role from '../role/role.entity';
 import ResourceCategory from '../resourceCategory/resourceCategory.entity';
@@ -6,13 +6,17 @@ import ResourceCategory from '../resourceCategory/resourceCategory.entity';
 @ObjectType()
 @Entity()
 class Resource {
-  @Field()
+  @Field(() => Int)
   @PrimaryGeneratedColumn()
   readonly id: number;
 
   @Field()
   @Column()
   name: string;
+
+  @Field()
+  @Column()
+  description: string;
 
   @Field(() => ResourceCategory, { nullable: true })
   @ManyToOne(
@@ -22,7 +26,7 @@ class Resource {
   )
   category: Promise<ResourceCategory>;
 
-  @Field()
+  @Field(() => Int)
   @Column({ default: 0 })
   minimalCount: number;
 
@@ -32,12 +36,12 @@ class Resource {
     resource => resource.requiredBy,
   )
   @JoinTable()
-  require: Promise<Resource[]>;
+  requires: Promise<Resource[]>;
 
   @Field(() => [Resource], { nullable: true })
   @ManyToMany(
     () => Resource,
-    resource => resource.require,
+    resource => resource.requires,
   )
   requiredBy: Promise<Resource[]>;
 

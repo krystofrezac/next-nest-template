@@ -1,4 +1,4 @@
-import { Field, ObjectType } from 'type-graphql';
+import { Field, Int, ObjectType } from 'type-graphql';
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import FieldGuard from 'auth/field.guard';
@@ -7,7 +7,7 @@ import Role from 'role/role.entity';
 @ObjectType()
 @Entity()
 class User {
-  @Field()
+  @Field(() => Int)
   @PrimaryGeneratedColumn()
   readonly id: number;
 

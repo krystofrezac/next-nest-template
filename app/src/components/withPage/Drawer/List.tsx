@@ -19,7 +19,7 @@ const DrawerList = () => {
       {listConfig.map(item => (
         <Link key={item.label + item.link} href={item.link}>
           <a href="#" className={classes.link}>
-            <ListItem button selected={item.link.startsWith(router.pathname)}>
+            <ListItem button selected={router.pathname.startsWith(item.link)}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.label} />
             </ListItem>

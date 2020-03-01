@@ -1,11 +1,11 @@
-import { Field, InputType } from 'type-graphql';
+import { Field, InputType, Int } from 'type-graphql';
 
 @InputType()
 class ChangedRoleArg {
-  @Field()
+  @Field(() => Int)
   resourceId: number;
 
-  @Field()
+  @Field(() => Int)
   roleId: number;
 
   @Field()
