@@ -1,4 +1,5 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
+import { Int } from 'type-graphql';
 
 import ResourceCategory from './resourceCategory.entity';
 import ResourceCategoryService from './resourceCategory.service';
@@ -12,6 +13,12 @@ class ResourceCategoryResolver {
   @Secured()
   async resourceCategoryFindAll() {
     return this.resourceCategoryService.findAll();
+  }
+
+  @Query(() => ResourceCategory)
+  @Secured()
+  async resourceCategoryFindById(@Args({ name: 'id', type: () => Int }) id: number) {
+    return this.resourceCategoryService.findById(id);
   }
 }
 

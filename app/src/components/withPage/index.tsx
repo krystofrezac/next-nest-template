@@ -29,7 +29,6 @@ const mapStateToProps = (state: State) => ({
 
 const withPage = (
   Component: React.ComponentType,
-  name: string,
   breadcrumbs: Breadcrumb[],
   requiredResources: string[] = [],
   apolloSsr: boolean = false,
@@ -45,9 +44,7 @@ const withPage = (
 
       return (
         <>
-          {showPage && (
-            <Page Component={Component} name={name} breadcrumbs={breadcrumbs} {...props} />
-          )}
+          {showPage && <Page Component={Component} breadcrumbs={breadcrumbs} {...props} />}
           {!showPage && (
             <Error
               // @ts-ignore

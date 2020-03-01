@@ -13,6 +13,10 @@ class ResourceCategoryService {
   async findAll() {
     return this.resourceCategory.find();
   }
+
+  async findById(id: number) {
+    return this.resourceCategory.findOne(id);
+  }
 }
 
 export default ResourceCategoryService;

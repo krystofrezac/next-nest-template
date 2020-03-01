@@ -44,7 +44,7 @@ const AppBar = (props: AppBarProps) => {
           </IconButton>
         </Hidden>
         <Typography variant="h6" component="h1" noWrap>
-          {props.name}
+          Název aplikace
         </Typography>
         <div className={classes.rightIcons}>
           <IconButton color="inherit" onClick={props.onLogOut}>

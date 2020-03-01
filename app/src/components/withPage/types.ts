@@ -7,6 +7,5 @@ export interface Breadcrumb {
 
 export interface PageProps {
   Component: React.ElementType;
-  name: string;
   breadcrumbs: Breadcrumb[];
 }

@@ -59,4 +59,4 @@ const ResourceDetailIndex = () => {
   );
 };
 
-export default withPage(ResourceDetailIndex, 'Detail zdroje', resourceDetailBreadcrumbs);
+export default withPage(ResourceDetailIndex, resourceDetailBreadcrumbs);

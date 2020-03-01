@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   Table,
   TableBody,
@@ -7,15 +8,24 @@ import {
   TableHead,
   Typography,
   Tooltip,
+  makeStyles,
+  IconButton,
 } from '@material-ui/core';
-import { ResourceDetailProps } from 'pages/roles/resourceDetail/types';
-import { makeStyles } from '@material-ui/core/styles';
+import InfoIcon from '@material-ui/icons/Info';
+import Link from 'next/link';
 
-const useStyles = makeStyles(() => ({
+import routes from '@template/shared/config/app/routes';
+
+import { ResourceDetailProps } from './types';
+
+const useStyles = makeStyles({
   fitWidth: {
     display: 'table',
   },
-}));
+  noWrap: {
+    whiteSpace: 'nowrap',
+  },
+});
 
 const ResourceDetail = (props: ResourceDetailProps) => {
   const classes = useStyles();
@@ -33,7 +43,9 @@ const ResourceDetail = (props: ResourceDetailProps) => {
             name
           )}
         </TableCell>
-        <TableCell>{p.children}</TableCell>
+        <TableCell padding="none">
+          <div className={classes.noWrap}>{p.children}</div>
+        </TableCell>
       </TableRow>
     );
   };
@@ -56,6 +68,16 @@ const ResourceDetail = (props: ResourceDetailProps) => {
         </TableHead>
         <TableBody>
           <Row name="Kategorie" tooltip="Kategorie pod kterou daný zdroj spadá">
+            <Link
+              href={{
+                pathname: routes.roles.resourceCategoryDetail,
+                query: { categoryId: category.id },
+              }}
+            >
+              <IconButton color="primary">
+                <InfoIcon />
+              </IconButton>
+            </Link>
             {category.name}
           </Row>
           <Row name="Role" tooltip="Role které mají daný zdroj aktivní">

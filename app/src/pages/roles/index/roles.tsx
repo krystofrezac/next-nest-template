@@ -62,9 +62,16 @@ const Roles = (props: RolesProps) => {
       <React.Fragment key={`category${category.id}`}>
         <TableRow>
           <TableCell padding="none">
-            <IconButton color="primary">
-              <InfoIcon />
-            </IconButton>
+            <Link
+              href={{
+                pathname: routes.roles.resourceCategoryDetail,
+                query: { categoryId: category.id },
+              }}
+            >
+              <IconButton color="primary">
+                <InfoIcon />
+              </IconButton>
+            </Link>
             <b>{category.name}</b>
           </TableCell>
           {emptyCells}

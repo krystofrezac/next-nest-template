@@ -148,6 +148,5 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatch => ({
 
 export default withPage(
   connect(mapStateToProps, mapDispatchToProps)(withSnackbar(RolesIndex)),
-  'Role',
   rolesBreadcrumbs,
 );

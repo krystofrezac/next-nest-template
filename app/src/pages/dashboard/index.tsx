@@ -19,6 +19,6 @@ const mapStateToProps = (state: State): MapState => ({
   user: state.user,
 });
 
-export default withPage(connect(mapStateToProps)(DashboardIndex), 'Přehled', [
+export default withPage(connect(mapStateToProps)(DashboardIndex), [
   { label: 'Přehled', link: routes.dashboard },
 ]);

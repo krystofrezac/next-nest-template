@@ -1,7 +1,8 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Int } from 'type-graphql';
 
 import Secured from 'auth/secured.guard';
-import { Int } from 'type-graphql';
+
 import ResourceService from './resource.service';
 import Resource from './resource.entity';
 import ChangedRoleArg from './args/changedRole.arg';
