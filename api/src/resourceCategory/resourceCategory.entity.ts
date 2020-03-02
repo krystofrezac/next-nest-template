@@ -10,7 +10,7 @@ class ResourceCategory {
   id: number;
 
   @Field()
-  @Column()
+  @Column({ unique: true })
   name: string;
 
   @Field(() => [Resource])
