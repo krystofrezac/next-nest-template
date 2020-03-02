@@ -82,7 +82,19 @@ const ResourceDetail = (props: ResourceDetailProps) => {
           </Row>
           <Row name="Role" tooltip="Role které mají daný zdroj aktivní">
             {roles.map(role => (
-              <div key={`role${role.id}`}>{role.name}</div>
+              <div key={`role${role.id}`}>
+                <Link
+                  href={{
+                    pathname: routes.roles.roleDetail,
+                    query: { roleId: role.id },
+                  }}
+                >
+                  <IconButton color="primary">
+                    <InfoIcon />
+                  </IconButton>
+                </Link>
+                {role.name}
+              </div>
             ))}
           </Row>
           <Row

@@ -24,8 +24,8 @@ const Dashboard = (props: DashboardProps) => {
           <PaperWithTabs
             title="Tabs"
             tabs={[
-              { label: 'Ahojky', Panel: <div>ahojky</div> },
-              { label: 'Hola', Panel: <div>hila</div> },
+              { label: 'Ahojky', panel: <div>ahojky</div> },
+              { label: 'Hola', panel: <div>hila</div> },
             ]}
           />
         </Grid>

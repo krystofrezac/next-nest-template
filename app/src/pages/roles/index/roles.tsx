@@ -17,7 +17,14 @@ import { RolesProps } from './types';
 
 const Roles = (props: RolesProps) => {
   const mappedHead = props.roles.map(role => (
-    <TableCell key={`head${role.id}`}>{role.name}</TableCell>
+    <TableCell key={`head${role.id}`} padding="none">
+      <Link href={{ pathname: routes.roles.roleDetail, query: { roleId: role.id } }}>
+        <IconButton color="primary">
+          <InfoIcon />
+        </IconButton>
+      </Link>
+      {role.name}
+    </TableCell>
   ));
 
   const mappedBody = props.resourceCategories.map(category => {

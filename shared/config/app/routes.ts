@@ -5,6 +5,7 @@ const routes = {
     index: '/roles',
     resourceDetail: '/roles/resourceDetail',
     resourceCategoryDetail: '/roles/resourceCategoryDetail',
+    roleDetail: '/roles/roleDetail',
   },
 };
 
