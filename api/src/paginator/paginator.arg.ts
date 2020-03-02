@@ -1,6 +1,6 @@
-import { Field, InputType, Int } from 'type-graphql';
+import { ArgsType, Field, InputType, Int } from 'type-graphql';
 
-@InputType({ isAbstract: true })
+@ArgsType()
 class PaginatorArg {
   @Field(() => Int)
   limit: number;

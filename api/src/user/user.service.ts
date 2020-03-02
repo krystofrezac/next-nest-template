@@ -18,6 +18,10 @@ class UserService {
     return this.userRepository.findOne(userId);
   }
 
+  async paginate(limit: number, offset: number) {
+    return this.userRepository.find({ take: limit, skip: offset });
+  }
+
   async getTotalCount() {
     return this.userRepository.count();
   }

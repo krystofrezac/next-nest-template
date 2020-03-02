@@ -2,14 +2,14 @@ import { ClassType, Field, Int, ObjectType } from 'type-graphql';
 
 function Paginator<TNodeType>(NodeType: ClassType<TNodeType>) {
   @ObjectType({ isAbstract: true })
-  abstract class EdgeType {
+  abstract class PaginatorType {
     @Field(() => NodeType)
     items: TNodeType[];
 
     @Field(() => Int)
     totalCount: number;
   }
-  return EdgeType;
+  return PaginatorType;
 }
 
 export default Paginator;
