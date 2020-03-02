@@ -49,8 +49,6 @@ class UserResolver {
   async userGetLogged(@CurrentUser() userId: number) {
     return this.userService.findById(userId);
   }
-
-
 }
 
 export default UserResolver;

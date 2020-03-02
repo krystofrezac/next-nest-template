@@ -1,6 +1,7 @@
 import { ClassType, Field, Int, ObjectType } from 'type-graphql';
 
-function Paginator<TNodeType>(NodeType: ClassType<TNodeType>) {
+// Any needs to be there or throwing ts error "TS4060: Return type of exported function has or is using private name"
+function Paginator<TNodeType>(NodeType: ClassType<TNodeType>): any {
   @ObjectType({ isAbstract: true })
   abstract class PaginatorType {
     @Field(() => NodeType)

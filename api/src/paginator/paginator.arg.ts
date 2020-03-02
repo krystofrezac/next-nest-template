@@ -1,4 +1,4 @@
-import { ArgsType, Field, InputType, Int } from 'type-graphql';
+import { ArgsType, Field, Int } from 'type-graphql';
 
 @ArgsType()
 class PaginatorArg {
