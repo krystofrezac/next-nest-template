@@ -18,6 +18,10 @@ class UserService {
     return this.userRepository.findOne(userId);
   }
 
+  async getTotalCount() {
+    return this.userRepository.count();
+  }
+
   async findByEmail(email: string): Promise<User> {
     return this.userRepository.findOne({ email });
   }

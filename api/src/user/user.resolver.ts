@@ -6,6 +6,8 @@ import AuthService from 'auth/auth.service';
 import CurrentUser from 'auth/currentUser.decorator';
 import User from 'user/user.entity';
 import UserService from 'user/user.service';
+import UserPaginator from 'user/userPaginate.type';
+import PaginateArg from 'user/args/paginate.arg';
 
 @Resolver()
 class UserResolver {
@@ -48,6 +50,15 @@ class UserResolver {
   @Secured()
   async userGetLogged(@CurrentUser() userId: number) {
     return this.userService.findById(userId);
+  }
+
+  @Query(() => UserPaginator)
+  @Secured()
+  async userPaginate(@Args({ name: 'paginator', type: () => PaginateArg }) paginator: PaginateArg) {
+    const userPaginator = new UserPaginator();
+    userPaginator.items = [await this.userService.findById(1)];
+    userPaginator.totalCount = await this.userService.getTotalCount();
+    return userPaginator;
   }
 }
 

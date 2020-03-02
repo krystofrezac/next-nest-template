@@ -1,6 +1,6 @@
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, Int, ObjectType } from 'type-graphql';
-import Resource from '../resource/resource.entity';
+import Resource from 'resource/resource.entity';
 
 @ObjectType()
 @Entity()
