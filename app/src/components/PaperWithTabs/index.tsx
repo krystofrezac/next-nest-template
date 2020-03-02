@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   tabRoot: {
     minHeight: tabHeight,
     height: tabHeight,
-    width: 0,
+    minWidth: 0,
   },
 }));
 
