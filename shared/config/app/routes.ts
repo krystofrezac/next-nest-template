@@ -7,6 +7,9 @@ const routes = {
     resourceCategoryDetail: '/roles/resourceCategoryDetail',
     roleDetail: '/roles/roleDetail',
   },
+  users: {
+    index: '/users',
+  },
 };
 
 export default routes;

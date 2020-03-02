@@ -1,8 +1,18 @@
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { List, ListItem, ListItemIcon, ListItemText, makeStyles } from '@material-ui/core';
-import listConfig from 'components/withPage/Drawer/listConfig';
-import React from 'react';
 import Link from 'next/link';
+import {
+  Collapse,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  makeStyles,
+} from '@material-ui/core';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+
+import listConfig, { ListConfig } from './listConfig';
 
 const useStyles = makeStyles(() => ({
   link: {
@@ -14,17 +24,51 @@ const useStyles = makeStyles(() => ({
 const DrawerList = () => {
   const classes = useStyles();
   const router = useRouter();
+
+  const Item = ({
+    link,
+    icon,
+    label,
+    subList,
+  }: {
+    link?: string;
+    icon: JSX.Element;
+    label: string;
+    subList?: ListConfig[];
+  }) => {
+    const [open, setOpen] = useState(
+      subList ? subList.some(s => router.pathname.startsWith(s.link)) : false,
+    );
+    const withoutLink = (
+      <>
+        <ListItem button selected={router.pathname.startsWith(link)} onClick={() => setOpen(!open)}>
+          <ListItemIcon>{icon}</ListItemIcon>
+          <ListItemText primary={label} />
+          {subList && <>{open ? <ExpandLess /> : <ExpandMore />}</>}
+        </ListItem>
+        {subList && (
+          <Collapse in={open}>
+            {subList.map(s => (
+              <Item key={`subItem${s.label}-${label}-${link}`} {...s} />
+            ))}
+          </Collapse>
+        )}
+      </>
+    );
+    const withLink = link ? (
+      <Link href={link}>
+        <a href="#" className={classes.link}>
+          {withoutLink}
+        </a>
+      </Link>
+    ) : null;
+    return <>{link ? withLink : withoutLink}</>;
+  };
+
   return (
     <List>
       {listConfig.map(item => (
-        <Link key={item.label + item.link} href={item.link}>
-          <a href="#" className={classes.link}>
-            <ListItem button selected={router.pathname.startsWith(item.link)}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.label} />
-            </ListItem>
-          </a>
-        </Link>
+        <Item key={`item${item.label}-${item.link}`} {...item} />
       ))}
     </List>
   );

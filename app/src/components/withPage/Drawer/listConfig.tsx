@@ -1,16 +1,26 @@
 import React from 'react';
+
 import DashboardIcon from '@material-ui/icons/Dashboard';
+
 import routes from '@template/shared/config/app/routes';
 
-interface ListConfig {
+export interface ListConfig {
   label: string;
   icon: JSX.Element;
-  link: string;
+  link?: string;
+  subList?: ListConfig[];
 }
 
 const listConfig: ListConfig[] = [
   { label: 'Přehled', icon: <DashboardIcon />, link: routes.dashboard },
-  { label: 'Role', icon: <DashboardIcon />, link: routes.roles.index },
+  {
+    label: 'Administrace',
+    icon: <DashboardIcon />,
+    subList: [
+      { label: 'Uživatelé', icon: <DashboardIcon />, link: routes.users.index },
+      { label: 'Role', icon: <DashboardIcon />, link: routes.roles.index },
+    ],
+  },
 ];
 
 export default listConfig;
