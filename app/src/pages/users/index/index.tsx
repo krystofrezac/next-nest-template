@@ -9,9 +9,11 @@ import MaterialTable from 'lib/materialTable';
 import withPage from 'components/withPage';
 import Paper from 'components/Paper';
 
-import { UserPaginate, UserPaginateVars } from 'pages/users/types';
+import { UserPaginate, UserPaginateVars } from 'pages/users/index/types';
 import { Button } from '@material-ui/core';
+import { useRouter } from 'next/router';
 import usersBreadcrumbs from './breadcrumbs';
+import routes from '../../../../../shared/config/app/routes';
 
 const USER_PAGINATE = gql`
   query($limit: Int!, $offset: Int!, $filter: UserFilterArg, $orderBy: OrderByArg) {
@@ -31,6 +33,8 @@ const Info = () => <InfoIcon color="primary" />;
 
 const UsersIndex = () => {
   const client = useApolloClient();
+  const router = useRouter();
+
   return (
     <Paper
       title="Uživatelé"
@@ -89,7 +93,9 @@ const UsersIndex = () => {
             icon: Info,
             iconProps: { color: 'error' },
             tooltip: 'Detail',
-            onClick: () => {},
+            onClick: (e, rowData) => {
+              router.push({ pathname: routes.users.userDetail, query: { userId: rowData.id } });
+            },
           },
         ]}
         options={{ filtering: true }}

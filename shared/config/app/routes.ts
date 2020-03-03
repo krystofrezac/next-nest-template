@@ -9,6 +9,7 @@ const routes = {
   },
   users: {
     index: '/users',
+    userDetail: '/users/userDetail',
   },
 };
 

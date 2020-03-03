@@ -1,17 +1,20 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 
 import Secured from 'auth/secured.guard';
 import AuthService from 'auth/auth.service';
 import CurrentUser from 'auth/currentUser.decorator';
 import User from 'user/user.entity';
 import UserService from 'user/user.service';
+import { Int } from 'type-graphql';
+import RoleService from '../role/role.service';
 
 @Resolver()
 class UserResolver {
   constructor(
     private readonly userService: UserService,
     private readonly authService: AuthService,
+    private readonly roleService: RoleService,
   ) {}
 
   @Query(() => User)
@@ -26,6 +29,18 @@ class UserResolver {
     }
 
     throw new UnauthorizedException();
+  }
+
+  @Query(() => User)
+  @Secured()
+  async userGetLogged(@CurrentUser() userId: number) {
+    return this.userService.findById(userId);
+  }
+
+  @Query(() => User)
+  @Secured()
+  async userFindById(@Args({ name: 'id', type: () => Int }) id: number) {
+    return this.userService.findById(id);
   }
 
   @Mutation(() => User)
@@ -44,10 +59,23 @@ class UserResolver {
     return this.userService.save(user);
   }
 
-  @Query(() => User)
-  @Secured()
-  async userGetLogged(@CurrentUser() userId: number) {
-    return this.userService.findById(userId);
+  @Mutation(() => User)
+  async userChangeRoles(
+    @Args({ name: 'userId', type: () => Int }) userId: number,
+    @Args({ name: 'rolesIds', type: () => [Int] }) rolesIds: number[],
+  ) {
+    const user = await this.userService.findById(userId);
+    if (!user) throw new BadRequestException();
+    const userRoles = [];
+
+    for (const roleId of rolesIds) {
+      const role = await this.roleService.findById(roleId);
+      if (!role) throw new BadRequestException();
+      userRoles.push(role);
+    }
+
+    user.roles = Promise.resolve(userRoles);
+    return this.userService.save(user);
   }
 }
 

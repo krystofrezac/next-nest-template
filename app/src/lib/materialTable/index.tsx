@@ -12,7 +12,7 @@ const MaterialTable = (props: MaterialTableProps<any>) => {
 
         ...props.components,
       }}
-      options={{ toolbar: false, paginationType: 'stepped', ...props.options }}
+      options={{ toolbar: false, ...props.options }}
       localization={{
         pagination: {
           nextTooltip: 'Další stránka',
@@ -20,6 +20,7 @@ const MaterialTable = (props: MaterialTableProps<any>) => {
           lastTooltip: 'Poslední stránka',
           firstTooltip: 'První stránka',
           labelRowsSelect: 'řádků',
+          labelDisplayedRows: '{from}-{to} z {count}',
         },
         header: {
           actions: 'Akce',

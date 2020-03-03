@@ -1,7 +1,6 @@
 import { Field, Int, ObjectType } from 'type-graphql';
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-import FieldGuard from 'auth/field.guard';
 import Role from 'role/role.entity';
 
 @ObjectType()
@@ -16,7 +15,6 @@ class User {
 
   @Field({ nullable: true })
   @Column({ unique: true })
-  @FieldGuard('test')
   email: string;
 
   @Column({ default: true })
