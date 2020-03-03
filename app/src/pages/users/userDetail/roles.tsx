@@ -45,7 +45,7 @@ const USER_CHANGE_ROLES = gql`
 `;
 
 const Roles = (props: RolesProps) => {
-  const classes = useStyles({});
+  const classes = useStyles();
 
   const router = useRouter();
   const { data, loading } = useQuery<RoleFindAll>(ROLE_FIND_ALL);

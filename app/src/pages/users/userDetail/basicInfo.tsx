@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const BasicInfo = ({ user }: BasicInfoProps) => {
-  const classes = useStyles({});
+  const classes = useStyles();
 
   const email = user ? user.email : '';
   const name = user ? user.name : '';

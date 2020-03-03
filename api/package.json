@@ -15,7 +15,7 @@
     "postmigration:generate": "yarn build",
     "postmigration:create": "yarn build",
     "migration:create": "ts-node ./node_modules/.bin/typeorm migration:create",
-    "conf": "cp ../shared/api.ts ./src/config/ && cp ../shared/resource.ts ./src/config/"
+    "conf": "cp ../shared/config/api.ts ./src/config/ && cp ../shared/config/resource.ts ./src/config/ && cp ../shared/config/apiErrors.ts ./src/config"
   },
   "workspaces": {
     "nohoist": [

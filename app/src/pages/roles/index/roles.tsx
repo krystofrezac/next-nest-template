@@ -9,19 +9,31 @@ import {
   TableHead,
   TableRow,
   IconButton,
+  Tooltip,
 } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
+import AddIcon from '@material-ui/icons/AddCircle';
 
 import routes from '@template/shared/config/app/routes';
 import { RolesProps } from './types';
 
 const Roles = (props: RolesProps) => {
+  const DetailTooltip: React.FC = (p: { children: JSX.Element }) => (
+    <Tooltip title="Detail" arrow>
+      {p.children}
+    </Tooltip>
+  );
+
   const mappedHead = props.roles.map(role => (
     <TableCell key={`head${role.id}`} padding="none">
       <Link href={{ pathname: routes.roles.roleDetail, query: { roleId: role.id } }}>
-        <IconButton color="primary">
-          <InfoIcon />
-        </IconButton>
+        <a>
+          <DetailTooltip>
+            <IconButton color="primary">
+              <InfoIcon />
+            </IconButton>
+          </DetailTooltip>
+        </a>
       </Link>
       {role.name}
     </TableCell>
@@ -29,7 +41,7 @@ const Roles = (props: RolesProps) => {
 
   const mappedBody = props.resourceCategories.map(category => {
     const categoryResources = category.resources.map(resource => {
-      const resourceRoles = props.roles.map(role => {
+      const resourceRoles = [...props.roles, { id: -1, name: '' }].map(role => {
         const changed = props.changedResources.some(
           ch => ch.resourceId === resource.id && ch.roleId === role.id,
         );
@@ -40,7 +52,11 @@ const Roles = (props: RolesProps) => {
         };
         return (
           <TableCell key={`resourceRole${role.id}-${category.id}`} padding="none">
-            <Checkbox checked={changedActive} onChange={checkboxChangeHandler} />
+            <Checkbox
+              checked={changedActive}
+              disabled={role.id < 0}
+              onChange={checkboxChangeHandler}
+            />
           </TableCell>
         );
       });
@@ -51,9 +67,13 @@ const Roles = (props: RolesProps) => {
               <Link
                 href={{ pathname: routes.roles.resourceDetail, query: { resourceId: resource.id } }}
               >
-                <IconButton color="primary">
-                  <InfoIcon />
-                </IconButton>
+                <a>
+                  <DetailTooltip>
+                    <IconButton color="primary">
+                      <InfoIcon />
+                    </IconButton>
+                  </DetailTooltip>
+                </a>
               </Link>
               {resource.name}
             </TableCell>
@@ -75,13 +95,18 @@ const Roles = (props: RolesProps) => {
                 query: { categoryId: category.id },
               }}
             >
-              <IconButton color="primary">
-                <InfoIcon />
-              </IconButton>
+              <a>
+                <DetailTooltip>
+                  <IconButton color="primary">
+                    <InfoIcon />
+                  </IconButton>
+                </DetailTooltip>
+              </a>
             </Link>
             <b>{category.name}</b>
           </TableCell>
           {emptyCells}
+          <TableCell />
         </TableRow>
         {categoryResources}
       </React.Fragment>
@@ -95,6 +120,17 @@ const Roles = (props: RolesProps) => {
           <TableRow>
             <TableCell>Zdroje</TableCell>
             {mappedHead}
+            <TableCell padding="none">
+              <Link href={routes.roles.addRole}>
+                <a>
+                  <Tooltip title="Přidat roli" arrow>
+                    <IconButton color="primary">
+                      <AddIcon />
+                    </IconButton>
+                  </Tooltip>
+                </a>
+              </Link>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>{mappedBody}</TableBody>
