@@ -13,6 +13,11 @@ export interface UserPaginate {
 export interface UserPaginateVars {
   limit: number;
   offset: number;
+  filter: {
+    email?: string;
+    name?: string;
+    surname?: string;
+  };
   email?: string;
   name?: string;
   surname?: string;

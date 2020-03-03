@@ -110,10 +110,10 @@ const RolesIndex = (props: RolesIndexProps) => {
         loading={loading}
         title="Role"
         actions={[
-          <Button key="saveButton" variant="contained" color="primary" onClick={submitHandler}>
+          <Button key="actionSave" variant="contained" color="primary" onClick={submitHandler}>
             Uložit
           </Button>,
-          <Button key="cancelButton" variant="contained" color="secondary" onClick={cancelHandler}>
+          <Button key="actionCancel" variant="contained" color="secondary" onClick={cancelHandler}>
             Zrušit
           </Button>,
         ]}

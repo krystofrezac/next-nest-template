@@ -10,30 +10,19 @@ import withPage from 'components/withPage';
 import Paper from 'components/Paper';
 
 import { UserPaginate, UserPaginateVars } from 'pages/users/types';
+import { Button } from '@material-ui/core';
 import usersBreadcrumbs from './breadcrumbs';
 
 const USER_PAGINATE = gql`
-  query(
-    $limit: Int!
-    $offset: Int!
-    $email: String
-    $name: String
-    $surname: String
-    $orderBy: OrderByArg
-  ) {
+  query($limit: Int!, $offset: Int!, $filter: UserFilterArg, $orderBy: OrderByArg) {
     userPaginate {
-      items(
-        limit: $limit
-        offset: $offset
-        filter: { email: $email, name: $name, surname: $surname }
-        orderBy: $orderBy
-      ) {
+      items(limit: $limit, offset: $offset, filter: $filter, orderBy: $orderBy) {
         id
         name
         surname
         email
       }
-      totalCount(filter: { email: $email, name: $name, surname: $surname })
+      totalCount(filter: $filter)
     }
   }
 `;
@@ -43,14 +32,25 @@ const Info = () => <InfoIcon color="primary" />;
 const UsersIndex = () => {
   const client = useApolloClient();
   return (
-    <Paper title="Uživatelé">
+    <Paper
+      title="Uživatelé"
+      actions={[
+        <Button key="actionAdd" color="primary" variant="contained">
+          Přidat uživatele
+        </Button>,
+      ]}
+    >
       <MaterialTable
         data={query => {
-          console.log('query', query);
           return new Promise((resolve, reject) => {
             const emailFilter = query.filters.find(f => f.column.field === 'email');
             const nameFilter = query.filters.find(f => f.column.field === 'name');
             const surnameFilter = query.filters.find(f => f.column.field === 'surname');
+            const filter = {
+              email: emailFilter ? emailFilter.value : '',
+              name: nameFilter ? nameFilter.value : '',
+              surname: surnameFilter ? surnameFilter.value : '',
+            };
             const orderBy = query.orderBy
               ? {
                   fieldName: query.orderBy.field.toString(),
@@ -67,9 +67,7 @@ const UsersIndex = () => {
                 variables: {
                   limit: query.pageSize,
                   offset: query.page * query.pageSize,
-                  email: emailFilter ? emailFilter.value : '',
-                  name: nameFilter ? nameFilter.value : '',
-                  surname: surnameFilter ? surnameFilter.value : '',
+                  filter,
                   orderBy,
                 },
               })
