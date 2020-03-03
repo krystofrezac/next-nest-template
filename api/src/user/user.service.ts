@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 import { compare, hash } from 'bcrypt';
 
 import User from 'user/user.entity';
 import apiConfig from 'config/api';
+import UserFilterArg from 'user/paginator/args/userFilter.arg';
 
 @Injectable()
 class UserService {
@@ -18,8 +19,16 @@ class UserService {
     return this.userRepository.findOne(userId);
   }
 
-  async paginate(limit: number, offset: number) {
-    return this.userRepository.find({ take: limit, skip: offset });
+  async paginate(limit: number, offset: number, filter: UserFilterArg) {
+    return this.userRepository.find({
+      take: limit,
+      skip: offset,
+      where: {
+        email: Like(`%${filter.email}%`),
+        name: Like(`%${filter.name}%`),
+        surname: Like(`%${filter.surname}%`),
+      },
+    });
   }
 
   async getTotalCount() {
