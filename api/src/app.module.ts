@@ -17,7 +17,7 @@ import ResourceCategoryModule from './resourceCategory/resourceCategory.module';
     ResourceCategoryModule,
 
     GraphQLModule.forRoot({
-      autoSchemaFile: 'schema.gql',
+      autoSchemaFile: 'schema.graphql',
       context: ({ req }) => ({ req }),
     }),
     TypeOrmModule.forRoot(),

@@ -9,18 +9,31 @@ import MaterialTable from 'lib/materialTable';
 import withPage from 'components/withPage';
 import Paper from 'components/Paper';
 
+import { UserPaginate, UserPaginateVars } from 'pages/users/types';
 import usersBreadcrumbs from './breadcrumbs';
 
 const USER_PAGINATE = gql`
-  query($limit: Int!, $offset: Int!) {
+  query(
+    $limit: Int!
+    $offset: Int!
+    $email: String
+    $name: String
+    $surname: String
+    $orderBy: OrderByArg
+  ) {
     userPaginate {
-      items(limit: $limit, offset: $offset) {
+      items(
+        limit: $limit
+        offset: $offset
+        filter: { email: $email, name: $name, surname: $surname }
+        orderBy: $orderBy
+      ) {
         id
         name
         surname
         email
       }
-      totalCount
+      totalCount(filter: { email: $email, name: $name, surname: $surname })
     }
   }
 `;
@@ -33,11 +46,32 @@ const UsersIndex = () => {
     <Paper title="Uživatelé">
       <MaterialTable
         data={query => {
+          console.log('query', query);
           return new Promise((resolve, reject) => {
+            const emailFilter = query.filters.find(f => f.column.field === 'email');
+            const nameFilter = query.filters.find(f => f.column.field === 'name');
+            const surnameFilter = query.filters.find(f => f.column.field === 'surname');
+            const orderBy = query.orderBy
+              ? {
+                  fieldName: query.orderBy.field.toString(),
+                  type: query.orderDirection.toUpperCase(),
+                }
+              : {
+                  fieldName: 'email',
+                  type: 'ASC',
+                };
+
             client
-              .query({
+              .query<UserPaginate, UserPaginateVars>({
                 query: USER_PAGINATE,
-                variables: { limit: query.pageSize, offset: query.page * query.pageSize },
+                variables: {
+                  limit: query.pageSize,
+                  offset: query.page * query.pageSize,
+                  email: emailFilter ? emailFilter.value : '',
+                  name: nameFilter ? nameFilter.value : '',
+                  surname: surnameFilter ? surnameFilter.value : '',
+                  orderBy,
+                },
               })
               .then(res => {
                 if (res.data) {
@@ -60,6 +94,7 @@ const UsersIndex = () => {
             onClick: () => {},
           },
         ]}
+        options={{ filtering: true }}
         columns={[
           { title: 'Email', field: 'email' },
           { title: 'Jméno', field: 'name' },

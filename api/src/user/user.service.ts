@@ -6,6 +6,7 @@ import { compare, hash } from 'bcrypt';
 import User from 'user/user.entity';
 import apiConfig from 'config/api';
 import UserFilterArg from 'user/paginator/args/userFilter.arg';
+import OrderByArg from '../paginator/orderBy.arg';
 
 @Injectable()
 class UserService {
@@ -19,7 +20,8 @@ class UserService {
     return this.userRepository.findOne(userId);
   }
 
-  async paginate(limit: number, offset: number, filter: UserFilterArg) {
+  async paginate(limit: number, offset: number, filter: UserFilterArg, orderBy?: OrderByArg) {
+    const order = orderBy ? { [orderBy.fieldName]: orderBy.type } : {};
     return this.userRepository.find({
       take: limit,
       skip: offset,
@@ -28,11 +30,20 @@ class UserService {
         name: Like(`%${filter.name}%`),
         surname: Like(`%${filter.surname}%`),
       },
+      order,
     });
   }
 
-  async getTotalCount() {
-    return this.userRepository.count();
+  async getTotalCount(filter?: UserFilterArg) {
+    return this.userRepository.count({
+      where: filter
+        ? {
+            email: Like(`%${filter.email}%`),
+            name: Like(`%${filter.name}%`),
+            surname: Like(`%${filter.surname}%`),
+          }
+        : {},
+    });
   }
 
   async findByEmail(email: string): Promise<User> {
