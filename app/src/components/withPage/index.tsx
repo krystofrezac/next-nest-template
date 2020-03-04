@@ -11,6 +11,7 @@ import { State } from 'redux/reducers/types';
 import { connect } from 'react-redux';
 import rolesToResources from 'components/resources/rolesToResources';
 import dynamic from 'next/dynamic';
+import NoAccess from 'components/withPage/NoAccess';
 import { Breadcrumb } from './types';
 
 const Error = dynamic(import('next/error'), { ssr: false });
@@ -45,14 +46,7 @@ const withPage = (
       return (
         <>
           {showPage && <Page Component={Component} breadcrumbs={breadcrumbs} {...props} />}
-          {!showPage && (
-            <Error
-              // @ts-ignore
-              style={{ display: 'none' }}
-              statusCode={401}
-              title="Na tuto stránku nemáte přístup"
-            />
-          )}
+          {!showPage && <NoAccess />}
         </>
       );
     }),
