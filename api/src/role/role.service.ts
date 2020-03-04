@@ -15,6 +15,10 @@ class RoleService {
     return this.roleRepository.save(roles);
   }
 
+  async remove(role: Role) {
+    return this.roleRepository.remove(role);
+  }
+
   async findAll() {
     return this.roleRepository.find();
   }

@@ -28,12 +28,21 @@ class RoleResolver {
   @Mutation(() => Role)
   @Secured()
   async roleCreate(@Args('name') name: string) {
-    if (!/[a-z]+/.test(name)) {
+    if (!/[a-zA-Z]+/.test(name)) {
       return new BadRequestException(apiErrors.input.invalid);
     }
     const role = new Role();
     role.name = name;
     return this.roleService.save(role);
+  }
+
+  @Mutation(() => Boolean)
+  @Secured()
+  async roleRemove(@Args({ name: 'id', type: () => Int }) id: number) {
+    const role = await this.roleService.findById(id);
+    if (!role) return new BadRequestException(apiErrors.input.invalid);
+    await this.roleService.remove(role);
+    return true;
   }
 }
 

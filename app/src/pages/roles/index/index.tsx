@@ -31,7 +31,19 @@ import {
 } from './types';
 import Roles from './roles';
 
-const RESOURCE_ROLE_FIND_ALL = gql`
+const RESOURCE_CHANGE_ROLES = gql`
+  mutation($changedRoles: [ChangedRoleArg!]!) {
+    resourceChangeRoles(changedRoles: $changedRoles) {
+      id
+      name
+      roles {
+        id
+      }
+    }
+  }
+`;
+
+const RESOURCE_CATEGORY_FIND_ALL = gql`
   {
     resourceCategoryFindAll {
       id
@@ -51,20 +63,8 @@ const RESOURCE_ROLE_FIND_ALL = gql`
   }
 `;
 
-const RESOURCE_CHANGE_ROLES = gql`
-  mutation($changedRoles: [ChangedRoleArg!]!) {
-    resourceChangeRoles(changedRoles: $changedRoles) {
-      id
-      name
-      roles {
-        id
-      }
-    }
-  }
-`;
-
 const RolesIndex = (props: RolesIndexProps) => {
-  const { data, error, loading } = useQuery<ResourceRoleFindAll>(RESOURCE_ROLE_FIND_ALL);
+  const { data, error, loading } = useQuery<ResourceRoleFindAll>(RESOURCE_CATEGORY_FIND_ALL);
   const [resourceChangeRoles, { data: mutationData, error: mutationError }] = useMutation<
     ResourceChangeRoles,
     ResourceChangeRolesVars

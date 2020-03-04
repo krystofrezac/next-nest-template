@@ -6,8 +6,10 @@ import { useForm } from 'react-hook-form';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import { withSnackbar } from 'notistack';
+import { useRouter } from 'next/router';
 
 import apiErrors from '@template/shared/config/apiErrors';
+import routes from '@template/shared/config/app/routes';
 
 import addRoleBreadcrumbs from 'pages/roles/addRole/breadcrumbs';
 
@@ -37,6 +39,7 @@ const ROLE_CREATE = gql`
 const AddRole = (props: AddRoleProps) => {
   const classes = useStyles();
 
+  const router = useRouter();
   const [roleCreate] = useMutation<RoleCreate, RoleCreateVars>(ROLE_CREATE);
   const { handleSubmit, register, errors } = useForm<{ name: string }>();
 
@@ -45,6 +48,7 @@ const AddRole = (props: AddRoleProps) => {
       .then(res => {
         if (res.data) {
           props.enqueueSnackbar('Role úspěšně vytvořena', { variant: 'success' });
+          router.push(routes.roles.index);
         }
       })
       .catch(error => {
@@ -85,7 +89,7 @@ const AddRole = (props: AddRoleProps) => {
             variant="outlined"
             label="Název role"
             name="name"
-            inputRef={register({ required: true,pattern:/[a-z]+/ })}
+            inputRef={register({ required: true, pattern: /[a-zA-Z]+/ })}
             error={errors.name !== undefined}
           />
         </div>
