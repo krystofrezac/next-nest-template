@@ -39,6 +39,10 @@ const RESOURCE_CHANGE_ROLES = gql`
       roles {
         id
       }
+      minimalCount
+      requires {
+        id
+      }
     }
   }
 `;
@@ -52,6 +56,10 @@ const RESOURCE_CATEGORY_FIND_ALL = gql`
         id
         name
         roles {
+          id
+        }
+        minimalCount
+        requires {
           id
         }
       }

@@ -13,8 +13,11 @@ import {
 } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import AddIcon from '@material-ui/icons/AddCircle';
+import WarningIcon from '@material-ui/icons/Warning';
 
 import routes from '@template/shared/config/app/routes';
+
+import { withSnackbar } from 'notistack';
 import { RolesProps } from './types';
 
 const Roles = (props: RolesProps) => {
@@ -47,25 +50,57 @@ const Roles = (props: RolesProps) => {
         );
         const active = resource.roles.some(r => r.id === role.id);
         const changedActive = changed ? !active : active;
+
         const checkboxChangeHandler = () => {
           props.onResourceChange(resource.id, role.id, !changedActive);
         };
+
+        let disabled = false;
+        resource.requires.forEach(req => {
+          const changedRequested = props.changedResources.find(
+            res => res.resourceId === req.id && res.roleId === role.id,
+          );
+          if (changedRequested) {
+            disabled = !changedRequested.active;
+            if (disabled && changedActive) {
+              props.onResourceChange(resource.id, role.id, false);
+            }
+          } else if (
+            !props.resourceCategories.some(cat =>
+              cat.resources.some(res => res.id === req.id && res.roles.some(r => r.id === role.id)),
+            )
+          ) {
+            disabled = true;
+            if (changedActive) props.onResourceChange(resource.id, role.id, !changedActive);
+          }
+        });
         return (
           <TableCell key={`resourceRole${role.id}-${category.id}`} padding="none">
             <Checkbox
               checked={changedActive}
-              disabled={role.id < 0}
+              disabled={role.id < 0 || disabled}
               onChange={checkboxChangeHandler}
             />
           </TableCell>
         );
       });
+      let rolesCount = resource.roles.length;
+      props.changedResources.forEach(changed => {
+        if (changed.resourceId === resource.id) {
+          if (changed.active) rolesCount++;
+          else rolesCount--;
+        }
+      });
+      const minimalCountError = resource.minimalCount > rolesCount;
       return (
         <React.Fragment key={`categoryResource${category.id}-${resource.id}`}>
           <TableRow>
             <TableCell padding="none">
               <Link
-                href={{ pathname: routes.roles.resourceDetail, query: { resourceId: resource.id } }}
+                href={{
+                  pathname: routes.roles.resourceDetail,
+                  query: { resourceId: resource.id },
+                }}
               >
                 <a>
                   <DetailTooltip>
@@ -76,6 +111,18 @@ const Roles = (props: RolesProps) => {
                 </a>
               </Link>
               {resource.name}
+              {minimalCountError && (
+                <IconButton
+                  color="secondary"
+                  onClick={() => {
+                    props.enqueueSnackbar('Nesplněn minimální počet zdroje', {
+                      variant: 'warning',
+                    });
+                  }}
+                >
+                  <WarningIcon />
+                </IconButton>
+              )}
             </TableCell>
             {resourceRoles}
           </TableRow>
@@ -139,4 +186,4 @@ const Roles = (props: RolesProps) => {
   );
 };
 
-export default Roles;
+export default withSnackbar(Roles);

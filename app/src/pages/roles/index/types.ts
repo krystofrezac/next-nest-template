@@ -15,6 +15,8 @@ interface Resource {
   id: number;
   name: string;
   roles: { id: number }[];
+  minimalCount: number;
+  requires: { id: number }[];
 }
 
 interface Category {
@@ -35,6 +37,8 @@ export interface ResourceChangeRoles {
     roles: {
       id: number;
     }[];
+    minimalCount: number;
+    requires: { id: number }[];
   }[];
 }
 
@@ -62,7 +66,7 @@ export interface MapDispatch {
 
 export interface RolesIndexProps extends MapState, MapDispatch, WithSnackbarProps {}
 
-export interface RolesProps {
+export interface RolesProps extends WithSnackbarProps{
   resourceCategories: ResourceCategory[];
   roles: RoleRedux[];
   changedResources: ChangedResource[];

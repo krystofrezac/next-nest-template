@@ -7,6 +7,8 @@ export interface Resource {
   id: number;
   name: string;
   roles: { id: number }[];
+  minimalCount: number;
+  requires: { id: number }[];
 }
 
 export interface ChangedResource {
