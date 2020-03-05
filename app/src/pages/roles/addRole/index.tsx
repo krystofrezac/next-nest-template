@@ -16,7 +16,11 @@ import addRoleBreadcrumbs from 'pages/roles/addRole/breadcrumbs';
 import withPage from 'components/withPage';
 import Paper from 'components/Paper';
 
-import { AddRoleProps, RoleCreate, RoleCreateVars } from './types';
+import { Dispatch } from 'redux';
+import { Role } from 'redux/reducers/roles/types';
+import { rolesAddRole } from 'redux/actions/roles';
+import { connect } from 'react-redux';
+import { AddRoleProps, MapDispatch, MapState, RoleCreate, RoleCreateVars } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   textField: {
@@ -28,6 +32,7 @@ const ROLE_CREATE = gql`
   mutation($name: String!) {
     roleCreate(name: $name) {
       id
+      name
       resources {
         id
         name
@@ -48,6 +53,7 @@ const AddRole = (props: AddRoleProps) => {
       .then(res => {
         if (res.data) {
           props.enqueueSnackbar('Role úspěšně vytvořena', { variant: 'success' });
+          props.addRole(res.data.roleCreate);
           router.push(routes.roles.index);
         }
       })
@@ -97,5 +103,13 @@ const AddRole = (props: AddRoleProps) => {
     </Paper>
   );
 };
+const mapStateToProps = (): MapState => ({});
 
-export default withPage(withSnackbar(AddRole), addRoleBreadcrumbs);
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatch => ({
+  addRole: (role: Role) => dispatch(rolesAddRole(role)),
+});
+
+export default withPage(
+  connect(mapStateToProps, mapDispatchToProps)(withSnackbar(AddRole)),
+  addRoleBreadcrumbs,
+);

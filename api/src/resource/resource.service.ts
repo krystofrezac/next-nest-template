@@ -33,18 +33,19 @@ class ResourceService {
       const requiredResources = await resource.requires;
 
       if (resource.minimalCount > resourceRoles.length) {
-        throw new BadRequestException(apiErrors.input.invalid);
+        return false;
       }
 
       for (const role of resourceRoles) {
         for (const requiredResource of requiredResources) {
           const a = resources.find(r => r.id === requiredResource.id);
           if (!(await a.roles).some(r => r.id === role.id)) {
-            throw new BadRequestException(apiErrors.input.invalid);
+            return false;
           }
         }
       }
     }
+    return true;
   }
 }
 

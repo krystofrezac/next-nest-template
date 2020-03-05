@@ -11,4 +11,10 @@ export interface RoleFindByIdVars {
   id: number;
 }
 
-export interface RoleDetailIndexProps extends WithSnackbarProps {}
+export interface MapState {}
+
+export interface MapDispatch {
+  removeRole: (id: number) => void;
+}
+
+export interface RoleDetailIndexProps extends WithSnackbarProps, MapState, MapDispatch {}

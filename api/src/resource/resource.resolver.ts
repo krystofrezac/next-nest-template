@@ -1,12 +1,16 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { BadRequestException } from '@nestjs/common';
 import { Int } from 'type-graphql';
 
 import Secured from 'auth/secured.guard';
 
+import RoleService from 'role/role.service';
+
+import apiErrors from 'config/apiErrors';
+
 import ResourceService from './resource.service';
 import Resource from './resource.entity';
 import ChangedRoleArg from './args/changedRole.arg';
-import RoleService from '../role/role.service';
 
 @Resolver()
 class ResourceResolver {
@@ -47,13 +51,10 @@ class ResourceResolver {
         }
       }
     }
-    for (const resource of resources) {
-      console.log('resource', resource);
-      console.log('resource requires', await resource.requires);
-      console.log('resource roles', await resource.roles);
-      console.log('----------------------');
+
+    if (!(await this.resourceService.validate(resources))) {
+      throw new BadRequestException(apiErrors.input.invalid);
     }
-    await this.resourceService.validate(resources);
     return this.resourceService.saveMultiple(resources);
   }
 }

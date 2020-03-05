@@ -5,13 +5,17 @@ import { Int } from 'type-graphql';
 import apiErrors from 'config/apiErrors';
 
 import Secured from 'auth/secured.guard';
+import ResourceService from 'resource/resource.service';
 
 import RoleService from './role.service';
 import Role from './role.entity';
 
 @Resolver()
 class RoleResolver {
-  constructor(private readonly roleService: RoleService) {}
+  constructor(
+    private readonly roleService: RoleService,
+    private readonly resourceService: ResourceService,
+  ) {}
 
   @Query(() => [Role])
   @Secured()
@@ -41,6 +45,22 @@ class RoleResolver {
   async roleRemove(@Args({ name: 'id', type: () => Int }) id: number) {
     const role = await this.roleService.findById(id);
     if (!role) return new BadRequestException(apiErrors.input.invalid);
+
+    if ((await this.roleService.findAll()).length < 2)
+      throw new BadRequestException(apiErrors.remove.roleMinimalCount);
+
+    const resources = await this.resourceService.findAll();
+    for (const resource of resources) {
+      const resourceRoles = await resource.roles;
+      const roleIndex = resourceRoles.findIndex(r => r.id === id);
+      if (roleIndex >= 0) {
+        resourceRoles.splice(roleIndex, 1);
+        break;
+      }
+    }
+    if (!(await this.resourceService.validate(resources))) {
+      throw new BadRequestException(apiErrors.remove.resourceConditions);
+    }
     await this.roleService.remove(role);
     return true;
   }

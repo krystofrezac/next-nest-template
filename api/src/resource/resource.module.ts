@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import Resource from 'resource/resource.entity';
@@ -8,7 +8,7 @@ import AuthModule from '../auth/auth.module';
 import RoleModule from '../role/role.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Resource]), AuthModule, RoleModule],
+  imports: [TypeOrmModule.forFeature([Resource]), AuthModule, forwardRef(() => RoleModule)],
   providers: [ResourceResolver, ResourceService],
   exports: [ResourceService],
 })

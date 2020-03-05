@@ -47,6 +47,15 @@ const rolesReducer = (s = initState, action) => {
       }
     });
   }
+  if (type === rolesActionTypes.addRole) {
+    state.roles.push(action.role);
+    return { ...state };
+  }
+  if (type === rolesActionTypes.removeRole) {
+    const roleIndex = state.roles.findIndex(r => r.id === action.id);
+    if (roleIndex >= 0) state.roles.splice(roleIndex, 1);
+    return { ...state };
+  }
 
   return state;
 };

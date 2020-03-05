@@ -7,13 +7,23 @@ import { Button } from '@material-ui/core';
 import { withSnackbar } from 'notistack';
 
 import routes from '@template/shared/config/app/routes';
+import apiErrors from '@template/shared/config/apiErrors';
 
 import withPage from 'components/withPage';
 import PaperWithTabs from 'components/PaperWithTabs';
 
+import { Dispatch } from 'redux';
+import { rolesRemoveRole } from 'redux/actions/roles';
+import { connect } from 'react-redux';
 import roleDetailBreadcrumbs from './breadcrumbs';
 import ResourcesIndex from './resources';
-import { RoleDetailIndexProps, RoleFindById, RoleFindByIdVars } from './types';
+import {
+  MapDispatch,
+  MapState,
+  RoleDetailIndexProps,
+  RoleFindById,
+  RoleFindByIdVars,
+} from './types';
 
 const ROLE_FIND_BY_ID = gql`
   query($id: Int!) {
@@ -47,12 +57,22 @@ const RoleDetailIndex = (props: RoleDetailIndexProps) => {
     })
       .then(res => {
         if (res.data) {
+          console.log(res);
           props.enqueueSnackbar('Role úspěšně odstraněna', { variant: 'success' });
+          props.removeRole(+router.query.roleId);
           router.push(routes.roles.index);
         }
       })
-      .catch(() => {
-        props.enqueueSnackbar('Něco se pokazilo', { variant: 'error' });
+      .catch(err => {
+        if (err.graphQLErrors.some(e => e.message?.message === apiErrors.remove.roleMinimalCount))
+          props.enqueueSnackbar('V systému musí být minimálně jedna role', { variant: 'error' });
+        else if (
+          err.graphQLErrors.some(e => e.message?.message === apiErrors.remove.resourceConditions)
+        )
+          props.enqueueSnackbar('Role nejde odstranit, protože by nebyli splněny podmínky zdrojů', {
+            variant: 'error',
+          });
+        else props.enqueueSnackbar('Něco se pokazilo', { variant: 'error' });
       });
   };
 
@@ -71,4 +91,13 @@ const RoleDetailIndex = (props: RoleDetailIndexProps) => {
   );
 };
 
-export default withPage(withSnackbar(RoleDetailIndex), roleDetailBreadcrumbs);
+const mapStateToProps = (): MapState => ({});
+
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatch => ({
+  removeRole: (id: number) => dispatch(rolesRemoveRole(id)),
+});
+
+export default withPage(
+  connect(mapStateToProps, mapDispatchToProps)(withSnackbar(RoleDetailIndex)),
+  roleDetailBreadcrumbs,
+);

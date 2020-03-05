@@ -24,3 +24,13 @@ export const rolesUpdateResources = (resources: Resource[]) => ({
   type: rolesActionTypes.updateResources,
   resources,
 });
+
+export const rolesAddRole = (role: Role) => ({
+  type: rolesActionTypes.addRole,
+  role,
+});
+
+export const rolesRemoveRole = (id: number) => ({
+  type: rolesActionTypes.removeRole,
+  id,
+});
