@@ -1,9 +1,11 @@
 import {QueryRunner} from "typeorm";
 import addResource from "./addResource";
 
-const addResources = async (queryRunner: QueryRunner, resources: { name: string, description: string, categoryName: string }[]) => {
+const addResources = async (queryRunner: QueryRunner, resources: { name: string, description: string, categoryName: string, minimalCount?: number, requiredResource?: string[] }[]) => {
     for (const resource of resources) {
-        await addResource(queryRunner, resource.name, resource.description, resource.categoryName);
+        const requiredResource = resource.requiredResource ? resource.requiredResource : [];
+        const minimalCount = resource.minimalCount ? resource.minimalCount : 0;
+        await addResource(queryRunner, resource.name, resource.description, resource.categoryName, minimalCount, requiredResource);
     }
 };
 

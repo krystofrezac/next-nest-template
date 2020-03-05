@@ -31,11 +31,7 @@ class ResourceResolver {
   async resourceChangeRoles(
     @Args({ name: 'changedRoles', type: () => [ChangedRoleArg] }) changedRoles: ChangedRoleArg[],
   ) {
-    const resources: Resource[] = [];
-    for (const changed of changedRoles) {
-      if (!resources.some(r => r.id === changed.resourceId))
-        resources.push(await this.resourceService.findById(changed.resourceId));
-    }
+    const resources: Resource[] = await this.resourceService.findAll();
     for (const changed of changedRoles) {
       const resource = resources.find(r => r.id === changed.resourceId);
       const resourceRole = await resource.roles;
@@ -51,6 +47,13 @@ class ResourceResolver {
         }
       }
     }
+    for (const resource of resources) {
+      console.log('resource', resource);
+      console.log('resource requires', await resource.requires);
+      console.log('resource roles', await resource.roles);
+      console.log('----------------------');
+    }
+    await this.resourceService.validate(resources);
     return this.resourceService.saveMultiple(resources);
   }
 }

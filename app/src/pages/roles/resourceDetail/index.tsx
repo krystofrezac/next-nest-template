@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useLazyQuery, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
@@ -45,9 +45,14 @@ const ResourceDetailIndex = () => {
     ResourceFindById,
     ResourceFindByIdVars
   >(RESOURCE_FIND_BY_ID);
+  const [lastId, setLastId] = useState(undefined);
 
-  if (+router.query.resourceId && !data && !loading && !error) {
+  if (
+    +router.query.resourceId &&
+    ((!data && !loading && !error) || lastId !== +router.query.resourceId)
+  ) {
     resourceFindById({ variables: { id: +router.query.resourceId } });
+    setLastId(+router.query.resourceId);
   }
 
   return (

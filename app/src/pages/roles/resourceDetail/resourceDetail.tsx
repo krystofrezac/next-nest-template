@@ -66,15 +66,29 @@ const ResourceDetail = (props: ResourceDetailProps) => {
             tooltip="Zdroje které musí mít role aktivní, aby bylo možné aktivovat tento zdroj"
           >
             {requires.map(r => (
-              <div key={`requires${r.id}`}>{r.name}</div>
+              <div key={`requires${r.id}`}>
+                <Link href={{ pathname: routes.roles.resourceDetail, query: { resourceId: r.id } }}>
+                  <IconButton color="primary">
+                    <InfoIcon />
+                  </IconButton>
+                </Link>
+                {r.name}
+              </div>
             ))}
           </SimpleRow>
           <SimpleRow
-            name="Je vyžadována"
+            name="Je vyžadována v"
             tooltip="Zdroje, které potřebují tento zdroj aktivní, aby mohli být sami aktivní"
           >
             {requiredBy.map(r => (
-              <div key={`requiredBy${r.id}`}>{r.name}</div>
+              <div key={`requiredBy${r.id}`}>
+                <Link href={{ pathname: routes.roles.resourceDetail, query: { resourceId: r.id } }}>
+                  <IconButton color="primary">
+                    <InfoIcon />
+                  </IconButton>
+                </Link>
+                {r.name}
+              </div>
             ))}
           </SimpleRow>
         </>
