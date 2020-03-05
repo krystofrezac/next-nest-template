@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Table, TableBody, TableHead, Typography, IconButton } from '@material-ui/core';
+import { Typography, IconButton } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import Link from 'next/link';
 

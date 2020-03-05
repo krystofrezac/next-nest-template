@@ -1,20 +1,19 @@
 import React from 'react';
 
+import { gql } from 'apollo-boost';
+import { useQuery } from '@apollo/react-hooks';
+import { connect } from 'react-redux';
+
+import { State } from 'redux/reducers/types';
+
 import withApollo from 'lib/apollo/withApollo';
 
 import Page from 'components/withPage/Page';
-import { gql } from 'apollo-boost';
-import { useQuery } from '@apollo/react-hooks';
-
 import hasResources from 'components/resources/hasResources';
-import { State } from 'redux/reducers/types';
-import { connect } from 'react-redux';
 import rolesToResources from 'components/resources/rolesToResources';
-import dynamic from 'next/dynamic';
 import NoAccess from 'components/withPage/NoAccess';
-import { Breadcrumb } from './types';
 
-const Error = dynamic(import('next/error'), { ssr: false });
+import { Breadcrumb } from './types';
 
 const USER_GET_LOGGED = gql`
   {

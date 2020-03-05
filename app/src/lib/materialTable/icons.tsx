@@ -1,4 +1,5 @@
-import { forwardRef } from 'react';
+/* eslint-disable react/display-name */
+import React, { forwardRef } from 'react';
 
 import { Icons } from 'material-table';
 

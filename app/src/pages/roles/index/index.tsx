@@ -72,7 +72,9 @@ const RESOURCE_CATEGORY_FIND_ALL = gql`
 `;
 
 const RolesIndex = (props: RolesIndexProps) => {
-  const { data, error, loading } = useQuery<ResourceRoleFindAll>(RESOURCE_CATEGORY_FIND_ALL);
+  const { data, error, loading } = useQuery<ResourceRoleFindAll>(RESOURCE_CATEGORY_FIND_ALL, {
+    fetchPolicy: 'no-cache',
+  });
   const [resourceChangeRoles, { data: mutationData, error: mutationError }] = useMutation<
     ResourceChangeRoles,
     ResourceChangeRolesVars

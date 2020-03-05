@@ -57,7 +57,6 @@ const RoleDetailIndex = (props: RoleDetailIndexProps) => {
     })
       .then(res => {
         if (res.data) {
-          console.log(res);
           props.enqueueSnackbar('Role úspěšně odstraněna', { variant: 'success' });
           props.removeRole(+router.query.roleId);
           router.push(routes.roles.index);

@@ -66,7 +66,7 @@ export interface MapDispatch {
 
 export interface RolesIndexProps extends MapState, MapDispatch, WithSnackbarProps {}
 
-export interface RolesProps extends WithSnackbarProps{
+export interface RolesProps extends WithSnackbarProps {
   resourceCategories: ResourceCategory[];
   roles: RoleRedux[];
   changedResources: ChangedResource[];

@@ -1,15 +1,6 @@
-import React, { CSSProperties } from 'react';
+import React from 'react';
 
-import {
-  TableCell,
-  TableRow,
-  Tooltip,
-  makeStyles,
-  Table,
-  TableHead,
-  TableBody,
-  IconButton,
-} from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import Link from 'next/link';
 

@@ -52,9 +52,10 @@ const rolesReducer = (s = initState, action) => {
     return { ...state };
   }
   if (type === rolesActionTypes.removeRole) {
-    const roleIndex = state.roles.findIndex(r => r.id === action.id);
-    if (roleIndex >= 0) state.roles.splice(roleIndex, 1);
-    return { ...state };
+    const roles = [...state.roles];
+    const roleIndex = roles.findIndex(r => r.id === action.id);
+    if (roleIndex >= 0) roles.splice(roleIndex, 1);
+    return { ...state, roles };
   }
 
   return state;

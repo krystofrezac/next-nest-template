@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useLazyQuery, useQuery } from '@apollo/react-hooks';
+import { useLazyQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
 import resourceDetailBreadcrumbs from 'pages/roles/resourceDetail/breadcrumbs';
