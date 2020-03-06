@@ -57,7 +57,7 @@ const Login = (props: LoginProps) => {
         {props.loading ? <CircularProgress size={46} className={classes.progress} /> : null}
 
         <Typography component="h1" variant="h5">
-          Sign in
+          Přihlašování
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)} className={classes.form} noValidate>
           <TextField
@@ -69,7 +69,6 @@ const Login = (props: LoginProps) => {
             label="Email"
             name="email"
             autoComplete="email"
-            autoFocus
           />
           <TextField
             inputRef={register({ required: true })}
@@ -78,7 +77,7 @@ const Login = (props: LoginProps) => {
             margin="normal"
             fullWidth
             name="password"
-            label="Password"
+            label="Heslo"
             type="password"
             autoComplete="current-password"
           />
@@ -89,7 +88,7 @@ const Login = (props: LoginProps) => {
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            Přihlásit se
           </Button>
         </form>
       </div>
