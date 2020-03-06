@@ -4,14 +4,13 @@ import { makeStyles, Theme } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 
-import store from 'redux/reducers';
-import { storeClear } from 'redux/actions/store';
+import appConfig from '@template/shared/config/app';
+import routes from '@template/shared/config/app/routes';
+
 import AppBar from './AppBar';
 import Drawer from './Drawer';
 import Content from './Content';
 import { PageProps } from './types';
-import appConfig from '../../../../shared/config/app';
-import routes from '../../../../shared/config/app/routes';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -33,7 +32,6 @@ const Page = ({ Component, breadcrumbs, ...props }: PageProps) => {
 
   const handlerLogOut = () => {
     removeCookies(appConfig.cookies.token);
-    store.dispatch(storeClear());
     router.push(routes.login);
   };
 

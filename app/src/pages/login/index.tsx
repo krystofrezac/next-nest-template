@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
 import { useCookies } from 'react-cookie';
+import { useRouter } from 'next/router';
 
 import appConfig from '@template/shared/config/app';
 
 import withApollo from 'lib/apollo/withApollo';
 
-import { UserReducer } from 'redux/reducers/user/types';
-import { userChange } from 'redux/actions/user';
-
-import { useRouter } from 'next/router';
-import { LoginIndexProps, MapDispatch, MapState, UserLogin } from './types';
+import { LoginIndexProps, UserLogin } from './types';
 import Login from './login';
 
 const USER_LOGIN = gql`
@@ -35,19 +30,28 @@ const USER_LOGIN = gql`
   }
 `;
 
+const USER_GET_LOGGED = gql`
+  {
+    userGetLogged {
+      id
+    }
+  }
+`;
+
 const LoginIndex = (props: LoginIndexProps) => {
   const [userLogin, { loading, data, error }] = useLazyQuery<UserLogin>(USER_LOGIN);
-  const [getCookies, setCookie] = useCookies();
+  const { data: loggedData } = useQuery(USER_GET_LOGGED);
+  const [, setCookie] = useCookies();
   const [state, setState] = useState({ loggedIn: false });
   const router = useRouter();
 
   if (data && !loading && !state.loggedIn) {
-    props.changeUser(data.userLogin);
-    setCookie(appConfig.cookies.token, data.userLogin.accessToken);
     setState({ ...state, loggedIn: true });
+    setCookie(appConfig.cookies.token, data.userLogin.accessToken);
+    router.push(appConfig.routes.dashboard);
   }
 
-  if (getCookies[appConfig.cookies.token]) {
+  if (loggedData) {
     router.push(appConfig.routes.dashboard);
   }
 
@@ -58,10 +62,4 @@ const LoginIndex = (props: LoginIndexProps) => {
   return <Login onSubmit={submitHandler} badInputs={error !== undefined} loading={loading} />;
 };
 
-const mapStateToProps = (): MapState => ({});
-
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatch => ({
-  changeUser: (user: UserReducer) => dispatch(userChange(user)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(withApollo(LoginIndex));
+export default withApollo(LoginIndex);

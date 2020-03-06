@@ -15,6 +15,7 @@ import PaperWithTabs from 'components/PaperWithTabs';
 import { Dispatch } from 'redux';
 import { rolesRemoveRole } from 'redux/actions/roles';
 import { connect } from 'react-redux';
+import LoadingButton from 'components/LoadingButton';
 import roleDetailBreadcrumbs from './breadcrumbs';
 import ResourcesIndex from './resources';
 import {
@@ -45,7 +46,7 @@ const RoleDetailIndex = (props: RoleDetailIndexProps) => {
   const [roleFindById, { data, error, loading }] = useLazyQuery<RoleFindById, RoleFindByIdVars>(
     ROLE_FIND_BY_ID,
   );
-  const [roleRemove] = useMutation(ROLE_REMOVE);
+  const [roleRemove, { loading: mutationLoading }] = useMutation(ROLE_REMOVE);
 
   if (router.query.roleId && !data && !error && !loading) {
     roleFindById({ variables: { id: +router.query.roleId } });
@@ -81,9 +82,15 @@ const RoleDetailIndex = (props: RoleDetailIndexProps) => {
         title={data ? data.roleFindById.name : ''}
         tabs={[{ label: 'Zdroje', panel: <ResourcesIndex /> }]}
         actions={[
-          <Button key="actionRemove" color="secondary" variant="contained" onClick={submitHandler}>
+          <LoadingButton
+            loading={mutationLoading}
+            key="actionRemove"
+            color="secondary"
+            variant="contained"
+            onClick={submitHandler}
+          >
             Odstranit
-          </Button>,
+          </LoadingButton>,
         ]}
       />
     </>

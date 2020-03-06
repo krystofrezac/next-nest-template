@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconButton, List, ListItem, ListItemText } from '@material-ui/core';
+import { IconButton, List, ListItem, ListItemText, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 
 import Link from 'next/link';
@@ -10,6 +10,7 @@ const Resources = (props: ResourcesProps) => {
   const { resources } = props;
   return (
     <>
+      {props.resources?.length === 0 && <Typography>Role nemá žádné přiřazené zdroje</Typography>}
       <List>
         {resources &&
           resources.map(resource => (

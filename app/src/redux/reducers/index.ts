@@ -1,10 +1,8 @@
 import { combineReducers, createStore } from 'redux';
 
-import user from './user';
 import roles from './roles';
 
 const appReducer = combineReducers({
-  user,
   roles,
 });
 

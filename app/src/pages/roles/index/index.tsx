@@ -21,6 +21,7 @@ import {
 import { ChangedResource, Resource, ResourceCategory, Role } from 'redux/reducers/roles/types';
 
 import rolesBreadcrumbs from 'pages/roles/index/breadcrumbs';
+import LoadingButton from 'components/LoadingButton';
 import {
   ResourceRoleFindAll,
   RolesIndexProps,
@@ -75,10 +76,10 @@ const RolesIndex = (props: RolesIndexProps) => {
   const { data, error, loading } = useQuery<ResourceRoleFindAll>(RESOURCE_CATEGORY_FIND_ALL, {
     fetchPolicy: 'no-cache',
   });
-  const [resourceChangeRoles, { data: mutationData, error: mutationError }] = useMutation<
-    ResourceChangeRoles,
-    ResourceChangeRolesVars
-  >(RESOURCE_CHANGE_ROLES);
+  const [
+    resourceChangeRoles,
+    { data: mutationData, loading: mutationLoading, error: mutationError },
+  ] = useMutation<ResourceChangeRoles, ResourceChangeRolesVars>(RESOURCE_CHANGE_ROLES);
   const [saved, setSaved] = useState(false);
   const [mutationSnacked, setMutationSnacked] = useState(false);
 
@@ -120,12 +121,24 @@ const RolesIndex = (props: RolesIndexProps) => {
         loading={loading}
         title="Role"
         actions={[
-          <Button key="actionSave" variant="contained" color="primary" onClick={submitHandler}>
+          <LoadingButton
+            loading={mutationLoading}
+            key="actionSave"
+            variant="contained"
+            color="primary"
+            onClick={submitHandler}
+          >
             Uložit
-          </Button>,
-          <Button key="actionCancel" variant="contained" color="secondary" onClick={cancelHandler}>
+          </LoadingButton>,
+          <LoadingButton
+            loading={mutationLoading}
+            key="actionCancel"
+            variant="contained"
+            color="secondary"
+            onClick={cancelHandler}
+          >
             Zrušit
-          </Button>,
+          </LoadingButton>,
         ]}
         footer={<Typography>{`Počet změn: ${props.changedResources.length}`}</Typography>}
       >

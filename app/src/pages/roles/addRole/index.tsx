@@ -20,6 +20,7 @@ import { Dispatch } from 'redux';
 import { Role } from 'redux/reducers/roles/types';
 import { rolesAddRole } from 'redux/actions/roles';
 import { connect } from 'react-redux';
+import LoadingButton from 'components/LoadingButton';
 import { AddRoleProps, MapDispatch, MapState, RoleCreate, RoleCreateVars } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -45,7 +46,7 @@ const AddRole = (props: AddRoleProps) => {
   const classes = useStyles();
 
   const router = useRouter();
-  const [roleCreate] = useMutation<RoleCreate, RoleCreateVars>(ROLE_CREATE);
+  const [roleCreate, { loading }] = useMutation<RoleCreate, RoleCreateVars>(ROLE_CREATE);
   const { handleSubmit, register, errors } = useForm<{ name: string }>();
 
   const onSubmit = values => {
@@ -76,17 +77,18 @@ const AddRole = (props: AddRoleProps) => {
     <Paper
       title="Přidání role"
       actions={[
-        <Button
+        <LoadingButton
+          loading={loading}
           key="actionAdd"
           color="primary"
           variant="contained"
           onClick={handleSubmit(onSubmit)}
         >
           Přidat
-        </Button>,
-        <Button key="actionCancel" color="secondary" variant="contained">
+        </LoadingButton>,
+        <LoadingButton loading={loading} key="actionCancel" color="secondary" variant="contained">
           Zrušit
-        </Button>,
+        </LoadingButton>,
       ]}
     >
       <form>

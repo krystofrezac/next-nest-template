@@ -16,7 +16,7 @@ const ResourceDetail = (props: ResourceDetailProps) => {
   const description = resource ? resource.description : '';
   const category = resource ? resource.category : { id: undefined, name: '' };
   const roles = resource ? resource.roles : [];
-  const minimalCount = resource ? resource.roleMinimalCount : '';
+  const minimalCount = resource ? resource.minimalCount : '';
   const requires = resource ? resource.requires : [];
   const requiredBy = resource ? resource.requiredBy : [];
 

@@ -23,6 +23,7 @@ const ResourcesIndex = () => {
   const router = useRouter();
   const [roleFindById, { data, error, loading }] = useLazyQuery<RoleFindById, RoleFindByIdVars>(
     ROLE_FIND_BY_ID,
+    { fetchPolicy: 'no-cache' },
   );
 
   if (router.query.roleId && !data && !error && !loading) {

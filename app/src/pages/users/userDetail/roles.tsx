@@ -9,6 +9,8 @@ import { useRouter } from 'next/router';
 
 import MaterialTable from 'lib/materialTable';
 
+import LoadingButton from 'components/LoadingButton';
+
 import roleFragment from './roleFragment';
 import { Role, RoleFindAll, RolesProps, UserChangeRoles, UserChangeRolesVars } from './types';
 
@@ -49,7 +51,10 @@ const Roles = (props: RolesProps) => {
 
   const router = useRouter();
   const { data, loading } = useQuery<RoleFindAll>(ROLE_FIND_ALL);
-  const [userChangeRoles] = useMutation<UserChangeRoles, UserChangeRolesVars>(USER_CHANGE_ROLES);
+  const [userChangeRoles, { loading: muationLoading }] = useMutation<
+    UserChangeRoles,
+    UserChangeRolesVars
+  >(USER_CHANGE_ROLES);
   const [editing, setEditing] = useState(false);
   const [selected, setSelected] = useState<Role[]>(props.roles);
 
@@ -99,14 +104,24 @@ const Roles = (props: RolesProps) => {
         ) : (
           <>
             <div className={classes.action}>
-              <Button color="primary" variant="contained" onClick={submitHandler}>
+              <LoadingButton
+                loading={muationLoading}
+                color="primary"
+                variant="contained"
+                onClick={submitHandler}
+              >
                 Uložit
-              </Button>
+              </LoadingButton>
             </div>
             <div className={classes.action}>
-              <Button color="secondary" variant="contained" onClick={() => setEditing(false)}>
+              <LoadingButton
+                loading={muationLoading}
+                color="secondary"
+                variant="contained"
+                onClick={() => setEditing(false)}
+              >
                 Zrušit
-              </Button>
+              </LoadingButton>
             </div>
           </>
         )}

@@ -1,6 +1,5 @@
-import { Role } from 'redux/reducers/user/types';
-
-const rolesToResources = (roles: Role[]) => {
+// TODO type
+const rolesToResources = roles => {
   const resources = [];
   roles.forEach(role => {
     role.resources.forEach(resource => {

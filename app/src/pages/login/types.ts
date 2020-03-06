@@ -23,10 +23,4 @@ export interface LoginProps {
   loading: boolean;
 }
 
-export interface MapState {}
-
-export interface MapDispatch {
-  changeUser: (user: UserReducer) => void;
-}
-
-export interface LoginIndexProps extends MapDispatch {}
+export interface LoginIndexProps {}
