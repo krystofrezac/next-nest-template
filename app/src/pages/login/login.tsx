@@ -11,7 +11,10 @@ import {
   CircularProgress,
 } from '@material-ui/core/';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { LoginProps } from 'pages/login/types';
+
+import { emailRegex } from '@template/shared/config/regexs';
+
+import { LoginProps } from './types';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -58,7 +61,7 @@ const Login = (props: LoginProps) => {
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)} className={classes.form} noValidate>
           <TextField
-            inputRef={register({ required: true, pattern: /^\S+@\S+$/i })}
+            inputRef={register({ required: true, pattern: emailRegex })}
             error={errors.email !== undefined || props.badInputs}
             variant="outlined"
             margin="normal"

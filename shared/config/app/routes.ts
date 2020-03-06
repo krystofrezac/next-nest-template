@@ -11,6 +11,7 @@ const routes = {
   users: {
     index: '/users',
     userDetail: '/users/userDetail',
+    addUser: '/users/addUser',
   },
 };
 

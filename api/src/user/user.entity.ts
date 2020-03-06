@@ -23,6 +23,9 @@ class User {
   @Column()
   password: string;
 
+  @Field({ nullable: true })
+  generatedPassword: string;
+
   @Field(() => [Role], { nullable: true })
   @ManyToMany(() => Role)
   @JoinTable()

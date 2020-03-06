@@ -3,6 +3,9 @@ import React from 'react';
 import { gql } from 'apollo-boost';
 import { useApolloClient } from '@apollo/react-hooks';
 import InfoIcon from '@material-ui/icons/Info';
+import Link from 'next/link';
+
+import routes from '@template/shared/config/app/routes';
 
 import MaterialTable from 'lib/materialTable';
 
@@ -13,7 +16,6 @@ import { UserPaginate, UserPaginateVars } from 'pages/users/index/types';
 import { Button } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import usersBreadcrumbs from './breadcrumbs';
-import routes from '../../../../../shared/config/app/routes';
 
 const USER_PAGINATE = gql`
   query($limit: Int!, $offset: Int!, $filter: UserFilterArg, $orderBy: OrderByArg) {
@@ -39,9 +41,11 @@ const UsersIndex = () => {
     <Paper
       title="Uživatelé"
       actions={[
-        <Button key="actionAdd" color="primary" variant="contained">
-          Přidat uživatele
-        </Button>,
+        <Link href={routes.users.addUser}>
+          <Button key="actionAdd" color="primary" variant="contained">
+            Přidat uživatele
+          </Button>
+        </Link>,
       ]}
     >
       <MaterialTable

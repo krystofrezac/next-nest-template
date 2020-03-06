@@ -1,12 +1,14 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { BadRequestException, UnauthorizedException } from '@nestjs/common';
+import { Int } from 'type-graphql';
+import { generate } from 'generate-password';
 
 import Secured from 'auth/secured.guard';
 import AuthService from 'auth/auth.service';
 import CurrentUser from 'auth/currentUser.decorator';
 import User from 'user/user.entity';
 import UserService from 'user/user.service';
-import { Int } from 'type-graphql';
+import { emailRegex } from 'config/regexs';
 import RoleService from '../role/role.service';
 
 @Resolver()
@@ -44,15 +46,20 @@ class UserResolver {
   }
 
   @Mutation(() => User)
+  @Secured()
   async userRegister(
     @Args('email') email: string,
-    @Args('password') password: string,
     @Args('name') name: string,
     @Args('surname') surname: string,
   ) {
+    const generatedPassword = generate({ length: 10, numbers: true });
+    if (!emailRegex.test(email)) {
+      throw new BadRequestException();
+    }
     const user = new User();
     user.email = email;
-    user.password = await this.userService.hashPassword(password);
+    user.password = await this.userService.hashPassword(generatedPassword);
+    user.generatedPassword = generatedPassword;
     user.name = name;
     user.surname = surname;
 

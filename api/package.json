@@ -15,7 +15,7 @@
     "postmigration:generate": "yarn build",
     "postmigration:create": "yarn build",
     "migration:create": "ts-node ./node_modules/.bin/typeorm migration:create",
-    "conf": "cp ../shared/config/api.ts ./src/config/ && cp ../shared/config/resource.ts ./src/config/ && cp ../shared/config/apiErrors.ts ./src/config"
+    "conf": "cp ../shared/config/api.ts ./src/config/ && cp ../shared/config/resource.ts ./src/config/ && cp ../shared/config/apiErrors.ts ./src/config && cp ../shared/config/regexs.ts ./src/config"
   },
   "workspaces": {
     "nohoist": [
@@ -37,6 +37,7 @@
     "apollo-server-express": "^2.9.16",
     "bcrypt": "^3.0.8",
     "class-transformer": "^0.2.3",
+    "generate-password": "^1.5.1",
     "graphql": "^14.5.8",
     "graphql-tools": "^4.0.6",
     "mysql": "^2.18.1",
