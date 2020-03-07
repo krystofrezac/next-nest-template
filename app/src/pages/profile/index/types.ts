@@ -4,5 +4,6 @@ export interface UserGetLogged {
     name: string;
     surname: string;
     email: string;
+    createTime: Date;
   };
 }

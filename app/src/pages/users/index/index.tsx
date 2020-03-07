@@ -25,6 +25,7 @@ const USER_PAGINATE = gql`
         name
         surname
         email
+        active
       }
       totalCount(filter: $filter)
     }
@@ -50,14 +51,17 @@ const UsersIndex = () => {
     >
       <MaterialTable
         data={query => {
+          console.log(query);
           return new Promise((resolve, reject) => {
             const emailFilter = query.filters.find(f => f.column.field === 'email');
             const nameFilter = query.filters.find(f => f.column.field === 'name');
             const surnameFilter = query.filters.find(f => f.column.field === 'surname');
+            const activeFilter = query.filters.find(f => f.column.field === 'active');
             const filter = {
               email: emailFilter ? emailFilter.value : '',
               name: nameFilter ? nameFilter.value : '',
               surname: surnameFilter ? surnameFilter.value : '',
+              active: activeFilter ? activeFilter.value.map(a => a === 'true') : [],
             };
             const orderBy = query.orderBy
               ? {
@@ -107,6 +111,12 @@ const UsersIndex = () => {
           { title: 'Email', field: 'email' },
           { title: 'Jméno', field: 'name' },
           { title: 'Příjmení', field: 'surname' },
+          {
+            title: 'Status',
+            field: 'active',
+            render: data => (data.active ? 'aktivní' : 'neaktivní'),
+            lookup: { true: 'aktivní', false: 'neaktivní' },
+          },
         ]}
       />
     </Paper>

@@ -10,6 +10,7 @@ interface User {
   email: string;
   name: string;
   surname: string;
+  createTime: Date;
   roles: Role[];
 }
 

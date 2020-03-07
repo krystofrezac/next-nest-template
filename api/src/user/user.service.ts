@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Like } from 'typeorm';
+import { Repository, Like, In } from 'typeorm';
 import { compare, hash } from 'bcrypt';
 
 import User from 'user/user.entity';
@@ -23,6 +23,7 @@ class UserService {
 
   async paginate(limit: number, offset: number, filter: UserFilterArg, orderBy?: OrderByArg) {
     const order = orderBy ? { [orderBy.fieldName]: orderBy.type } : {};
+
     return this.userRepository.find({
       take: limit,
       skip: offset,
@@ -30,6 +31,7 @@ class UserService {
         email: Like(`%${filter.email}%`),
         name: Like(`%${filter.name}%`),
         surname: Like(`%${filter.surname}%`),
+        active: In(filter.active.length > 0 ? filter.active : [true, false]),
       },
       order,
     });

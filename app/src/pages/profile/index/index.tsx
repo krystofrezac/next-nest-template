@@ -5,6 +5,7 @@ import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import { makeStyles } from '@material-ui/core/styles';
 import Link from 'next/link';
+import dateFormat from 'dateformat';
 
 import routes from '@template/shared/config/app/routes';
 
@@ -21,6 +22,7 @@ const USER_GET_LOGGED = gql`
       name
       surname
       email
+      createTime
     }
   }
 `;
@@ -35,6 +37,8 @@ const useStyles = makeStyles({
 const ProfileIndex = () => {
   const classes = useStyles();
   const { data, loading } = useQuery<UserGetLogged>(USER_GET_LOGGED);
+  const date = new Date(data?.userGetLogged.createTime || '');
+  const formattedDate = dateFormat(date, 'dd.mm.yyyy HH:MM:ss');
   return (
     <>
       <Grid container spacing={2}>
@@ -43,6 +47,7 @@ const ProfileIndex = () => {
             <Typography>{`Jméno: ${data?.userGetLogged.name || ''}`}</Typography>
             <Typography>{`Příjmení: ${data?.userGetLogged.surname || ''}`}</Typography>
             <Typography>{`Email: ${data?.userGetLogged.email || ''}`}</Typography>
+            <Typography>{`Datum registrace: ${formattedDate}`}</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} md={6}>

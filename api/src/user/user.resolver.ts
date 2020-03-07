@@ -46,7 +46,6 @@ class UserResolver {
   }
 
   @Mutation(() => User)
-  @Secured()
   async userRegister(
     @Args('email') email: string,
     @Args('name') name: string,
@@ -58,6 +57,7 @@ class UserResolver {
 
     const { plainPassword, hashedPassword } = await this.userService.generatePassword();
     const user = new User();
+    user.createTime = new Date(Date.now());
     user.email = email;
     user.password = hashedPassword;
     user.generatedPassword = plainPassword;

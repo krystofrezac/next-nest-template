@@ -10,6 +10,14 @@ class User {
   @PrimaryGeneratedColumn()
   readonly id: number;
 
+  @Field()
+  @Column({ default: true })
+  active: boolean;
+
+  @Field()
+  @Column()
+  createTime: Date;
+
   @Field({ nullable: true })
   accessToken: string;
 
