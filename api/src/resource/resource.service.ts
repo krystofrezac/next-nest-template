@@ -1,9 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 
 import Resource from 'resource/resource.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import apiErrors from '../config/apiErrors';
 
 @Injectable()
 class ResourceService {

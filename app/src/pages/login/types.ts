@@ -1,5 +1,3 @@
-import { UserReducer } from 'redux/reducers/user/types';
-
 export interface UserLogin {
   userLogin: {
     id: number;
@@ -22,5 +20,3 @@ export interface LoginProps {
   badInputs: boolean;
   loading: boolean;
 }
-
-export interface LoginIndexProps {}

@@ -38,8 +38,7 @@ const withPage = (
   const WithPage = withApollo((props: any) => {
     const { data, error } = useQuery<UserGetLogged>(USER_GET_LOGGED);
 
-    // TODO roles
-    const userResources = rolesToResources([]);
+    const userResources = rolesToResources(data?.userGetLogged?.roles || []);
 
     const showPage = (!error && hasResources(userResources, requiredResources)) || !process.browser;
 

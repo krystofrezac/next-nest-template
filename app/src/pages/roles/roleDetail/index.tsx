@@ -3,7 +3,6 @@ import React from 'react';
 import { gql } from 'apollo-boost';
 import { useRouter } from 'next/router';
 import { useLazyQuery, useMutation } from '@apollo/react-hooks';
-import { Button } from '@material-ui/core';
 import { withSnackbar } from 'notistack';
 
 import routes from '@template/shared/config/app/routes';

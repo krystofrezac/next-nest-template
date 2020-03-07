@@ -13,6 +13,7 @@ const routes = {
     userDetail: '/users/userDetail',
     addUser: '/users/addUser',
   },
+  profile: { index: '/profile', changePassword: '/profile/changePassword' },
 };
 
 export default routes;

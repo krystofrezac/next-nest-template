@@ -12,6 +12,9 @@ import {
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
+import Link from 'next/link';
+
+import routes from '@template/shared/config/app/routes';
 
 import { AppBarProps } from './types';
 
@@ -39,6 +42,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: theme.palette.getContrastText(theme.palette.secondary.main),
     backgroundColor: theme.palette.secondary.main,
   },
+  link: {
+    textDecoration: 'none',
+  },
 }));
 
 const AppBar = (props: AppBarProps) => {
@@ -55,9 +61,13 @@ const AppBar = (props: AppBarProps) => {
           Název aplikace
         </Typography>
         <div className={classes.rightIcons}>
-          <Avatar className={classes.avatar} color="secondary">
-            {`${props?.user?.name[0] || ''}${props?.user?.surname[0] || ''}`}
-          </Avatar>
+          <Link href={routes.profile.index}>
+            <a className={classes.link}>
+              <Avatar className={classes.avatar} color="secondary">
+                {`${props?.user?.name[0] || ''}${props?.user?.surname[0] || ''}`}
+              </Avatar>
+            </a>
+          </Link>
           <IconButton color="inherit" onClick={props.onLogOut}>
             <LogoutIcon />
           </IconButton>

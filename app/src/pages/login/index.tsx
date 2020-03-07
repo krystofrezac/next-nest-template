@@ -8,7 +8,7 @@ import appConfig from '@template/shared/config/app';
 
 import withApollo from 'lib/apollo/withApollo';
 
-import { LoginIndexProps, UserLogin } from './types';
+import { UserLogin } from './types';
 import Login from './login';
 
 const USER_LOGIN = gql`
@@ -38,9 +38,9 @@ const USER_GET_LOGGED = gql`
   }
 `;
 
-const LoginIndex = (props: LoginIndexProps) => {
+const LoginIndex = () => {
   const [userLogin, { loading, data, error }] = useLazyQuery<UserLogin>(USER_LOGIN);
-  const { data: loggedData } = useQuery(USER_GET_LOGGED);
+  const { data: loggedData } = useQuery(USER_GET_LOGGED, { fetchPolicy: 'no-cache' });
   const [, setCookie] = useCookies();
   const [state, setState] = useState({ loggedIn: false });
   const router = useRouter();

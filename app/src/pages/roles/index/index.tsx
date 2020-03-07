@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { withSnackbar } from 'notistack';
-import { Button, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 

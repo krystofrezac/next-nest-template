@@ -41,8 +41,8 @@ const UsersIndex = () => {
     <Paper
       title="Uživatelé"
       actions={[
-        <Link href={routes.users.addUser}>
-          <Button key="actionAdd" color="primary" variant="contained">
+        <Link key="actionAdd" href={routes.users.addUser}>
+          <Button color="primary" variant="contained">
             Přidat uživatele
           </Button>
         </Link>,

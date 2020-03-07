@@ -1,4 +1,4 @@
-import { Args, Parent, Query, ResolveProperty, Resolver } from '@nestjs/graphql';
+import { Args, Query, ResolveProperty, Resolver } from '@nestjs/graphql';
 import UserPaginator from 'user/paginator/userPaginator.type';
 import UserService from 'user/user.service';
 import { Int } from 'type-graphql';
