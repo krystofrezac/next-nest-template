@@ -9,7 +9,7 @@ import routes from '@template/shared/config/app/routes';
 
 import withPage from 'components/withPage';
 
-import UserLoginDataModal from './userLoginDataModal';
+import UserLoginDataDialog from './userLoginDataDialog';
 import addUserBreadcrumbs from './breadcrumbs';
 import AddUser from './addUser';
 import { AddUserIndexProps, UserRegister, UserRegisterVars } from './types';
@@ -44,7 +44,7 @@ const AddUserIndex = (props: AddUserIndexProps) => {
   return (
     <>
       <AddUser onSubmit={onSubmit} loading={loading} />
-      <UserLoginDataModal
+      <UserLoginDataDialog
         open={Boolean(data)}
         close={() => router.push(routes.users.index)}
         email={data?.userRegister.email}

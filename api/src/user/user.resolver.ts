@@ -1,7 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { Int } from 'type-graphql';
-import { generate } from 'generate-password';
 
 import Secured from 'auth/secured.guard';
 import AuthService from 'auth/auth.service';
@@ -9,7 +8,8 @@ import CurrentUser from 'auth/currentUser.decorator';
 import User from 'user/user.entity';
 import UserService from 'user/user.service';
 import { emailRegex } from 'config/regexs';
-import RoleService from '../role/role.service';
+import RoleService from 'role/role.service';
+import apiErrors from 'config/apiErrors';
 
 @Resolver()
 class UserResolver {
@@ -52,14 +52,15 @@ class UserResolver {
     @Args('name') name: string,
     @Args('surname') surname: string,
   ) {
-    const generatedPassword = generate({ length: 10, numbers: true });
     if (!emailRegex.test(email)) {
       throw new BadRequestException();
     }
+
+    const { plainPassword, hashedPassword } = await this.userService.generatePassword();
     const user = new User();
     user.email = email;
-    user.password = await this.userService.hashPassword(generatedPassword);
-    user.generatedPassword = generatedPassword;
+    user.password = hashedPassword;
+    user.generatedPassword = plainPassword;
     user.name = name;
     user.surname = surname;
 
@@ -82,6 +83,40 @@ class UserResolver {
     }
 
     user.roles = Promise.resolve(userRoles);
+    return this.userService.save(user);
+  }
+
+  @Mutation(() => User)
+  @Secured()
+  async userResetPassword(@Args({ name: 'userId', type: () => Int }) userId) {
+    const user = await this.userService.findById(userId);
+    if (!user) throw new BadRequestException();
+
+    const { plainPassword, hashedPassword } = await this.userService.generatePassword();
+
+    user.password = hashedPassword;
+    user.generatedPassword = plainPassword;
+    user.passwordIsHashed = true;
+
+    return this.userService.save(user);
+  }
+
+  @Mutation(() => User)
+  @Secured()
+  async userResetMyPassword(
+    @Args('oldPassword') oldPassword: string,
+    @Args('newPassword') newPassword: string,
+    @CurrentUser() userId: number,
+  ) {
+    const user = await this.userService.findById(userId);
+    if (!user) throw new BadRequestException();
+    if (!(await this.userService.comparePassword(oldPassword, user.password))) {
+      throw new BadRequestException(apiErrors.input.invalid);
+    }
+
+    user.password = await this.userService.hashPassword(newPassword);
+    user.passwordIsHashed = true;
+
     return this.userService.save(user);
   }
 }

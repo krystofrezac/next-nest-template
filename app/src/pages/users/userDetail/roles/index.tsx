@@ -11,8 +11,8 @@ import MaterialTable from 'lib/materialTable';
 
 import LoadingButton from 'components/LoadingButton';
 
-import roleFragment from './roleFragment';
-import { Role, RoleFindAll, RolesProps, UserChangeRoles, UserChangeRolesVars } from './types';
+import roleFragment from '../roleFragment';
+import { Role, RoleFindAll, RolesProps, UserChangeRoles, UserChangeRolesVars } from '../types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   actions: {
@@ -46,7 +46,7 @@ const USER_CHANGE_ROLES = gql`
   }
 `;
 
-const Roles = (props: RolesProps) => {
+const Index = (props: RolesProps) => {
   const classes = useStyles();
 
   const router = useRouter();
@@ -130,4 +130,4 @@ const Roles = (props: RolesProps) => {
   );
 };
 
-export default withSnackbar(Roles);
+export default withSnackbar(Index);

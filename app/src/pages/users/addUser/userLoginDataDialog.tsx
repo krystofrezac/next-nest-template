@@ -10,7 +10,7 @@ import {
 
 import { UserLoginDataModalProps } from './types';
 
-const UserLoginDataModal = (props: UserLoginDataModalProps) => {
+const UserLoginDataDialog = (props: UserLoginDataModalProps) => {
   return (
     <Dialog open={props.open}>
       <DialogTitle>Přihlašovací údaje uživatele</DialogTitle>
@@ -27,4 +27,4 @@ const UserLoginDataModal = (props: UserLoginDataModalProps) => {
   );
 };
 
-export default UserLoginDataModal;
+export default UserLoginDataDialog;

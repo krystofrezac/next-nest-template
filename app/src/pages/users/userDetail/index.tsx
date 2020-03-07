@@ -9,6 +9,7 @@ import PaperWithTabs from 'components/PaperWithTabs';
 
 import roleFragment from './roleFragment';
 import Roles from './roles';
+import Actions from './actions';
 import BasicInfo from './basicInfo';
 import userDetailBreadcrumbs from './breadcrumbs';
 import { UserFindById, UserFindByIdVars } from './types';
@@ -48,6 +49,7 @@ const UserDetailIndex = () => {
           label: 'role',
           panel: <Roles roles={data ? data.userFindById.roles : []} />,
         },
+        { label: 'Akce', panel: <Actions /> },
       ]}
     />
   );

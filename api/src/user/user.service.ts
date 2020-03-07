@@ -6,6 +6,7 @@ import { compare, hash } from 'bcrypt';
 import User from 'user/user.entity';
 import apiConfig from 'config/api';
 import UserFilterArg from 'user/paginator/args/userFilter.arg';
+import { generate } from 'generate-password';
 import OrderByArg from '../paginator/orderBy.arg';
 
 @Injectable()
@@ -56,6 +57,12 @@ class UserService {
 
   async hashPassword(plain: string) {
     return hash(plain, apiConfig.hash.saltRounds);
+  }
+
+  async generatePassword() {
+    const generatedPassword = generate({ length: 10, numbers: true });
+    const hashedPassword = await this.hashPassword(generatedPassword);
+    return { plainPassword: generatedPassword, hashedPassword };
   }
 }
 
