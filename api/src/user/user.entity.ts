@@ -35,7 +35,10 @@ class User {
   generatedPassword: string;
 
   @Field(() => [Role], { nullable: true })
-  @ManyToMany(() => Role)
+  @ManyToMany(
+    () => Role,
+    role => role.users,
+  )
   @JoinTable()
   roles: Promise<Role[]>;
 

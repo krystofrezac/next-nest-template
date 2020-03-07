@@ -1,6 +1,8 @@
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, Int, ObjectType } from 'type-graphql';
+
 import Resource from 'resource/resource.entity';
+import User from 'user/user.entity';
 
 @ObjectType()
 @Entity()
@@ -20,6 +22,13 @@ class Role {
   )
   @JoinTable()
   resources: Promise<Resource[]>;
+
+  @Field(() => [User], { nullable: true })
+  @ManyToMany(
+    () => User,
+    user => user.roles,
+  )
+  users: Promise<User[]>;
 }
 
 export default Role;

@@ -4,19 +4,20 @@ import { gql } from 'apollo-boost';
 import { useRouter } from 'next/router';
 import { useLazyQuery, useMutation } from '@apollo/react-hooks';
 import { withSnackbar } from 'notistack';
+import { Dispatch } from 'redux';
+import { rolesRemoveRole } from 'redux/actions/roles';
+import { connect } from 'react-redux';
 
 import routes from '@template/shared/config/app/routes';
 import apiErrors from '@template/shared/config/apiErrors';
 
 import withPage from 'components/withPage';
 import PaperWithTabs from 'components/PaperWithTabs';
-
-import { Dispatch } from 'redux';
-import { rolesRemoveRole } from 'redux/actions/roles';
-import { connect } from 'react-redux';
 import LoadingButton from 'components/LoadingButton';
+
 import roleDetailBreadcrumbs from './breadcrumbs';
 import ResourcesIndex from './resources';
+import UsersIndex from './users';
 import {
   MapDispatch,
   MapState,
@@ -79,7 +80,10 @@ const RoleDetailIndex = (props: RoleDetailIndexProps) => {
     <>
       <PaperWithTabs
         title={data ? data.roleFindById.name : ''}
-        tabs={[{ label: 'Zdroje', panel: <ResourcesIndex /> }]}
+        tabs={[
+          { label: 'Zdroje', panel: <ResourcesIndex /> },
+          { label: 'Uživatelé', panel: <UsersIndex /> },
+        ]}
         actions={[
           <LoadingButton
             loading={mutationLoading}

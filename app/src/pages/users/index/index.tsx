@@ -51,7 +51,6 @@ const UsersIndex = () => {
     >
       <MaterialTable
         data={query => {
-          console.log(query);
           return new Promise((resolve, reject) => {
             const emailFilter = query.filters.find(f => f.column.field === 'email');
             const nameFilter = query.filters.find(f => f.column.field === 'name');
@@ -82,6 +81,7 @@ const UsersIndex = () => {
                   filter,
                   orderBy,
                 },
+                fetchPolicy: 'no-cache',
               })
               .then(res => {
                 if (res.data) {
@@ -99,7 +99,6 @@ const UsersIndex = () => {
         actions={[
           {
             icon: Info,
-            iconProps: { color: 'error' },
             tooltip: 'Detail',
             onClick: (e, rowData) => {
               router.push({ pathname: routes.users.userDetail, query: { userId: rowData.id } });
