@@ -114,8 +114,8 @@ const UsersIndex = () => {
           {
             title: 'Status',
             field: 'active',
-            render: data => (data.active ? 'aktivní' : 'neaktivní'),
-            lookup: { true: 'aktivní', false: 'neaktivní' },
+            render: data => (data.active ? 'Aktivní' : 'Neaktivní'),
+            lookup: { true: 'Aktivní', false: 'Neaktivní' },
           },
         ]}
       />

@@ -12,6 +12,7 @@ interface User {
   surname: string;
   createTime: Date;
   roles: Role[];
+  active: boolean;
 }
 
 export interface UserFindById {

@@ -20,6 +20,7 @@ const Index = ({ user }: BasicInfoProps) => {
         <SimpleRow name="Jméno">{name}</SimpleRow>
         <SimpleRow name="Příjmení">{surname}</SimpleRow>
         <SimpleRow name="Datum registrace">{formattedDate}</SimpleRow>
+        <SimpleRow name="Status">{user?.active ? 'Aktivní' : 'Neaktivní'}</SimpleRow>
       </SimpleTable>
     </>
   );

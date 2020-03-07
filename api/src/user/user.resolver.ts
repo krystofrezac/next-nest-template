@@ -88,7 +88,7 @@ class UserResolver {
 
   @Mutation(() => User)
   @Secured()
-  async userResetPassword(@Args({ name: 'userId', type: () => Int }) userId) {
+  async userResetPassword(@Args({ name: 'userId', type: () => Int }) userId: number) {
     const user = await this.userService.findById(userId);
     if (!user) throw new BadRequestException();
 
@@ -117,6 +117,18 @@ class UserResolver {
     user.password = await this.userService.hashPassword(newPassword);
     user.passwordIsHashed = true;
 
+    return this.userService.save(user);
+  }
+
+  @Mutation(() => User)
+  @Secured()
+  async userChangeActive(
+    @Args({ name: 'userId', type: () => Int }) userId: number,
+    @Args('active') active: boolean,
+  ) {
+    const user = await this.userService.findById(userId);
+    if (!user) throw new BadRequestException();
+    user.active = active;
     return this.userService.save(user);
   }
 }
