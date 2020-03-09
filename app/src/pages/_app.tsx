@@ -18,7 +18,7 @@ const ThemProvider = (props: any) => {
 
   let prefersDarkMode = false;
   if (process.browser) {
-    prefersDarkMode = cookies[appConfig.cookies.theme] === 'true';
+    prefersDarkMode = cookies[appConfig.cookies.darkTheme] === 'true';
   }
   return <ThemeProviderPrefab theme={prefersDarkMode ? darkTheme : theme} {...props} />;
 };

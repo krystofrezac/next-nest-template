@@ -14,8 +14,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 import Link from 'next/link';
 
+import appConfig from '@template/shared/config/app';
 import routes from '@template/shared/config/app/routes';
 
+import { useCookies } from 'react-cookie';
 import { AppBarProps } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -45,19 +47,38 @@ const useStyles = makeStyles((theme: Theme) => ({
   link: {
     textDecoration: 'none',
   },
+  appBarRootDark: {
+    backgroundColor: theme.palette.background.paper,
+  },
+  white: {
+    color: theme.palette.text.primary,
+  },
 }));
 
 const AppBar = (props: AppBarProps) => {
   const classes = useStyles();
+
+  const [cookies] = useCookies();
+  const darkMode = cookies[appConfig.cookies.darkTheme] === 'true';
+
   return (
-    <AppBarPrefab position="fixed" className={classes.appBar}>
+    <AppBarPrefab
+      position="fixed"
+      classes={darkMode ? { root: classes.appBarRootDark } : {}}
+      className={classes.appBar}
+    >
       <Toolbar className={classes.toolbar}>
         <Hidden mdUp>
-          <IconButton onClick={props.drawerOpen} color="inherit" edge="start">
+          <IconButton
+            className={darkMode ? classes.white : ''}
+            onClick={props.drawerOpen}
+            color="inherit"
+            edge="start"
+          >
             <MenuIcon />
           </IconButton>
         </Hidden>
-        <Typography variant="h6" component="h1" noWrap>
+        <Typography className={darkMode ? classes.white : ''} variant="h6" component="h1" noWrap>
           Název aplikace
         </Typography>
         <div className={classes.rightIcons}>
@@ -68,7 +89,11 @@ const AppBar = (props: AppBarProps) => {
               </Avatar>
             </a>
           </Link>
-          <IconButton color="inherit" onClick={props.onLogOut}>
+          <IconButton
+            className={darkMode ? classes.white : ''}
+            color="inherit"
+            onClick={props.onLogOut}
+          >
             <LogoutIcon />
           </IconButton>
         </div>

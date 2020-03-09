@@ -24,23 +24,19 @@ const USER_CHANGE_DARK_THEME = gql`
 `;
 
 const Preferences = (props: PreferencesProps) => {
-  const [cookies, setCookie] = useCookies();
-  const [userChangeDarkTheme] = useMutation(USER_CHANGE_DARK_THEME);
-  const checked = cookies[appConfig.cookies.theme] === 'true';
+  const [cookies] = useCookies();
+  const [userChangeDarkTheme, { loading }] = useMutation(USER_CHANGE_DARK_THEME);
+  const checked = cookies[appConfig.cookies.darkTheme] === 'true';
 
   const changeHandler = () => {
-    userChangeDarkTheme({ variables: { darkTheme: !checked } }).then(res => {
-      if (res.data) {
-        setCookie(appConfig.cookies.theme, 'false');
-      }
-    });
+    userChangeDarkTheme({ variables: { darkTheme: !checked } });
   };
 
   return (
     <Paper title="Preference" loading={props.loading}>
       <FormControlLabel
-        control={<Switch checked={checked} onChange={changeHandler} />}
-        label="Temný režim"
+        control={<Switch disabled={loading} checked={checked} onChange={changeHandler} />}
+        label="Tmavý režim"
       />
     </Paper>
   );

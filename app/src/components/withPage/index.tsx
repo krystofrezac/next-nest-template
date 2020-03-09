@@ -44,8 +44,8 @@ const withPage = (
     const { data, error } = useQuery<UserGetLogged>(USER_GET_LOGGED);
 
     if (data) {
-      if (cookies[appConfig.cookies.theme] !== data.userGetLogged.darkTheme.toString()) {
-        setCookie(appConfig.cookies.theme, data.userGetLogged.darkTheme);
+      if (cookies[appConfig.cookies.darkTheme] !== data.userGetLogged.darkTheme.toString()) {
+        setCookie(appConfig.cookies.darkTheme, data.userGetLogged.darkTheme);
       }
     }
 
