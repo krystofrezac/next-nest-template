@@ -25,12 +25,13 @@ class UserResolver {
     @Args({ name: 'password', type: () => String }) plainPassword: string,
   ) {
     const user = await this.authService.validateUser(email, plainPassword);
-    if (user) {
-      user.accessToken = await this.authService.login(user);
-      return user;
-    }
 
-    throw new UnauthorizedException();
+    if (!user) throw new UnauthorizedException();
+    if (!user.active) throw new UnauthorizedException();
+
+    user.accessToken = await this.authService.login(user);
+    user.lastLoginTime = new Date(Date.now());
+    return this.userService.save(user);
   }
 
   @Query(() => User)

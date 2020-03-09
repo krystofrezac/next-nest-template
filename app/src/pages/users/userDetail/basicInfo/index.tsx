@@ -11,15 +11,22 @@ const Index = ({ user }: BasicInfoProps) => {
   const email = user ? user.email : '';
   const name = user ? user.name : '';
   const surname = user ? user.surname : '';
-  const date = new Date(user?.createTime || Date.now());
-  const formattedDate = dateFormat(date, 'dd.mm.yyyy HH:MM:ss');
+  const registerDate = new Date(user?.createTime || Date.now());
+  const formattedRegisterDate = dateFormat(registerDate, 'dd.mm.yyyy HH:MM:ss');
+  const lastLoginDate = new Date(user?.lastLoginTime || Date.now());
+  const formattedLastLoginDate = user?.lastLoginTime
+    ? dateFormat(lastLoginDate, 'dd.mm.yyyy HH:MM:ss')
+    : '-';
+
+  console.log(user);
   return (
     <>
       <SimpleTable>
         <SimpleRow name="Email">{email}</SimpleRow>
         <SimpleRow name="Jméno">{name}</SimpleRow>
         <SimpleRow name="Příjmení">{surname}</SimpleRow>
-        <SimpleRow name="Datum registrace">{formattedDate}</SimpleRow>
+        <SimpleRow name="Datum registrace">{formattedRegisterDate}</SimpleRow>
+        <SimpleRow name="Poslední přihlášení">{formattedLastLoginDate}</SimpleRow>
         <SimpleRow name="Status">{user?.active ? 'Aktivní' : 'Neaktivní'}</SimpleRow>
       </SimpleTable>
     </>

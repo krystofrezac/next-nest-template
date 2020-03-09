@@ -11,6 +11,7 @@ interface User {
   name: string;
   surname: string;
   createTime: Date;
+  lastLoginTime: Date;
   roles: Role[];
   active: boolean;
 }

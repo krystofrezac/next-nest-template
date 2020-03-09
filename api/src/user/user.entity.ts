@@ -19,6 +19,10 @@ class User {
   createTime: Date;
 
   @Field({ nullable: true })
+  @Column({ nullable: true })
+  lastLoginTime: Date;
+
+  @Field({ nullable: true })
   accessToken: string;
 
   @Field({ nullable: true })
