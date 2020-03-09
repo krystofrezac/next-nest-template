@@ -6,9 +6,9 @@
     "node": "12.14"
   },
   "scripts": {
-    "dev": "next",
+    "dev": "node server.js",
     "build": "next build",
-    "start": "next start",
+    "start": "env NODE_ENV=production node server.js",
     "fix": "eslint '*/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
@@ -25,6 +25,7 @@
     "material-table": "^1.57.2",
     "next": "^9.2.1",
     "next-cookies": "^2.0.3",
+    "next-offline": "^5.0.0",
     "next-with-apollo": "^5.0.0",
     "notistack": "^0.9.8",
     "react": "^16.12.0",

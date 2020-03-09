@@ -37,7 +37,7 @@ const useStyles = makeStyles({
 const ProfileIndex = () => {
   const classes = useStyles();
   const { data, loading } = useQuery<UserGetLogged>(USER_GET_LOGGED);
-  const date = new Date(data?.userGetLogged.createTime || '');
+  const date = new Date(data?.userGetLogged.createTime || Date.now());
   const formattedDate = dateFormat(date, 'dd.mm.yyyy HH:MM:ss');
   return (
     <>

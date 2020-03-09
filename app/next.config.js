@@ -1,9 +1,5 @@
-module.exports = {
-  webpackDevMiddleware: config => {
-    config.watchOptions = {
-      poll: 1000,
-      aggregateTimeout: 300,
-    };
-    return config;
-  },
-};
+const withOffline = require('next-offline');
+
+const nextConfig = {};
+
+module.exports = withOffline(nextConfig);
