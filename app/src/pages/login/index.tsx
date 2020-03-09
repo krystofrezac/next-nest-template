@@ -26,6 +26,7 @@ const USER_LOGIN = gql`
           name
         }
       }
+      darkTheme
     }
   }
 `;
@@ -48,6 +49,7 @@ const LoginIndex = () => {
   if (data && !loading && !state.loggedIn) {
     setState({ ...state, loggedIn: true });
     setCookie(appConfig.cookies.token, data.userLogin.accessToken);
+    setCookie(appConfig.cookies.theme, data.userLogin.darkTheme);
     router.push(appConfig.routes.dashboard);
   }
 

@@ -14,6 +14,7 @@ import Paper from 'components/Paper';
 
 import profileBreadcrumbs from './breadcrumbs';
 import { UserGetLogged } from './types';
+import Preferences from './preferences';
 
 const USER_GET_LOGGED = gql`
   {
@@ -65,6 +66,9 @@ const ProfileIndex = () => {
               </Link>
             </div>
           </Paper>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Preferences loading={loading} />
         </Grid>
       </Grid>
     </>

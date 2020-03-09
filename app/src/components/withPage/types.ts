@@ -17,6 +17,7 @@ export interface User {
       name: string;
     }[];
   }[];
+  darkTheme: boolean;
 }
 
 export interface UserGetLogged {

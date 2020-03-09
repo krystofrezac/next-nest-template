@@ -12,6 +12,7 @@ export interface UserLogin {
         name: string;
       }[];
     }[];
+    darkTheme: boolean;
   };
 }
 

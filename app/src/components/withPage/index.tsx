@@ -2,6 +2,7 @@ import React from 'react';
 
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
+import { useCookies } from 'react-cookie';
 
 import withApollo from 'lib/apollo/withApollo';
 
@@ -11,6 +12,7 @@ import rolesToResources from 'components/resources/rolesToResources';
 import NoAccess from 'components/withPage/NoAccess';
 
 import { Breadcrumb, UserGetLogged } from './types';
+import appConfig from '../../../../shared/config/app';
 
 const USER_GET_LOGGED = gql`
   {
@@ -25,6 +27,7 @@ const USER_GET_LOGGED = gql`
           name
         }
       }
+      darkTheme
     }
   }
 `;
@@ -36,7 +39,15 @@ const withPage = (
   apolloSsr: boolean = false,
 ) => {
   const WithPage = withApollo((props: any) => {
+    const [cookies, setCookie] = useCookies();
+
     const { data, error } = useQuery<UserGetLogged>(USER_GET_LOGGED);
+
+    if (data) {
+      if (cookies[appConfig.cookies.theme] !== data.userGetLogged.darkTheme.toString()) {
+        setCookie(appConfig.cookies.theme, data.userGetLogged.darkTheme);
+      }
+    }
 
     const userResources = rolesToResources(data?.userGetLogged?.roles || []);
 

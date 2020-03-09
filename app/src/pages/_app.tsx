@@ -4,7 +4,9 @@ import Head from 'next/head';
 import { ThemeProvider as ThemeProviderPrefab } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Provider } from 'react-redux';
-import { useMediaQuery } from '@material-ui/core';
+import { useCookies } from 'react-cookie';
+
+import appConfig from '@template/shared/config/app';
 
 import SnackbarProvider from 'lib/notistack';
 import theme, { darkTheme } from 'lib/materialui/theme';
@@ -12,7 +14,12 @@ import theme, { darkTheme } from 'lib/materialui/theme';
 import store from 'redux/reducers';
 
 const ThemProvider = (props: any) => {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const [cookies] = useCookies();
+
+  let prefersDarkMode = false;
+  if (process.browser) {
+    prefersDarkMode = cookies[appConfig.cookies.theme] === 'true';
+  }
   return <ThemeProviderPrefab theme={prefersDarkMode ? darkTheme : theme} {...props} />;
 };
 

@@ -8,6 +8,7 @@ const appConfig = {
   },
   cookies: {
     token: 'templateToken',
+    theme: 'templateTheme',
   },
   routes,
 };

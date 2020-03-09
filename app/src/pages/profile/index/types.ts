@@ -1,9 +1,15 @@
+interface User {
+  id: number;
+  name: string;
+  surname: string;
+  email: string;
+  createTime: Date;
+}
+
 export interface UserGetLogged {
-  userGetLogged: {
-    id: number;
-    name: string;
-    surname: string;
-    email: string;
-    createTime: Date;
-  };
+  userGetLogged: User;
+}
+
+export interface PreferencesProps {
+  loading: boolean;
 }

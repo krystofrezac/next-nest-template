@@ -131,6 +131,15 @@ class UserResolver {
     user.active = active;
     return this.userService.save(user);
   }
+
+  @Mutation(() => User)
+  @Secured()
+  async userChangeDarkTheme(@Args('darkTheme') darkTheme: boolean, @CurrentUser() userId: number) {
+    const user = await this.userService.findById(userId);
+    if (!user) throw new BadRequestException();
+    user.darkTheme = darkTheme;
+    return this.userService.save(user);
+  }
 }
 
 export default UserResolver;

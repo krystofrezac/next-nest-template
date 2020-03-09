@@ -49,6 +49,10 @@ class User {
   @Field()
   @Column()
   surname: string;
+
+  @Field()
+  @Column({ default: false })
+  darkTheme: boolean;
 }
 
 export default User;
