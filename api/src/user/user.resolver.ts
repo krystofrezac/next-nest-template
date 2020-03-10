@@ -9,7 +9,7 @@ import User from 'user/user.entity';
 import UserService from 'user/user.service';
 import { emailRegex } from 'config/regexs';
 import RoleService from 'role/role.service';
-import apiErrors from 'config/apiErrors';
+import apiErrors from 'config/api/errors';
 
 @Resolver()
 class UserResolver {

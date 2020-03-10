@@ -2,7 +2,7 @@ import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { BadRequestException } from '@nestjs/common';
 import { Int } from 'type-graphql';
 
-import apiErrors from 'config/apiErrors';
+import apiErrors from 'config/api/errors';
 
 import Secured from 'auth/secured.guard';
 import ResourceService from 'resource/resource.service';

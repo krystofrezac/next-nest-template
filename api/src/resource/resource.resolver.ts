@@ -6,7 +6,7 @@ import Secured from 'auth/secured.guard';
 
 import RoleService from 'role/role.service';
 
-import apiErrors from 'config/apiErrors';
+import apiErrors from 'config/api/errors';
 
 import ResourceService from './resource.service';
 import Resource from './resource.entity';

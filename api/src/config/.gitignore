@@ -1,2 +1,2 @@
-api.ts
-resource.ts
+api/index.ts
+api/resources.ts
