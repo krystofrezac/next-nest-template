@@ -5,7 +5,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { getDataFromTree } from '@apollo/react-ssr';
 import cookies from 'next-cookies';
 import browserCookies from 'browser-cookies';
-import appConfig from '../../../../shared/config/app';
+import appConfig from '@template/shared/config/app';
 
 const apolloProvider = ({ Page, props }) => {
   return (

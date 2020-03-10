@@ -1,5 +1,5 @@
 import {QueryRunner} from "typeorm";
-import ResourceCategory from "../../resourceCategory/resourceCategory.entity";
+import ResourceCategory from "resourceCategory/resourceCategory.entity";
 
 const removeResourceCategory = async (queryRunner: QueryRunner, resourceCategoryName: string) => {
     const resourceCategoryRepository = queryRunner.manager.getRepository(ResourceCategory);

@@ -1,10 +1,12 @@
 import React from 'react';
+
 import { IconButton, List, ListItem, ListItemText, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
-
 import Link from 'next/link';
+
+import routes from '@template/shared/config/app/routes';
+
 import { ResourcesProps } from './types';
-import routes from '../../../../../../shared/config/app/routes';
 
 const Resources = (props: ResourcesProps) => {
   const { resources } = props;

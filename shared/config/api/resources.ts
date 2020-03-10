@@ -1,6 +1,13 @@
 const resources = {
+  role: {
+    edit: 'ROLE_EDIT',
+  },
   user: {
-    register: 'USER_REGISTER',
+    seeAll: 'USER_SEE_ALL',
+    add: 'USER_ADD',
+    activate: 'USER_ACTIVATE',
+    generatedPassword: 'USER_GENERATE_PASSWORD',
+    assignRole: 'USER_ASSIGN_ROLE',
   },
 };
 

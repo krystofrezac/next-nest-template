@@ -4,6 +4,8 @@ import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import { useCookies } from 'react-cookie';
 
+import appConfig from '@template/shared/config/app';
+
 import withApollo from 'lib/apollo/withApollo';
 
 import Page from 'components/withPage/Page';
@@ -12,7 +14,6 @@ import rolesToResources from 'components/resources/rolesToResources';
 import NoAccess from 'components/withPage/NoAccess';
 
 import { Breadcrumb, UserGetLogged } from './types';
-import appConfig from '../../../../shared/config/app';
 
 const USER_GET_LOGGED = gql`
   {
