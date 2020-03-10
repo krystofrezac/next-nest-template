@@ -36,7 +36,7 @@ const USER_GET_LOGGED = gql`
 const withPage = (
   Component: React.ComponentType,
   breadcrumbs: Breadcrumb[],
-  requiredResources: string[] = [],
+  requiredResources: string[][] = [],
   apolloSsr: boolean = false,
 ) => {
   const WithPage = withApollo((props: any) => {
@@ -52,6 +52,12 @@ const withPage = (
 
     const userResources = rolesToResources(data?.userGetLogged?.roles || []);
 
+    console.log(
+      'a',
+      hasResources(userResources, requiredResources),
+      userResources,
+      requiredResources,
+    );
     const showPage = (!error && hasResources(userResources, requiredResources)) || !process.browser;
 
     return (

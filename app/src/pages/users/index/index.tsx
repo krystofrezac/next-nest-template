@@ -16,6 +16,7 @@ import { UserPaginate, UserPaginateVars } from 'pages/users/index/types';
 import { Button } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import usersBreadcrumbs from './breadcrumbs';
+import resources from '../../../../../shared/config/api/resources';
 
 const USER_PAGINATE = gql`
   query($limit: Int!, $offset: Int!, $filter: UserFilterArg, $orderBy: OrderByArg) {
@@ -122,4 +123,7 @@ const UsersIndex = () => {
   );
 };
 
-export default withPage(UsersIndex, usersBreadcrumbs);
+export default withPage(UsersIndex, usersBreadcrumbs, [
+  [resources.user.seeAll],
+  [resources.user.add],
+]);

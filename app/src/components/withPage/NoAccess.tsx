@@ -1,8 +1,11 @@
 import React from 'react';
 import { Button, Theme, Typography } from '@material-ui/core';
 import { useRouter } from 'next/router';
-import routes from '@template/shared/config/app/routes';
 import { makeStyles } from '@material-ui/core/styles';
+import { useCookies } from 'react-cookie';
+
+import routes from '@template/shared/config/app/routes';
+import appConfig from '@template/shared/config/app';
 
 const useStyles = makeStyles((theme: Theme) => ({
   center: {
@@ -34,6 +37,12 @@ const NoAccess = () => {
   const classes = useStyles();
 
   const router = useRouter();
+  const [, , removeCookies] = useCookies();
+
+  const loginHandler = () => {
+    removeCookies(appConfig.cookies.token);
+    router.push(routes.login);
+  };
 
   return (
     <div className={classes.center}>
@@ -50,7 +59,7 @@ const NoAccess = () => {
             </Typography>
           </div>
           <div>
-            <Button href={`${routes.login}`} variant="contained" color="primary">
+            <Button onClick={loginHandler} variant="contained" color="primary">
               Přihlásit se
             </Button>
           </div>
