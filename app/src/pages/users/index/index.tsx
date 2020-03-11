@@ -2,10 +2,13 @@ import React from 'react';
 
 import { gql } from 'apollo-boost';
 import { useApolloClient } from '@apollo/react-hooks';
+import { Button } from '@material-ui/core';
+import { useRouter } from 'next/router';
 import InfoIcon from '@material-ui/icons/Info';
 import Link from 'next/link';
 
 import routes from '@template/shared/config/app/routes';
+import resources from '@template/shared/config/api/resources';
 
 import MaterialTable from 'lib/materialTable';
 
@@ -13,10 +16,8 @@ import withPage from 'components/withPage';
 import Paper from 'components/Paper';
 
 import { UserPaginate, UserPaginateVars } from 'pages/users/index/types';
-import { Button } from '@material-ui/core';
-import { useRouter } from 'next/router';
+
 import usersBreadcrumbs from './breadcrumbs';
-import resources from '../../../../../shared/config/api/resources';
 
 const USER_PAGINATE = gql`
   query($limit: Int!, $offset: Int!, $filter: UserFilterArg, $orderBy: OrderByArg) {

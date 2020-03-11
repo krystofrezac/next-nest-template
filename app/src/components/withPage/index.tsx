@@ -9,10 +9,10 @@ import appConfig from '@template/shared/config/app';
 import withApollo from 'lib/apollo/withApollo';
 
 import Page from 'components/withPage/Page';
-import hasResources from 'components/resources/hasResources';
 import rolesToResources from 'components/resources/rolesToResources';
 import NoAccess from 'components/withPage/NoAccess';
 
+import useResources from 'components/resources/useResources';
 import { Breadcrumb, UserGetLogged } from './types';
 
 const USER_GET_LOGGED = gql`
@@ -21,13 +21,6 @@ const USER_GET_LOGGED = gql`
       id
       name
       surname
-      roles {
-        id
-        resources {
-          id
-          name
-        }
-      }
       darkTheme
     }
   }
@@ -40,6 +33,7 @@ const withPage = (
   apolloSsr: boolean = false,
 ) => {
   const WithPage = withApollo((props: any) => {
+    const hasAccess = useResources(requiredResources);
     const [cookies, setCookie] = useCookies();
 
     const { data, error } = useQuery<UserGetLogged>(USER_GET_LOGGED);
@@ -50,19 +44,12 @@ const withPage = (
       }
     }
 
-    const userResources = rolesToResources(data?.userGetLogged?.roles || []);
-
-    console.log(
-      'a',
-      hasResources(userResources, requiredResources),
-      userResources,
-      requiredResources,
-    );
-    const showPage = (!error && hasResources(userResources, requiredResources)) || !process.browser;
+    const showPage = !error && hasAccess;
 
     return (
       <>
-        {showPage && (
+        {(!showPage || !process.browser) && <NoAccess />}
+        {(showPage || !process.browser) && (
           <Page
             user={data?.userGetLogged}
             Component={Component}
@@ -70,7 +57,6 @@ const withPage = (
             {...props}
           />
         )}
-        {!showPage && <NoAccess />}
       </>
     );
   }, apolloSsr);

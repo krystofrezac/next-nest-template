@@ -1,5 +1,9 @@
-// TODO type
-const rolesToResources = roles => {
+interface Role {
+  resources: {
+    name: string;
+  }[];
+}
+const rolesToResources = (roles: Role[]) => {
   const resources = [];
   roles.forEach(role => {
     role.resources.forEach(resource => {

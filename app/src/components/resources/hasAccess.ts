@@ -1,5 +1,5 @@
-const hasResources = (userResources: string[], requiredResources: string[][]) => {
-  let hasAccess = true;
+const hasAccess = (userResources: string[], requiredResources: string[][]) => {
+  let access = true;
   requiredResources.forEach(resources => {
     const requiredResourcesObject = {};
 
@@ -20,10 +20,10 @@ const hasResources = (userResources: string[], requiredResources: string[][]) =>
         hasPartialAccess = false;
       }
     });
-    if (!hasPartialAccess) hasAccess = false;
+    if (!hasPartialAccess) access = false;
   });
 
-  return hasAccess;
+  return access;
 };
 
-export default hasResources;
+export default hasAccess;

@@ -9,14 +9,6 @@ export interface User {
   id: number;
   name: string;
   surname: string;
-  roles: {
-    id: number;
-    resources: {
-      id: number;
-
-      name: string;
-    }[];
-  }[];
   darkTheme: boolean;
 }
 
