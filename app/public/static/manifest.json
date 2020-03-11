@@ -1,16 +1,11 @@
 {
-  "name": "KBS Portal",
-  "short_name": "KBS",
-  "description": "KBS is best app in the whole universe",
+  "name": "Template",
+  "short_name": "Template",
+  "description": "Aplikace na plánování směn",
   "icons": [
     {
       "src": "/static/pwa.png",
       "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/static/a.png",
-      "sizes": "3286x1080",
       "type": "image/png"
     }
   ],

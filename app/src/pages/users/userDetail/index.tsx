@@ -24,7 +24,7 @@ const USER_FIND_BY_ID = gql`
       surname
       createTime
       lastLoginTime
-        active
+      active
       ...Roles
     }
   }

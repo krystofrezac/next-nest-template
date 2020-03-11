@@ -4,12 +4,15 @@ import { makeStyles, Typography } from '@material-ui/core';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
+
+import resources from '@template/shared/config/api/resources';
 
 import LoadingButton from 'components/LoadingButton';
+import useResources from 'components/resources/useResources';
 
 import UserLoginDataDialog from 'pages/users/addUser/userLoginDataDialog';
 
-import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { UserResetPassword, UserResetPasswordVars } from './types';
 
 const useStyles = makeStyles({
@@ -38,6 +41,7 @@ const PasswordReset = (props: WithSnackbarProps) => {
     UserResetPassword,
     UserResetPasswordVars
   >(USER_RESET_PASSWORD);
+  const canGeneratePassword = useResources([[resources.user.generatedPassword]]);
 
   const clickHandler = () => {
     userResetPassword({ variables: { userId: +router.query.userId } })
@@ -62,7 +66,13 @@ const PasswordReset = (props: WithSnackbarProps) => {
       </Typography>
 
       <div className={classes.buttonContainer}>
-        <LoadingButton loading={loading} color="primary" variant="contained" onClick={clickHandler}>
+        <LoadingButton
+          disabled={!canGeneratePassword}
+          loading={loading}
+          color="primary"
+          variant="contained"
+          onClick={clickHandler}
+        >
           Vygenerovat nové heslo
         </LoadingButton>
       </div>

@@ -3,6 +3,8 @@ import { Field, Int, ObjectType } from 'type-graphql';
 
 import Resource from 'resource/resource.entity';
 import User from 'user/user.entity';
+import FieldGuard from 'auth/field.guard';
+import resources from 'config/api/resources';
 
 @ObjectType()
 @Entity()
@@ -23,6 +25,7 @@ class Role {
   @JoinTable()
   resources: Promise<Resource[]>;
 
+  @FieldGuard(resources.user.seeAll)
   @Field(() => [User], { nullable: true })
   @ManyToMany(
     () => User,

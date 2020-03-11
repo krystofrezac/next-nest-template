@@ -7,6 +7,7 @@ import Secured from 'auth/secured.guard';
 import RoleService from 'role/role.service';
 
 import apiErrors from 'config/api/errors';
+import resources from 'config/api/resources';
 
 import ResourceService from './resource.service';
 import Resource from './resource.entity';
@@ -31,13 +32,13 @@ class ResourceResolver {
   }
 
   @Mutation(() => [Resource], { nullable: true })
-  @Secured()
+  @Secured(resources.role.edit)
   async resourceChangeRoles(
     @Args({ name: 'changedRoles', type: () => [ChangedRoleArg] }) changedRoles: ChangedRoleArg[],
   ) {
-    const resources: Resource[] = await this.resourceService.findAll();
+    const res: Resource[] = await this.resourceService.findAll();
     for (const changed of changedRoles) {
-      const resource = resources.find(r => r.id === changed.resourceId);
+      const resource = res.find(r => r.id === changed.resourceId);
       const resourceRole = await resource.roles;
 
       if (changed.active) {
@@ -52,10 +53,10 @@ class ResourceResolver {
       }
     }
 
-    if (!(await this.resourceService.validate(resources))) {
+    if (!(await this.resourceService.validate(res))) {
       throw new BadRequestException(apiErrors.input.invalid);
     }
-    return this.resourceService.saveMultiple(resources);
+    return this.resourceService.saveMultiple(res);
   }
 }
 

@@ -37,7 +37,9 @@ const withPage = (
     const hasAccess = useResources(requiredResources);
     const [cookies, setCookie] = useCookies();
 
-    const { data, error } = useQuery<UserGetLogged>(USER_GET_LOGGED);
+    const { data, error } = useQuery<UserGetLogged>(USER_GET_LOGGED, {
+      fetchPolicy: 'cache-and-network',
+    });
 
     if (data) {
       if (cookies[appConfig.cookies.darkTheme] !== data.userGetLogged.darkTheme.toString()) {

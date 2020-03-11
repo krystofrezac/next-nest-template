@@ -19,6 +19,7 @@ const USER_LOGIN = gql`
       name
       surname
       email
+      darkTheme
       roles {
         id
         resources {
@@ -26,7 +27,6 @@ const USER_LOGIN = gql`
           name
         }
       }
-      darkTheme
     }
   }
 `;
@@ -42,12 +42,14 @@ const USER_GET_LOGGED = gql`
 const LoginIndex = () => {
   const [userLogin, { loading, data, error }] = useLazyQuery<UserLogin>(USER_LOGIN);
   const { data: loggedData } = useQuery(USER_GET_LOGGED, { fetchPolicy: 'no-cache' });
-  const [, setCookie] = useCookies();
+  const [, setCookie, removeCookie] = useCookies();
   const [state, setState] = useState({ loggedIn: false });
   const router = useRouter();
 
   if (data && !loading && !state.loggedIn) {
     setState({ ...state, loggedIn: true });
+    removeCookie(appConfig.cookies.token);
+    removeCookie(appConfig.cookies.darkTheme);
     setCookie(appConfig.cookies.token, data.userLogin.accessToken);
     setCookie(appConfig.cookies.darkTheme, data.userLogin.darkTheme);
     router.push(appConfig.routes.dashboard);

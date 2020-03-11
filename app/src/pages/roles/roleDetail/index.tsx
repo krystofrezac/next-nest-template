@@ -9,7 +9,7 @@ import { rolesRemoveRole } from 'redux/actions/roles';
 import { connect } from 'react-redux';
 
 import routes from '@template/shared/config/app/routes';
-import apiErrors from '@template/shared/config/apiErrors';
+import apiErrors from '@template/shared/config/api/errors';
 
 import withPage from 'components/withPage';
 import PaperWithTabs from 'components/PaperWithTabs';

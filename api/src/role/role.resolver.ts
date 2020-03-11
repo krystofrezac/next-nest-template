@@ -3,7 +3,7 @@ import { BadRequestException } from '@nestjs/common';
 import { Int } from 'type-graphql';
 
 import apiErrors from 'config/api/errors';
-
+import resources from 'config/api/resources';
 import Secured from 'auth/secured.guard';
 import ResourceService from 'resource/resource.service';
 
@@ -30,7 +30,7 @@ class RoleResolver {
   }
 
   @Mutation(() => Role)
-  @Secured()
+  @Secured(resources.role.edit)
   async roleCreate(@Args('name') name: string) {
     if (!/[a-zA-Z]+/.test(name)) {
       return new BadRequestException(apiErrors.input.invalid);
@@ -41,7 +41,7 @@ class RoleResolver {
   }
 
   @Mutation(() => Boolean)
-  @Secured()
+  @Secured(resources.role.edit)
   async roleRemove(@Args({ name: 'id', type: () => Int }) id: number) {
     const role = await this.roleService.findById(id);
     if (!role) return new BadRequestException(apiErrors.input.invalid);
@@ -49,8 +49,8 @@ class RoleResolver {
     if ((await this.roleService.findAll()).length < 2)
       throw new BadRequestException(apiErrors.remove.roleMinimalCount);
 
-    const resources = await this.resourceService.findAll();
-    for (const resource of resources) {
+    const res = await this.resourceService.findAll();
+    for (const resource of res) {
       const resourceRoles = await resource.roles;
       const roleIndex = resourceRoles.findIndex(r => r.id === id);
       if (roleIndex >= 0) {
@@ -58,7 +58,7 @@ class RoleResolver {
         break;
       }
     }
-    if (!(await this.resourceService.validate(resources))) {
+    if (!(await this.resourceService.validate(res))) {
       throw new BadRequestException(apiErrors.remove.resourceConditions);
     }
     await this.roleService.remove(role);

@@ -8,7 +8,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { withSnackbar } from 'notistack';
 import { useRouter } from 'next/router';
 
-import apiErrors from '@template/shared/config/apiErrors';
+import apiErrors from '@template/shared/config/api/errors';
 import routes from '@template/shared/config/app/routes';
 
 import addRoleBreadcrumbs from 'pages/roles/addRole/breadcrumbs';

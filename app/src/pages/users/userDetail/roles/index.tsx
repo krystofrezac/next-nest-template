@@ -11,8 +11,10 @@ import MaterialTable from 'lib/materialTable';
 
 import LoadingButton from 'components/LoadingButton';
 
+import useResources from 'components/resources/useResources';
 import roleFragment from '../roleFragment';
 import { Role, RoleFindAll, RolesProps, UserChangeRoles, UserChangeRolesVars } from '../types';
+import resources from '../../../../../../shared/config/api/resources';
 
 const useStyles = makeStyles((theme: Theme) => ({
   actions: {
@@ -57,6 +59,7 @@ const Index = (props: RolesProps) => {
   >(USER_CHANGE_ROLES);
   const [editing, setEditing] = useState(false);
   const [selected, setSelected] = useState<Role[]>(props.roles);
+  const canAssignRole = useResources([[resources.user.assignRole]]);
 
   const submitHandler = () => {
     const rolesIds = selected.map(s => s.id);
@@ -97,7 +100,12 @@ const Index = (props: RolesProps) => {
       <div className={classes.actions}>
         {!editing ? (
           <div className={classes.action}>
-            <Button color="primary" variant="contained" onClick={() => setEditing(true)}>
+            <Button
+              disabled={!canAssignRole}
+              color="primary"
+              variant="contained"
+              onClick={() => setEditing(true)}
+            >
               Změnit role
             </Button>
           </div>

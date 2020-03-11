@@ -7,11 +7,15 @@ import LockIcon from '@material-ui/icons/Lock';
 
 import routes from '@template/shared/config/app/routes';
 
+import usersResources from 'pages/users/index/resources';
+import rolesResources from 'pages/roles/index/resources';
+
 export interface ListConfig {
   label: string;
   icon: JSX.Element;
   link?: string;
   subList?: ListConfig[];
+  resources?: string[][];
 }
 
 const listConfig: ListConfig[] = [
@@ -19,9 +23,15 @@ const listConfig: ListConfig[] = [
   {
     label: 'Administrace',
     icon: <BuildIcon />,
+    resources: [...usersResources, ...rolesResources],
     subList: [
-      { label: 'Uživatelé', icon: <GroupIcon />, link: routes.users.index },
-      { label: 'Role', icon: <LockIcon />, link: routes.roles.index },
+      {
+        label: 'Uživatelé',
+        icon: <GroupIcon />,
+        link: routes.users.index,
+        resources: usersResources,
+      },
+      { label: 'Role', icon: <LockIcon />, link: routes.roles.index, resources: rolesResources },
     ],
   },
 ];

@@ -12,7 +12,7 @@ import withPage from 'components/withPage';
 import Paper from 'components/Paper';
 import LoadingButton from 'components/LoadingButton';
 
-import apiErrors from '@template/shared/config/apiErrors';
+import apiErrors from '@template/shared/config/api/errors';
 import routes from '@template/shared/config/app/routes';
 
 import { FormValues, UserChangeMyPassword, UserChangeMyPasswordVars } from './types';

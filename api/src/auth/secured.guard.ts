@@ -4,7 +4,7 @@ import GqlAuthGuard from 'auth/jwt.guard';
 import ResourceDecorator from './resource.decorator';
 import ResourceInterceptor from './resource.interceptor';
 
-const Secured = (resources: string[] = []) => {
+const Secured = (...resources: string[]) => {
   const metadata = ResourceDecorator(...resources);
   const resourceGuard = UseGuards(ResourcesGuard);
   const gqlGuard = UseGuards(GqlAuthGuard);

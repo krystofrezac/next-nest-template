@@ -7,6 +7,8 @@ import { Typography } from '@material-ui/core';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
+import resources from '@template/shared/config/api/resources';
+
 import withPage from 'components/withPage';
 import Paper from 'components/Paper';
 
@@ -166,10 +168,11 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatch => ({
   rolesAddChangedResource: (changedResource: ChangedResource) =>
     dispatch(rolesAddChangedResource(changedResource)),
   rolesClearChangedResources: () => dispatch(rolesClearChangedResources()),
-  rolesUpdateResources: (resources: Resource[]) => dispatch(rolesUpdateResources(resources)),
+  rolesUpdateResources: (r: Resource[]) => dispatch(rolesUpdateResources(r)),
 });
 
 export default withPage(
   connect(mapStateToProps, mapDispatchToProps)(withSnackbar(RolesIndex)),
   rolesBreadcrumbs,
+  [[resources.role.edit]],
 );

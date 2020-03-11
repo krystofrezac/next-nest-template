@@ -1,5 +1,6 @@
 export interface UserGetLogged {
   userGetLogged: {
+    id: number;
     roles: {
       id: number;
 

@@ -8,13 +8,14 @@ import UserFilterArg, { getUserFilterArgDefaultValue } from 'user/paginator/args
 import OrderByArg from 'paginator/orderBy.arg';
 import Secured from 'auth/secured.guard';
 import PaginatorArg from 'paginator/paginator.arg';
+import resources from 'config/api/resources';
 
 @Resolver(() => UserPaginator)
 class UserPaginatorResolver {
   constructor(private readonly userService: UserService) {}
 
   @Query(() => UserPaginator)
-  @Secured()
+  @Secured(resources.user.seeAll)
   async userPaginate() {
     return new UserPaginator();
   }

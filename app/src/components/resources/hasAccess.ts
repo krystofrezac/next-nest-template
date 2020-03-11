@@ -1,5 +1,7 @@
 const hasAccess = (userResources: string[], requiredResources: string[][]) => {
-  let access = true;
+  let access = false;
+  if (requiredResources.length === 0) return true;
+
   requiredResources.forEach(resources => {
     const requiredResourcesObject = {};
 
@@ -20,7 +22,7 @@ const hasAccess = (userResources: string[], requiredResources: string[][]) => {
         hasPartialAccess = false;
       }
     });
-    if (!hasPartialAccess) access = false;
+    if (hasPartialAccess) access = true;
   });
 
   return access;

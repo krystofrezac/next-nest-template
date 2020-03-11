@@ -7,6 +7,7 @@ import { UserGetLogged } from './types';
 const USER_GET_LOGGED = gql`
   {
     userGetLogged {
+      id
       roles {
         id
         resources {
@@ -19,7 +20,9 @@ const USER_GET_LOGGED = gql`
 `;
 
 const useResources = (requiredResource: string[][]) => {
-  const { data } = useQuery<UserGetLogged>(USER_GET_LOGGED);
+  const { data } = useQuery<UserGetLogged>(USER_GET_LOGGED, {
+    fetchPolicy: 'cache-and-network',
+  });
   const resources = rolesToResources(data?.userGetLogged.roles || []);
   return hasAccess(resources, requiredResource);
 };

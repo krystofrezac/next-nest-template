@@ -10,6 +10,7 @@ import UserService from 'user/user.service';
 import { emailRegex } from 'config/regexs';
 import RoleService from 'role/role.service';
 import apiErrors from 'config/api/errors';
+import resources from 'config/api/resources';
 
 @Resolver()
 class UserResolver {
@@ -41,12 +42,13 @@ class UserResolver {
   }
 
   @Query(() => User)
-  @Secured()
+  @Secured(resources.user.seeAll)
   async userFindById(@Args({ name: 'id', type: () => Int }) id: number) {
     return this.userService.findById(id);
   }
 
   @Mutation(() => User)
+  @Secured(resources.user.add)
   async userRegister(
     @Args('email') email: string,
     @Args('name') name: string,
@@ -69,6 +71,7 @@ class UserResolver {
   }
 
   @Mutation(() => User)
+  @Secured(resources.user.assignRole)
   async userChangeRoles(
     @Args({ name: 'userId', type: () => Int }) userId: number,
     @Args({ name: 'rolesIds', type: () => [Int] }) rolesIds: number[],
@@ -88,7 +91,7 @@ class UserResolver {
   }
 
   @Mutation(() => User)
-  @Secured()
+  @Secured(resources.user.generatedPassword)
   async userResetPassword(@Args({ name: 'userId', type: () => Int }) userId: number) {
     const user = await this.userService.findById(userId);
     if (!user) throw new BadRequestException();
@@ -122,7 +125,7 @@ class UserResolver {
   }
 
   @Mutation(() => User)
-  @Secured()
+  @Secured(resources.user.activate)
   async userChangeActive(
     @Args({ name: 'userId', type: () => Int }) userId: number,
     @Args('active') active: boolean,

@@ -45,7 +45,9 @@ class ResourceInterceptor extends ClassSerializerInterceptor {
       return response;
     }
     return isArray
-      ? (response as PlainLiteralObject[]).map(item => this.transformToClass(item, options))
+      ? (response as PlainLiteralObject[]).map(item =>
+          this.transformToGuard(this.transformToClass(item, options), user),
+        )
       : this.transformToGuard(this.transformToClass(response, options), user);
   }
 
@@ -82,6 +84,7 @@ class ResourceInterceptor extends ClassSerializerInterceptor {
   async transformToGuard(response, userId: number) {
     // eslint-disable-next-line no-restricted-syntax
     for (const key of Object.keys(response)) {
+      console.log(key);
       const item = response[key];
       // eslint-disable-next-line no-underscore-dangle
       if (typeof item === 'object' && item !== null && item.__RESOURCE_GUARD__ === true) {
@@ -91,6 +94,7 @@ class ResourceInterceptor extends ClassSerializerInterceptor {
           : null;
       }
     }
+    console.log('response', response);
     return response;
   }
 }

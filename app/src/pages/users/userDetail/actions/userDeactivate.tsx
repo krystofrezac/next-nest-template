@@ -3,10 +3,13 @@ import { makeStyles, Typography } from '@material-ui/core';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import { withSnackbar } from 'notistack';
+import { useRouter } from 'next/router';
 
+import resources from '@template/shared/config/api/resources';
+
+import useResources from 'components/resources/useResources';
 import LoadingButton from 'components/LoadingButton';
 
-import { useRouter } from 'next/router';
 import { UserActivateDeactivateProps, UserChangeActive, UserChangeActiveVars } from './types';
 
 const useStyles = makeStyles({
@@ -31,6 +34,7 @@ const UserDeactivate = (props: UserActivateDeactivateProps) => {
   const [userChangeActive, { loading }] = useMutation<UserChangeActive, UserChangeActiveVars>(
     USER_CHANGE_ACTIVE,
   );
+  const canActivate = useResources([[resources.user.activate]]);
 
   const submitHandler = () => {
     userChangeActive({ variables: { userId: +router.query.userId } })
@@ -54,7 +58,7 @@ const UserDeactivate = (props: UserActivateDeactivateProps) => {
 
       <div className={classes.buttonContainer}>
         <LoadingButton
-          disabled={!props.active}
+          disabled={!props.active || !canActivate}
           loading={loading}
           color="secondary"
           variant="contained"

@@ -12,6 +12,7 @@ import {
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
+import useResources from 'components/resources/useResources';
 import listConfig, { ListConfig } from './listConfig';
 
 const useStyles = makeStyles(() => ({
@@ -30,12 +31,15 @@ const DrawerList = () => {
     icon,
     label,
     subList,
+    resources,
   }: {
     link?: string;
     icon: JSX.Element;
     label: string;
     subList?: ListConfig[];
+    resources?: string[][];
   }) => {
+    const hasAccess = useResources(resources || []);
     const [open, setOpen] = useState(
       subList ? subList.some(s => router.pathname.startsWith(s.link)) : false,
     );
@@ -62,14 +66,14 @@ const DrawerList = () => {
         </a>
       </Link>
     ) : null;
-    return <>{link ? withLink : withoutLink}</>;
+    return <>{hasAccess && (link ? withLink : withoutLink)}</>;
   };
 
   return (
     <List>
-      {listConfig.map(item => (
-        <Item key={`item${item.label}-${item.link}`} {...item} />
-      ))}
+      {listConfig.map(item => {
+        return <Item key={`item${item.label}-${item.link}`} {...item} />;
+      })}
     </List>
   );
 };

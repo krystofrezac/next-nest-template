@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {
-  AppBar as AppBarPrefab,
   Theme,
   Toolbar,
   Typography,
@@ -18,7 +17,10 @@ import appConfig from '@template/shared/config/app';
 import routes from '@template/shared/config/app/routes';
 
 import { useCookies } from 'react-cookie';
+import dynamic from 'next/dynamic';
 import { AppBarProps } from './types';
+
+const AppBarPrefab = dynamic(import('@material-ui/core/AppBar'), { ssr: false });
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -79,7 +81,7 @@ const AppBar = (props: AppBarProps) => {
           </IconButton>
         </Hidden>
         <Typography className={darkMode ? classes.white : ''} variant="h6" component="h1" noWrap>
-          Název aplikace
+          Směny
         </Typography>
         <div className={classes.rightIcons}>
           <Link href={routes.profile.index}>
