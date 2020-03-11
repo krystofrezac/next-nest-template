@@ -9,11 +9,12 @@ import appConfig from '@template/shared/config/app';
 import withApollo from 'lib/apollo/withApollo';
 
 import Page from 'components/withPage/Page';
-import rolesToResources from 'components/resources/rolesToResources';
-import NoAccess from 'components/withPage/NoAccess';
 
 import useResources from 'components/resources/useResources';
+import dynamic from 'next/dynamic';
 import { Breadcrumb, UserGetLogged } from './types';
+
+const NoAccess = dynamic(import('components/withPage/NoAccess'), { ssr: false });
 
 const USER_GET_LOGGED = gql`
   {
@@ -48,7 +49,7 @@ const withPage = (
 
     return (
       <>
-        {(!showPage || !process.browser) && <NoAccess />}
+        {!showPage && <NoAccess />}
         {(showPage || !process.browser) && (
           <Page
             user={data?.userGetLogged}
