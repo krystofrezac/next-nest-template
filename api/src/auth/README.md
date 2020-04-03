@@ -61,17 +61,8 @@ async userGetLogged(@CurrentUser() userId: number) {
 }
 ```
 
-## resource.interceptor
-- Translate `field.guard` and other fields with `@Translate()`.
-```js
-@UseInterceptors(ResourceInterceptor)
-async userGetLogged(@CurrentUser() userId: number) {
-  return this.userService.findById(userId);
-}
-```
-
 ## secured.guard
-- Combines `resoucre.decorator`, `resource.guard`, `jwt.guard` and `resource.interceptor`
+- Combines `resoucre.decorator`, `resource.guard` and `jwt.guard`
 ```js
 @Secured()
 async userGetLogged(@CurrentUser() userId: number) {
