@@ -14,5 +14,6 @@ To get started you need to follow only few easy steps.
 2. Remove `.git` folder
 3. Rename `template` word to name of your project
 4. Run `yarn install`
-5. In `api` folder make `ormconfig.json` from `ormconfig.example.json` and fill database connection details
-6. In `api` run `yarn conf`
+5. In `api` folder create `ormconfig.json` from `ormconfig.example.json` and fill database connection details
+6. In `api` folder run `yarn conf`
+7. In `shared` folder create `api/index.ts` and `app/index.ts` from examples
