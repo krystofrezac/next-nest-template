@@ -36,7 +36,7 @@ class MyApp extends App<{ store: any }> {
     return (
       <>
         <Head>
-          <title>Směny</title>
+          <title>{appConfig.appName}</title>
           <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
         </Head>
         <Provider store={store}>
