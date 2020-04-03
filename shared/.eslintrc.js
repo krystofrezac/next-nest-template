@@ -1,3 +1,3 @@
-const prefab = require("../eslint.prefab")
+const prefab = require("../eslint.prefab");
 
-module.exports = prefab
+module.exports = prefab;
