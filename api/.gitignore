@@ -2,7 +2,7 @@
 /dist
 /node_modules
 schema.graphql
-ormconfig.example.json
+ormconfig.json
 config/
 # Logs
 logs
