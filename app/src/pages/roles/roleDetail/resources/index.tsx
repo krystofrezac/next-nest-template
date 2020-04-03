@@ -13,7 +13,7 @@ const ROLE_FIND_BY_ID = gql`
       id
       resources {
         id
-        name
+        label
       }
     }
   }

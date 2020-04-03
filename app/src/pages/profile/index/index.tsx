@@ -24,6 +24,7 @@ const USER_GET_LOGGED = gql`
       surname
       email
       createTime
+      lastLoginTime
     }
   }
 `;
@@ -40,6 +41,8 @@ const ProfileIndex = () => {
   const { data, loading } = useQuery<UserGetLogged>(USER_GET_LOGGED);
   const date = new Date(data?.userGetLogged.createTime || Date.now());
   const formattedDate = dateFormat(date, 'dd.mm.yyyy HH:MM:ss');
+  const lastLogin = new Date(data?.userGetLogged.lastLoginTime || Date.now());
+  const formattedLastLogin = dateFormat(lastLogin, 'dd.mm.yyyy HH:MM:ss');
   return (
     <>
       <Grid container spacing={2}>
@@ -49,6 +52,7 @@ const ProfileIndex = () => {
             <Typography>{`Příjmení: ${data?.userGetLogged.surname || ''}`}</Typography>
             <Typography>{`Email: ${data?.userGetLogged.email || ''}`}</Typography>
             <Typography>{`Datum registrace: ${formattedDate}`}</Typography>
+            <Typography>{`Poslední přihlášení: ${formattedLastLogin}`}</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} md={6}>

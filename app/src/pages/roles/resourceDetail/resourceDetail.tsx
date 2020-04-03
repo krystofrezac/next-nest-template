@@ -14,7 +14,7 @@ const ResourceDetail = (props: ResourceDetailProps) => {
   const { resource } = props;
 
   const description = resource ? resource.description : '';
-  const category = resource ? resource.category : { id: undefined, name: '' };
+  const category = resource ? resource.category : { id: undefined, label: '' };
   const roles = resource ? resource.roles : [];
   const minimalCount = resource ? resource.minimalCount : '';
   const requires = resource ? resource.requires : [];
@@ -36,7 +36,7 @@ const ResourceDetail = (props: ResourceDetailProps) => {
                 <InfoIcon />
               </IconButton>
             </Link>
-            {category.name}
+            {category.label}
           </SimpleRow>
           <SimpleRow name="Role" tooltip="Role které mají daný zdroj aktivní">
             {roles.map(role => (
@@ -72,7 +72,7 @@ const ResourceDetail = (props: ResourceDetailProps) => {
                     <InfoIcon />
                   </IconButton>
                 </Link>
-                {r.name}
+                {r.label}
               </div>
             ))}
           </SimpleRow>
@@ -87,7 +87,7 @@ const ResourceDetail = (props: ResourceDetailProps) => {
                     <InfoIcon />
                   </IconButton>
                 </Link>
-                {r.name}
+                {r.label}
               </div>
             ))}
           </SimpleRow>

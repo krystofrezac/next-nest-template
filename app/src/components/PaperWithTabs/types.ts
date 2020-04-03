@@ -5,5 +5,5 @@ export interface PaperWithTabsProps extends PaperPrefabProps {
   loading?: boolean;
   actions?: JSX.Element[];
   footer?: JSX.Element;
-  tabs: { label: string; panel: JSX.Element }[];
+  tabs: { label: string; panel: JSX.Element; disabled?: boolean }[];
 }

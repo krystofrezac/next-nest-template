@@ -4,6 +4,8 @@ import { gql } from 'apollo-boost';
 import { useRouter } from 'next/router';
 import { useLazyQuery } from '@apollo/react-hooks';
 
+import resources from '@template/shared/config/api/resources';
+
 import withPage from 'components/withPage';
 import Paper from 'components/Paper';
 
@@ -43,4 +45,6 @@ const ResourceCategoryDetailIndex = () => {
   );
 };
 
-export default withPage(ResourceCategoryDetailIndex, resourceCategoryDetailBreadcrumbs);
+export default withPage(ResourceCategoryDetailIndex, resourceCategoryDetailBreadcrumbs, [
+  [resources.role.edit],
+]);

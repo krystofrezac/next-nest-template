@@ -10,9 +10,11 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "incremental": true,
+    "esModuleInterop": true,
     "paths": {
       "user/*": ["user/*"]
-    }
+    },
+    "allowSyntheticDefaultImports": true
   },
   "exclude": ["node_modules", "dist"]
 }

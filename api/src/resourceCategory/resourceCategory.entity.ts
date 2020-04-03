@@ -13,6 +13,10 @@ class ResourceCategory {
   @Column({ unique: true })
   name: string;
 
+  @Field()
+  @Column()
+  label: string;
+
   @Field(() => [Resource])
   @OneToMany(
     () => Resource,

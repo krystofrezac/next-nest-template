@@ -5,6 +5,10 @@ const roleFragment = gql`
     roles {
       id
       name
+      resources {
+        name
+        id
+      }
     }
   }
 `;

@@ -10,6 +10,7 @@ import {
   TableRow,
   IconButton,
   Tooltip,
+  Theme,
 } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import AddIcon from '@material-ui/icons/AddCircle';
@@ -18,9 +19,33 @@ import WarningIcon from '@material-ui/icons/Warning';
 import routes from '@template/shared/config/app/routes';
 
 import { withSnackbar } from 'notistack';
+import { makeStyles } from '@material-ui/core/styles';
+import { useRouter } from 'next/router';
 import { RolesProps } from './types';
 
+const useStyles = makeStyles((theme: Theme) => ({
+  highlight: {
+    transitionDuration: '1s',
+    backgroundColor: theme.palette.primary.main,
+  },
+  resource: {
+    transitionDelay: '1s',
+    transitionDuration: '1s',
+  },
+}));
+
 const Roles = (props: RolesProps) => {
+  const classes = useStyles();
+  const router = useRouter();
+
+  const highlightedResourceId = +router.query.resourceId;
+
+  if (highlightedResourceId) {
+    setTimeout(() => {
+      router.push(routes.roles.index);
+    }, 1000);
+  }
+
   const DetailTooltip: React.FC = (p: { children: JSX.Element }) => (
     <Tooltip title="Detail" arrow>
       {p.children}
@@ -61,7 +86,7 @@ const Roles = (props: RolesProps) => {
             res => res.resourceId === req.id && res.roleId === role.id,
           );
           if (changedRequested) {
-            disabled = !changedRequested.active;
+            if (!changedRequested.active) disabled = true;
             if (disabled && changedActive) {
               props.onResourceChange(resource.id, role.id, false);
             }
@@ -95,7 +120,13 @@ const Roles = (props: RolesProps) => {
       return (
         <React.Fragment key={`categoryResource${category.id}-${resource.id}`}>
           <TableRow>
-            <TableCell padding="none">
+            <TableCell
+              id={`resource-${resource.id}`}
+              padding="none"
+              className={
+                resource.id === highlightedResourceId ? classes.highlight : classes.resource
+              }
+            >
               <Link
                 href={{
                   pathname: routes.roles.resourceDetail,
@@ -110,7 +141,7 @@ const Roles = (props: RolesProps) => {
                   </DetailTooltip>
                 </a>
               </Link>
-              {resource.name}
+              {resource.label}
               {minimalCountError && (
                 <IconButton
                   color="secondary"
@@ -150,7 +181,7 @@ const Roles = (props: RolesProps) => {
                 </DetailTooltip>
               </a>
             </Link>
-            <b>{category.name}</b>
+            <b>{category.label}</b>
           </TableCell>
           {emptyCells}
           <TableCell />

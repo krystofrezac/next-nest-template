@@ -1,6 +1,6 @@
 interface Resource {
   id: number;
-  name: string;
+  label: string;
 }
 
 export interface RoleFindById {

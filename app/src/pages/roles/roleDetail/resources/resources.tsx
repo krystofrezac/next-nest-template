@@ -28,7 +28,7 @@ const Resources = (props: ResourcesProps) => {
                     <InfoIcon />
                   </IconButton>
                 </Link>
-                {resource.name}
+                {resource.label}
               </ListItemText>
             </ListItem>
           ))}

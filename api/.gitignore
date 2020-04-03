@@ -3,6 +3,7 @@
 /node_modules
 schema.graphql
 ormconfig.example.json
+config/
 # Logs
 logs
 *.log

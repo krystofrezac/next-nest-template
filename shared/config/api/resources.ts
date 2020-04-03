@@ -4,10 +4,11 @@ const resources = {
   },
   user: {
     seeAll: 'USER_SEE_ALL',
+    assignRole: 'USER_ASSIGN_ROLE',
     add: 'USER_ADD',
     activate: 'USER_ACTIVATE',
     generatedPassword: 'USER_GENERATE_PASSWORD',
-    assignRole: 'USER_ASSIGN_ROLE',
+    edit: 'USER_EDIT',
   },
 };
 

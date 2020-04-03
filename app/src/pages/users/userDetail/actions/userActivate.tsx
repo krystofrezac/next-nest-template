@@ -55,7 +55,7 @@ const UserActivate = (props: UserActivateDeactivateProps) => {
 
       <div className={classes.buttonContainer}>
         <LoadingButton
-          disabled={props.active||!canActivate}
+          disabled={props.active || !canActivate}
           loading={loading}
           color="primary"
           variant="contained"

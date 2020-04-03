@@ -3,9 +3,10 @@ import { WithSnackbarProps } from 'notistack';
 export interface Role {
   id: number;
   name: string;
+  resources: { id: number; name: string }[];
 }
 
-interface User {
+export interface User {
   id: number;
   email: string;
   name: string;
@@ -40,10 +41,8 @@ export interface RoleFindAll {
   roleFindAll: Role[];
 }
 
-export interface BasicInfoProps {
-  user: User;
-}
-
 export interface RolesProps extends WithSnackbarProps {
   roles: Role[];
 }
+
+

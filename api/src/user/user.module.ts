@@ -6,7 +6,7 @@ import User from 'user/user.entity';
 import UserResolver from 'user/user.resolver';
 import UserService from 'user/user.service';
 import UserPaginatorResolver from 'user/paginator/userPaginator.resolver';
-import RoleModule from '../role/role.module';
+import RoleModule from 'role/role.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User]), forwardRef(() => AuthModule), RoleModule],

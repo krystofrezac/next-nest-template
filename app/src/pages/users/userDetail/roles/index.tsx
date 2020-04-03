@@ -6,15 +6,19 @@ import { gql } from 'apollo-boost';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { withSnackbar } from 'notistack';
 import { useRouter } from 'next/router';
+import InfoIcon from '@material-ui/icons/Info';
+
+import routes from '@template/shared/config/app/routes';
+import resources from '@template/shared/config/api/resources';
 
 import MaterialTable from 'lib/materialTable';
 
 import LoadingButton from 'components/LoadingButton';
-
 import useResources from 'components/resources/useResources';
-import roleFragment from '../roleFragment';
+
+import roleFragment from '../../fragments/roleFragment';
 import { Role, RoleFindAll, RolesProps, UserChangeRoles, UserChangeRolesVars } from '../types';
-import resources from '../../../../../../shared/config/api/resources';
+import apiErrors from '../../../../../../shared/config/api/errors';
 
 const useStyles = makeStyles((theme: Theme) => ({
   actions: {
@@ -48,6 +52,7 @@ const USER_CHANGE_ROLES = gql`
   }
 `;
 
+const Info = () => <InfoIcon color="primary" />;
 const Index = (props: RolesProps) => {
   const classes = useStyles();
 
@@ -65,15 +70,20 @@ const Index = (props: RolesProps) => {
     const rolesIds = selected.map(s => s.id);
     userChangeRoles({
       variables: { userId: +router.query.userId, rolesIds },
-    }).then(res => {
-      if (res.data) {
-        props.enqueueSnackbar('Role úspěšně změněny', { variant: 'success' });
-        setEditing(false);
-      }
-      if (res.errors) {
-        props.enqueueSnackbar('Něco se pokazilo', { variant: 'error' });
-      }
-    });
+    })
+      .then(res => {
+        if (res.data) {
+          props.enqueueSnackbar('Role úspěšně změněny', { variant: 'success' });
+          setEditing(false);
+        }
+      })
+      .catch(err => {
+        if (err?.graphQLErrors?.some(e => e.message?.message === apiErrors.role.maxUsers))
+          props.enqueueSnackbar('Maximální počet uživatelů jedné z rolí byl překročen.', {
+            variant: 'warning',
+          });
+        else props.enqueueSnackbar('Nepovedlo se změnit role', { variant: 'error' });
+      });
   };
 
   const fetchedRoles = data
@@ -96,6 +106,14 @@ const Index = (props: RolesProps) => {
         onSelectionChange={d => {
           setSelected(d);
         }}
+        actions={[
+          {
+            tooltip: 'Detail',
+            icon: Info,
+            onClick: (e, rowData) =>
+              router.push({ pathname: routes.roles.roleDetail, query: { roleId: rowData.id } }),
+          },
+        ]}
       />
       <div className={classes.actions}>
         {!editing ? (
@@ -126,7 +144,10 @@ const Index = (props: RolesProps) => {
                 loading={muationLoading}
                 color="secondary"
                 variant="contained"
-                onClick={() => setEditing(false)}
+                onClick={() => {
+                  setEditing(false);
+                  setSelected(props.roles);
+                }}
               >
                 Zrušit
               </LoadingButton>

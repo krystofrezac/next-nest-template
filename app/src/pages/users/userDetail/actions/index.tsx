@@ -39,7 +39,7 @@ const Actions = () => {
 
   return (
     <div className={classes.container}>
-      <Grid container spacing={1}>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <PasswordReset />
         </Grid>

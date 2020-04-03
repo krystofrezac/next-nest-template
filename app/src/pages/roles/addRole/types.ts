@@ -14,6 +14,7 @@ export interface RoleCreate {
 
 export interface RoleCreateVars {
   name: string;
+  maxUsers: number;
 }
 
 export interface MapState {}

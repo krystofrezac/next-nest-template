@@ -1,7 +1,8 @@
 import { Field, Int, ObjectType } from 'type-graphql';
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import Role from '../role/role.entity';
-import ResourceCategory from '../resourceCategory/resourceCategory.entity';
+
+import Role from 'role/role.entity';
+import ResourceCategory from 'resourceCategory/resourceCategory.entity';
 
 @ObjectType()
 @Entity()
@@ -13,6 +14,10 @@ class Resource {
   @Field()
   @Column({ unique: true })
   name: string;
+
+  @Field()
+  @Column()
+  label: string;
 
   @Field()
   @Column()

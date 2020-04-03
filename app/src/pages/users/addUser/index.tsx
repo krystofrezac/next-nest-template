@@ -6,6 +6,7 @@ import { withSnackbar } from 'notistack';
 import { useRouter } from 'next/router';
 
 import routes from '@template/shared/config/app/routes';
+import resources from '@template/shared/config/api/resources';
 
 import withPage from 'components/withPage';
 
@@ -54,4 +55,4 @@ const AddUserIndex = (props: AddUserIndexProps) => {
   );
 };
 
-export default withPage(withSnackbar(AddUserIndex), addUserBreadcrumbs);
+export default withPage(withSnackbar(AddUserIndex), addUserBreadcrumbs, [[resources.user.add]]);

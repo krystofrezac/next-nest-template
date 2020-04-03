@@ -25,6 +25,9 @@ const MaterialTable = (props: MaterialTableProps<any>) => {
         header: {
           actions: 'Akce',
         },
+        body: {
+          emptyDataSourceMessage: 'Žádná data k zobrazení',
+        },
       }}
     />
   );

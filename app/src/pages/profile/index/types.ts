@@ -4,6 +4,7 @@ interface User {
   surname: string;
   email: string;
   createTime: Date;
+  lastLoginTime: Date;
 }
 
 export interface UserGetLogged {

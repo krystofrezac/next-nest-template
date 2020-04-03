@@ -39,6 +39,7 @@ const RESOURCE_CHANGE_ROLES = gql`
     resourceChangeRoles(changedRoles: $changedRoles) {
       id
       name
+      label
       roles {
         id
       }
@@ -55,9 +56,11 @@ const RESOURCE_CATEGORY_FIND_ALL = gql`
     resourceCategoryFindAll {
       id
       name
+      label
       resources {
         id
         name
+        label
         roles {
           id
         }

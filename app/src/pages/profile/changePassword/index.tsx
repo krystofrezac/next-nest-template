@@ -20,7 +20,7 @@ import changePasswordBreadcrumbs from './breadcrumbs';
 
 const USER_CHANGE_MY_PASSWORD = gql`
   mutation($old: String!, $new: String!) {
-    userResetMyPassword(oldPassword: $old, newPassword: $new) {
+    userChangeMyPassword(oldPassword: $old, newPassword: $new) {
       id
     }
   }

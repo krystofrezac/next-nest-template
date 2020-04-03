@@ -73,6 +73,7 @@ const PaperWithTabs = (props: PaperWithTabsProps) => {
 
   const mappedTabs = props.tabs.map(tab => (
     <Tab
+      disabled={tab.disabled}
       key={`tab${tab.label}`}
       label={tab.label}
       classes={{
@@ -101,6 +102,8 @@ const PaperWithTabs = (props: PaperWithTabsProps) => {
               classes={{
                 root: classes.tabsRoot,
               }}
+              variant="scrollable"
+              scrollButtons="auto"
             >
               {mappedTabs}
             </Tabs>

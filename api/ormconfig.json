@@ -4,7 +4,7 @@
   "port": 3306,
   "username": "krystof",
   "password": "heslo",
-  "database": "shift-planner",
+  "database": "template2",
   "entities": ["dist/**/*.entity.js"],
 
   "migrations": ["dist/migrations/*.js"],

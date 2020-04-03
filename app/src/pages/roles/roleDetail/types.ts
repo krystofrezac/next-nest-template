@@ -1,10 +1,14 @@
 import { WithSnackbarProps } from 'notistack';
 
+interface Role {
+  id: number;
+  name: string;
+  maxUsers: number;
+  userCount: number;
+}
+
 export interface RoleFindById {
-  roleFindById: {
-    id: number;
-    name: string;
-  };
+  roleFindById: Role;
 }
 
 export interface RoleFindByIdVars {
@@ -17,4 +21,7 @@ export interface MapDispatch {
   removeRole: (id: number) => void;
 }
 
-export interface RoleDetailIndexProps extends WithSnackbarProps, MapState, MapDispatch {}
+export interface BasicInfoProps extends WithSnackbarProps {
+  role: Role;
+  loading: boolean;
+}

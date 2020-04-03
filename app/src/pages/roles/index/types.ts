@@ -14,6 +14,7 @@ interface Role {
 interface Resource {
   id: number;
   name: string;
+  label: string;
   roles: { id: number }[];
   minimalCount: number;
   requires: { id: number }[];
@@ -22,6 +23,7 @@ interface Resource {
 interface Category {
   id: number;
   name: string;
+  label: string;
   resources: Resource[];
 }
 
@@ -34,6 +36,7 @@ export interface ResourceChangeRoles {
   resourceChangeRoles: {
     id: number;
     name: string;
+    label: string;
     roles: {
       id: number;
     }[];

@@ -16,8 +16,9 @@ import withPage from 'components/withPage';
 import Paper from 'components/Paper';
 import useResources from 'components/resources/useResources';
 
-import { UserPaginate, UserPaginateVars } from 'pages/users/index/types';
+import { UserPaginate, UserPaginateVars } from './types';
 
+import usersResources from './resources';
 import usersBreadcrumbs from './breadcrumbs';
 
 const USER_PAGINATE = gql`
@@ -132,7 +133,4 @@ const UsersIndex = () => {
   );
 };
 
-export default withPage(UsersIndex, usersBreadcrumbs, [
-  [resources.user.seeAll],
-  [resources.user.add],
-]);
+export default withPage(UsersIndex, usersBreadcrumbs, usersResources);

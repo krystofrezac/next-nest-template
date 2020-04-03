@@ -25,7 +25,6 @@ class AuthService {
 
   async login(user: User) {
     const payload = { sub: user.id };
-    // TODO set  dynamic expire time
     return this.jwtService.sign(payload);
   }
 

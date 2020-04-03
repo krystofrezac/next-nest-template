@@ -10,6 +10,8 @@ import { useRouter } from 'next/router';
 
 import apiErrors from '@template/shared/config/api/errors';
 import routes from '@template/shared/config/app/routes';
+import resources from '@template/shared/config/api/resources';
+import { roleNameRegex } from '@template/shared/config/regexs';
 
 import addRoleBreadcrumbs from 'pages/roles/addRole/breadcrumbs';
 
@@ -30,8 +32,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const ROLE_CREATE = gql`
-  mutation($name: String!) {
-    roleCreate(name: $name) {
+  mutation($name: String!, $maxUsers: Int!) {
+    roleCreate(name: $name, maxUsers: $maxUsers) {
       id
       name
       resources {
@@ -47,10 +49,10 @@ const AddRole = (props: AddRoleProps) => {
 
   const router = useRouter();
   const [roleCreate, { loading }] = useMutation<RoleCreate, RoleCreateVars>(ROLE_CREATE);
-  const { handleSubmit, register, errors } = useForm<{ name: string }>();
+  const { handleSubmit, register, errors } = useForm<{ name: string; maxUsers: string }>();
 
   const onSubmit = values => {
-    roleCreate({ variables: { name: values.name } })
+    roleCreate({ variables: { name: values.name, maxUsers: +values.maxUsers } })
       .then(res => {
         if (res.data) {
           props.enqueueSnackbar('Role úspěšně vytvořena', { variant: 'success' });
@@ -97,7 +99,18 @@ const AddRole = (props: AddRoleProps) => {
             variant="outlined"
             label="Název role"
             name="name"
-            inputRef={register({ required: true, pattern: /[a-zA-Z]+/ })}
+            inputRef={register({ required: true, pattern: roleNameRegex })}
+            error={errors.name !== undefined}
+          />
+        </div>
+        <div className={classes.textField}>
+          <TextField
+            variant="outlined"
+            type="number"
+            label="Maximální počet uživatelů"
+            name="maxUsers"
+            defaultValue={9999}
+            inputRef={register({ required: true })}
             error={errors.name !== undefined}
           />
         </div>
@@ -114,4 +127,5 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatch => ({
 export default withPage(
   connect(mapStateToProps, mapDispatchToProps)(withSnackbar(AddRole)),
   addRoleBreadcrumbs,
+  [[resources.role.edit]],
 );

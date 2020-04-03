@@ -83,6 +83,11 @@ class UserResolver {
     for (const roleId of rolesIds) {
       const role = await this.roleService.findById(roleId);
       if (!role) throw new BadRequestException();
+      if ((await user.roles).some(r => r.id === roleId)) {
+        if (role.maxUsers <= (await role.dbUsers).length - 1)
+          throw new BadRequestException(apiErrors.role.maxUsers);
+      } else if (role.maxUsers <= (await role.dbUsers).length)
+        throw new BadRequestException(apiErrors.role.maxUsers);
       userRoles.push(role);
     }
 
@@ -107,14 +112,19 @@ class UserResolver {
 
   @Mutation(() => User)
   @Secured()
-  async userResetMyPassword(
+  async userChangeMyPassword(
     @Args('oldPassword') oldPassword: string,
     @Args('newPassword') newPassword: string,
     @CurrentUser() userId: number,
   ) {
     const user = await this.userService.findById(userId);
     if (!user) throw new BadRequestException();
-    if (!(await this.userService.comparePassword(oldPassword, user.password))) {
+
+    if (user.passwordIsHashed) {
+      if (!(await this.userService.comparePassword(oldPassword, user.password))) {
+        throw new BadRequestException(apiErrors.input.invalid);
+      }
+    } else if (oldPassword !== user.password) {
       throw new BadRequestException(apiErrors.input.invalid);
     }
 
@@ -142,6 +152,28 @@ class UserResolver {
     const user = await this.userService.findById(userId);
     if (!user) throw new BadRequestException();
     user.darkTheme = darkTheme;
+    return this.userService.save(user);
+  }
+
+  @Mutation(() => User)
+  @Secured(resources.user.edit)
+  async userEdit(
+    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args('name') name: string,
+    @Args('surname') surname: string,
+    @Args('email') email: string,
+  ) {
+    const user = await this.userService.findById(id);
+    if (!user) throw new BadRequestException();
+
+    if (!emailRegex.test(email)) {
+      throw new BadRequestException();
+    }
+
+    user.name = name;
+    user.surname = surname;
+    user.email = email;
+
     return this.userService.save(user);
   }
 }

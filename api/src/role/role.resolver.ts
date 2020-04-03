@@ -1,20 +1,27 @@
-import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
+import { Resolver, Query, Args, Mutation, ResolveProperty, Parent } from '@nestjs/graphql';
 import { BadRequestException } from '@nestjs/common';
 import { Int } from 'type-graphql';
 
 import apiErrors from 'config/api/errors';
 import resources from 'config/api/resources';
+import { roleNameRegex } from 'config/regexs';
+
 import Secured from 'auth/secured.guard';
+import User from 'user/user.entity';
+import CurrentUser from 'auth/currentUser.decorator';
+import AuthService from 'auth/auth.service';
+
 import ResourceService from 'resource/resource.service';
 
 import RoleService from './role.service';
 import Role from './role.entity';
 
-@Resolver()
+@Resolver(() => Role)
 class RoleResolver {
   constructor(
     private readonly roleService: RoleService,
     private readonly resourceService: ResourceService,
+    private readonly authService: AuthService,
   ) {}
 
   @Query(() => [Role])
@@ -31,12 +38,16 @@ class RoleResolver {
 
   @Mutation(() => Role)
   @Secured(resources.role.edit)
-  async roleCreate(@Args('name') name: string) {
-    if (!/[a-zA-Z]+/.test(name)) {
+  async roleCreate(
+    @Args('name') name: string,
+    @Args({ name: 'maxUsers', type: () => Int }) maxUsers: number,
+  ) {
+    if (!roleNameRegex.test(name)) {
       return new BadRequestException(apiErrors.input.invalid);
     }
     const role = new Role();
     role.name = name;
+    role.maxUsers = maxUsers;
     return this.roleService.save(role);
   }
 
@@ -63,6 +74,33 @@ class RoleResolver {
     }
     await this.roleService.remove(role);
     return true;
+  }
+
+  @Mutation(() => Role)
+  @Secured(resources.role.edit)
+  async roleEdit(
+    @Args({ name: 'roleId', type: () => Int }) roleId: number,
+    @Args('name') name: string,
+    @Args({ name: 'maxUsers', type: () => Int }) maxUsers: number,
+  ) {
+    if (!roleNameRegex.test(name)) {
+      return new BadRequestException(apiErrors.input.invalid);
+    }
+    const role = await this.roleService.findById(roleId);
+    role.name = name;
+    role.maxUsers = maxUsers;
+    return this.roleService.save(role);
+  }
+
+  @ResolveProperty(() => [User], { nullable: true })
+  async users(@Parent() parent: Role, @CurrentUser() userId: number) {
+    if (await this.authService.hasResources(userId, [resources.user.seeAll])) return parent.dbUsers;
+    return null;
+  }
+
+  @ResolveProperty(() => Int)
+  async userCount(@Parent() parent: Role) {
+    return (await parent.dbUsers).length;
   }
 }
 

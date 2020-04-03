@@ -6,6 +6,9 @@ const apiErrors = {
     roleMinimalCount: 'REMOVE_ROLE_MINIMAL_COUNT',
     resourceConditions: 'REMOVE_RESOURCE_CONDITIONS',
   },
+  role: {
+    maxUsers: 'ROLE_MAX_USERS',
+  },
   db: {
     duplicate: 'ER_DUP_ENTRY',
   },
