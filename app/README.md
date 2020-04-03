@@ -2,7 +2,7 @@
 - This is frontend part of project which uses Nextjs(react) framework/library
 
 ## Scripts 
-| commnad            | action                                              |
+| command            | action                                              |
 |--------------------|-----------------------------------------------------|
 | dev                | Start development version                           |
 | build              | Build production version                            |

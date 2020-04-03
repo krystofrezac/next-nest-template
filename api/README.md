@@ -2,7 +2,7 @@
 - This is backend part of project which uses Nestjs framework
 
 ## Scripts 
-| commnad            | action                                              |
+| command            | action                                              |
 |--------------------|-----------------------------------------------------|
 | dev                | Start development version                           |
 | build              | Build production version                            |
