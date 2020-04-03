@@ -44,5 +44,3 @@ export interface RoleFindAll {
 export interface RolesProps extends WithSnackbarProps {
   roles: Role[];
 }
-
-
