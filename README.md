@@ -18,4 +18,6 @@ To get started you need to follow only few easy steps.
 6. In `api` folder create `ormconfig.json` from `ormconfig.example.json` and fill database connection details
 7. In `api` folder run `yarn conf`
 8. In `api` folder run `yarn migration:run`
+9. Start application (`app/README.md`, `api/README.md`)
+10. Login with email: `admin@admin.cz`, password: `admin`
 
