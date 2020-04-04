@@ -31,7 +31,7 @@ const ResourceCategoryDetail = (props: ResourceCategoryDetailProps) => {
                     <InfoIcon />
                   </IconButton>
                 </Link>
-                {resource.name}
+                {resource.label}
               </div>
             ))}
           </SimpleRow>

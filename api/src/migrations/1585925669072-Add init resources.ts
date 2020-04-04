@@ -5,7 +5,7 @@ import removeResources from "./scripts/removeResources";
 
 export class AddInitResources1585925669072 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<any> {
-        await addResourceCategories(queryRunner, [{name: "ROLE", label: "role"}, {name: "USER", label: "user"}])
+        await addResourceCategories(queryRunner, [{name: "ROLE", label: "Role"}, {name: "USER", label: "Uživatel"}])
         await addResources(queryRunner, [{
             name: "ROLE_EDIT",
             categoryName: "ROLE",

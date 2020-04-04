@@ -1,9 +1,9 @@
 interface Category {
   id: number;
-  name: string;
+  label: string;
   resources: {
     id: number;
-    name: string;
+    label: string;
   }[];
 }
 

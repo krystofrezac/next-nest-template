@@ -17,10 +17,10 @@ const RESOURCE_CATEGORY_FIND_BY_ID = gql`
   query($id: Int!) {
     resourceCategoryFindById(id: $id) {
       id
-      name
+      label
       resources {
         id
-        name
+        label
       }
     }
   }
@@ -38,7 +38,7 @@ const ResourceCategoryDetailIndex = () => {
 
   return (
     <>
-      <Paper title={data ? data.resourceCategoryFindById.name : ''}>
+      <Paper title={data ? data.resourceCategoryFindById.label : ''}>
         <ResourceCategoryDetail category={data ? data.resourceCategoryFindById : undefined} />
       </Paper>
     </>
