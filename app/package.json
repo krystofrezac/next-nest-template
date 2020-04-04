@@ -23,7 +23,7 @@
     "dateformat": "^3.0.3",
     "graphql": "^14.5.8",
     "material-table": "^1.57.2",
-    "next": "^9.2.1",
+    "next": "^9.3.2",
     "next-cookies": "^2.0.3",
     "next-offline": "^5.0.0",
     "next-with-apollo": "^5.0.0",
