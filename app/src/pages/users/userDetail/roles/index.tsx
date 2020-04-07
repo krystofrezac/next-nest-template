@@ -10,6 +10,7 @@ import InfoIcon from '@material-ui/icons/Info';
 
 import routes from '@template/shared/config/app/routes';
 import resources from '@template/shared/config/api/resources';
+import apiErrors from '@template/shared/config/api/errors';
 
 import MaterialTable from 'lib/materialTable';
 
@@ -18,7 +19,6 @@ import useResources from 'components/resources/useResources';
 
 import roleFragment from '../../fragments/roleFragment';
 import { Role, RoleFindAll, RolesProps, UserChangeRoles, UserChangeRolesVars } from '../types';
-import apiErrors from '../../../../../../shared/config/api/errors';
 
 const useStyles = makeStyles((theme: Theme) => ({
   actions: {
@@ -65,6 +65,7 @@ const Index = (props: RolesProps) => {
   const [editing, setEditing] = useState(false);
   const [selected, setSelected] = useState<Role[]>(props.roles);
   const canAssignRole = useResources([[resources.user.assignRole]]);
+  const canEditRoles = useResources([[resources.role.edit]]);
 
   const submitHandler = () => {
     const rolesIds = selected.map(s => s.id);
@@ -106,14 +107,16 @@ const Index = (props: RolesProps) => {
         onSelectionChange={d => {
           setSelected(d);
         }}
-        actions={[
-          {
-            tooltip: 'Detail',
-            icon: Info,
-            onClick: (e, rowData) =>
-              router.push({ pathname: routes.roles.roleDetail, query: { roleId: rowData.id } }),
-          },
-        ]}
+        actions={
+          canEditRoles && [
+            {
+              tooltip: 'Detail',
+              icon: Info,
+              onClick: (e, rowData) =>
+                router.push({ pathname: routes.roles.roleDetail, query: { roleId: rowData.id } }),
+            },
+          ]
+        }
       />
       <div className={classes.actions}>
         {!editing ? (
