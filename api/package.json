@@ -37,7 +37,7 @@
     "@template/shared": "1.0.0",
     "@types/passport-jwt": "^3.0.3",
     "apollo-server-express": "^2.9.16",
-    "bcrypt": "^3.0.8",
+    "bcrypt": "^5.0.0",
     "dateformat": "^3.0.3",
     "generate-password": "^1.5.1",
     "graphql": "^14.5.8",
